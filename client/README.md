@@ -1,18 +1,22 @@
-# minimal-react-redux-webpack
-> A minimal React/Redux Webpack environment
+<p align="center"><a href="https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f"><img src="https://i.imgur.com/PATsTx2.png" title="View tutorial" alt="React, React Router, Redux and Redux Thunk" width="900"></a></p>
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
+[![Dependency Status](https://dependencyci.com/github/notrab/create-react-app-redux/badge)](https://dependencyci.com/github/notrab/create-react-app-redux)
 
-## Development
+* Tutorial: [Getting started with create-react-app, Redux, React Router & Redux Thunk](https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f)
+* Example: [View on Heroku](https://cra-redux-router-thunk.herokuapp.com/) 🙌
+
+## Installation
 
 ```bash
-npm i && npm start
+git clone https://github.com/notrab/create-react-app-redux.git
+cd create-react-app-redux
+yarn
 ```
 
-## Meta
+## Get started
 
-Valentino Gagliardi - [valentinog.com](https://www.valentinog.com) - valentino@valentinog.com
+```bash
+yarn start
+```
 
-## License
-
-This project is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+This boilerplate is built using [create-react-app](https://github.com/facebookincubator/create-react-app) so you will want to read the User Guide for more goodies.
