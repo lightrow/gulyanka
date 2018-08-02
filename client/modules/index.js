@@ -2,10 +2,12 @@ import { combineReducers } from "redux";
 import { routerReducer } from "react-router-redux";
 import loader from "./loader";
 import auth from "./auth";
+import navbar from "./navbar";
 
 const appReducer = combineReducers({
   router: routerReducer,
   loader,
+  navbar,
   auth
 });
 

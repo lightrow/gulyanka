@@ -8,14 +8,18 @@ React.createElement();
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { color : "white" };
+
+  }
+
+  componentWillMount() {
+    console.log(window.location.pathname);
+    if (window.location.pathname == "/details") {
+      this.color = "black";
+    }
   }
 
   componentDidMount() {
-    if (window.location.pathname == "/details") {
-      console.log("black");
-      this.setState({color:"black"})
-    }
+
     //wait for a postmessage with verifier token from authorization popup
     console.log("LISTENER");
     window.addEventListener("message", event => {
@@ -59,7 +63,7 @@ class Navbar extends React.Component {
   //this.props.userinfo.data.screen_name
   render() {
     return (
-      <nav className={"navbar navbar-dark"} style={{backgroundColor:this.state.color}}>
+      <nav className={"navbar navbar-dark"} style={{backgroundColor:this.props.navcolor}}>
         <button className="btn btn-info" onClick={() => this.handleClick()}>
           {this.props.logged ? "Logout" : "Login with Twitter"}
         </button>
@@ -69,6 +73,7 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  navcolor: state.navbar.color,
   userinfo: state.auth.userinfo,
   logged: state.auth.logged,
   pathname: state.router.location.pathname

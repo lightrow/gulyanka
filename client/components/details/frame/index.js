@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {} from "../../../modules/loader";
 import Review from "./review";
 import Tracker from "./tracker";
+import { changeColor } from "../../../modules/navbar";
 
 class Frame extends React.Component {
   constructor(props) {
@@ -17,6 +18,9 @@ class Frame extends React.Component {
   " ";
 
   componentWillMount() {
+
+    this.props.changeColor("black");
+
     if (!this.props.entryData.photo) {
       this.props.changePage();
     }
@@ -140,6 +144,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      changeColor,
       changePage: () => push("/")
     },
     dispatch
