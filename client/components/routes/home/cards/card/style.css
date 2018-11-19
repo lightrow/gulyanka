@@ -1,0 +1,70 @@
+.card {
+  flex: 1;
+  min-width: 300px;
+  height: 160px;
+  margin: 10px 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.75);
+  background-repeat: no-repeat;
+  background-color: rgb(27, 27, 27);
+  background-size: cover;
+  object-fit: cover;
+  border: 3px solid rgb(47, 47, 47);
+  box-sizing: border-box;
+  -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.overlay {
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.93) 0%,
+    rgba(0, 0, 0, 0.2) 47.14%,
+    rgba(0, 0, 0, 0.74) 100%
+  );
+
+  box-sizing: border-box;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  color: white;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  width: 65%;
+}
+
+.star-svg {
+  width: 16px;
+}
+
+.halfstar-svg {
+  width: 16px;
+}
+
+.star {
+  fill: #f9ee8b;
+}
+
+.halfstar-back {
+  fill: #f9ee8b;
+}
+
+.halfstar-front {
+  fill: #707070;
+}
+
+.stars {
+  display: inline;
+}

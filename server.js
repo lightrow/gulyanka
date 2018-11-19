@@ -19,7 +19,6 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.set("trust proxy", true);
 app.use(
   session({

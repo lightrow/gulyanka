@@ -1,12 +1,11 @@
 import React from "react";
 import { Route, Link } from "react-router-dom";
-import Home from "../home";
-import Details from "../details";
-import Navbar from "./navbar";
-import AuthPopup from "../authpopup";
-import purgeStoredState from "redux-persist";
+import Home from "../routes/home";
+import Details from "../routes/details";
+import Auth from "../routes/auth"
+import Navbar from "../navbar"
 
-class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
       <div>
@@ -16,11 +15,9 @@ class App extends React.Component {
         <main>
           <Route exact path="/" component={Home} />
           <Route exact path="/details" component={Details} />
-          <Route exact path="/auth" component={AuthPopup} />
+          <Route exact path="/auth" component={Auth} />
         </main>
       </div>
     );
   }
 }
-
-export default App;

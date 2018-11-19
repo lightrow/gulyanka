@@ -5,22 +5,33 @@ import { connect } from "react-redux";
 import {} from "../../../modules/loader";
 import Review from "./review";
 import Tracker from "./tracker";
+import Map from "./map";
 import { changeColor } from "../../../modules/navbar";
+import "./style.css";
 
 class Frame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reviews: false,
-      stars: []
+      stars: [],
+      framestyle: {
+        opacity: "0%",
+        transition: "background-color 0.5s ease-in-out"
+      },
+      styleset: false
     };
   }
   " ";
 
+  componentDidMount() {
+    if (!this.state.styleset) {
+      this.setState({ framestyle: { opacity: "100%" }, styleset: true });
+    }
+  }
+
   componentWillMount() {
-
     this.props.changeColor("black");
-
     if (!this.props.entryData.photo) {
       this.props.changePage();
     }
@@ -65,13 +76,7 @@ class Frame extends React.Component {
 
   render() {
     const imgstyle = {
-      width: "100%",
-      backgroundImage: `url(${this.props.entryData.photo})`,
-      backgroundRepeat: "no-repeat",
-      backgroundColor: "black",
-      backgroundSize: "cover",
-      objectFit: "cover",
-      border: "none"
+      backgroundImage: `url(${this.props.entryData.photo})`
     };
 
     const gradstyle = {
@@ -82,10 +87,10 @@ class Frame extends React.Component {
     };
 
     return (
-      <div>
-        <div style={imgstyle}>
-          <div style={gradstyle}>
-            <div className=" p-3 mb-2" style={{ height: "auto" }}>
+      <div style={this.state.framestyle}>
+        <div id="image" style={imgstyle}>
+          <div id="gradient" style={{ display: "flex" }}>
+            <div className="p-3 mb-2">
               <h3 className="mb-1" style={{ color: "white" }}>
                 {this.props.entryData.name}
               </h3>
@@ -95,19 +100,21 @@ class Frame extends React.Component {
               <h6 className="mb-1" style={{ color: "white" }}>
                 {this.props.entryData.formatted_address}
               </h6>
-              <div style={{ height: "250px" }} />
-              <small style={{ color: "white" }}>
-                {this.props.entryData.opening_hours
-                  ? this.props.entryData.opening_hours.open_now
-                    ? "Opened"
-                    : "Closed"
-                  : ""}
-              </small>
-              <h6 style={{ color: "white" }} className="mb-1">
-                {this.props.entryData.formatted_phone_number}
-              </h6>
-              <Tracker />
+              <div style={{ position: "absolute", bottom: "15px" }}>
+                <small style={{ color: "white" }}>
+                  {this.props.entryData.opening_hours
+                    ? this.props.entryData.opening_hours.open_now
+                      ? "Opened"
+                      : "Closed"
+                    : ""}
+                </small>
+                <h6 style={{ color: "white" }} className="mb-1">
+                  {this.props.entryData.formatted_phone_number}
+                </h6>
+                <Tracker />
+              </div>
             </div>
+            <Map place_id={this.props.entryData.place_id}/>
           </div>
         </div>
 
@@ -115,21 +122,6 @@ class Frame extends React.Component {
           {this.props.entryData.reviews.map(review => (
             <Review key={review.id} review={review} />
           ))}
-        </div>
-
-        <div className="card p-1 mb-2">
-          <iframe
-            title="googleMapsEmbed"
-            height="300"
-            width="100%"
-            frameBorder="0"
-            style={{ border: "0", borderRadius: "5px" }}
-            src={
-              "https://www.google.com/maps/embed/v1/place?key=AIzaSyDPQNABRT48CdsoR_UHMBpYWmnRhWmuBcU&q=place_id:" +
-              this.props.entryData.place_id
-            }
-            allowFullScreen
-          />
         </div>
       </div>
     );
@@ -150,4 +142,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Frame);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Frame);

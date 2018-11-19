@@ -30,18 +30,20 @@ class Tracker extends React.Component {
     })
       .then(response => response.json())
       .then(response => {
-        this.setState({ goers: response });
+        if (response.status != "NOT_FOUND") {
+          this.setState({ goers: response });
+        }
       });
   }
 
 
   render() {
     return (
-      <div className="card my-2 tracker p-3" style={{backgroundColor:"black"}}>
+      <div className="card my-2 tracker p-3" style={{backgroundColor:"rgba(25,25,25,0.8"}}>
         <button
           className={"btn btn-primary " + this.state.button}
           onClick={this.handleGo}
-          style={{ width: "25%" }}
+          style={{ width: "200px" }}
         >
           Will Go
         </button>

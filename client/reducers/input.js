@@ -1,24 +1,24 @@
-const CHANGE_COLOR = "navbar/CHANGE_COLOR";
+const INPUT_CHANGE = "input/INPUT_CHANGE";
 
-export const changeColor = color => {
+export const inputChange = inputValue => {
   return dispatch => {
     dispatch({
-      type: CHANGE_COLOR,
-      payload: color
+      type: INPUT_CHANGE,
+      payload: inputValue
     });
   };
 };
 
 const initialState = {
-  color: "white"
+  search_field: ""
 };
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case CHANGE_COLOR:
+    case INPUT_CHANGE:
       return {
         ...state,
-        color: action.payload
+        search_field: action.payload
       };
     default:
       return state;

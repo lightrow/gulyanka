@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\components",
+    "\\client\\components\\details",
+    "\\client\\components\\details\\frame",
+    "\\client\\components\\details\\frame\\tracker",
+    "\\routes",
+    "\\routes\\api"
+  ],
+  "SelectedNode": "\\client\\components\\details\\frame\\tracker\\index.js",
+  "PreviewInSolutionExplorer": false
+}
