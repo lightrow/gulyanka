@@ -10,57 +10,55 @@ class Card extends React.Component {
     super(props);
     this.state = {
       style: {
+        ...props.style,
         transform: "scale(0)",
         opacity: 0
       },
-      img: "",
-      
+      img: ""
     };
-    this.mounted = false
+    this.mounted = false;
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      style: { ...this.state.style, ...newProps.style }
+    });
   }
 
   componentDidMount() {
-    this.mounted = true
-    if (!this.state.mounted) {
+    setTimeout(() => {
+      this.setState({
+        style: {
+          transform: "scale(1)",
+          opacity: 1,
+          ...this.props.style
+        }
+      });
       setTimeout(() => {
         this.setState({
           style: {
-            transform: "scale(1)",
-            opacity: 1,
-            height: this.props.height
+            ...this.props.style
           }
         });
-        setTimeout(() => {
-          this.setState({
-            style: {
-              height: this.props.height
-            }
-          });
-        });
-        if (this.props.cardData.photos) {
-          fetch(
-            `/api/getdetails?photoref=${
-              this.props.cardData.photos[0].photo_reference
-            }&placeid=${this.props.cardData.place_id}`
-          )
-            .then(res => res.json())
-            .then(res => {
-              if (this.mounted) {
-                this.setState({
-                  style: {
-                    backgroundImage: `url(${res.photo})`,
-                    height: this.props.height
-                  }
-                });
+      });
+
+      if (this.props.cardData.photos && 1 == 2) {
+        fetch(
+          `/api/getdetails?photoref=${
+            this.props.cardData.photos[0].photo_reference
+          }&placeid=${this.props.cardData.place_id}`
+        )
+          .then(res => res.json())
+          .then(res => {
+            this.setState({
+              style: {
+                ...this.props.style,
+                backgroundImage: `url(${res.photo})`
               }
             });
-        }
-      }, 100);
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+          });
+      }
+    }, 100);
   }
 
   handleRating = () => {
@@ -82,6 +80,16 @@ class Card extends React.Component {
           <div className="headline">
             <span className="card-title">{this.props.cardData.name}</span>
             <div className="stars">{this.handleRating()}</div>
+          </div>
+          <div className="midline" />
+          <div className="footer">
+            <span className="openclosed">
+              {this.props.cardData.opening_hours
+                ? this.props.cardData.opening_hours.open_now
+                  ? "Open"
+                  : ""
+                : ""}
+            </span>
           </div>
         </div>
       </div>

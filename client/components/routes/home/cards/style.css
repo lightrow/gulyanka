@@ -1,7 +1,8 @@
 #cards {
-  display: flex;
-  flex-flow:row wrap;
-  justify-content: stretch;
+  display: block;
+  position:relative;
+  margin:auto;
+  width: 930px;
 }
 
 .column{
