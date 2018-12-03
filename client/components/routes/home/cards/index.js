@@ -24,7 +24,8 @@ class Cards extends React.Component {
     this.state = {
       cardsStyle: {
         height: "1000px"
-      }
+      },
+      cards: "",
     };
     this.mounted = false;
     this.targetCardHeight = 200;
@@ -33,7 +34,7 @@ class Cards extends React.Component {
     this.margin = 10;
     this.cardsInRow = 4;
     this.numRows = Math.floor(this.props.data.length / this.cardsInRow);
-    this.targetColHeight = (this.targetCardHeight + this.margin) * this.numRows;
+    this.targetColHeight = 0;
     this.totalWidth = this.cardsInRow * (this.cardWidth + this.margin);
   }
 
@@ -41,11 +42,11 @@ class Cards extends React.Component {
     let docWidth = document.getElementById("root").clientWidth;
     this.cardsInRow = Math.floor(docWidth / (this.cardWidth + this.margin));
     this.numRows = Math.floor(this.props.data.length / this.cardsInRow);
-    this.targetColHeight = (this.targetCardHeight + this.margin) * this.numRows;
     this.totalWidth = this.cardsInRow * (this.cardWidth + this.margin);
+    this.handleCardsProper();
     this.setState({
       cardsStyle: {
-        height: (this.targetColHeight + this.margin).toString() + "px",
+        height: (this.targetColHeight + this.margin * 2).toString() + "px",
         width: this.totalWidth
       }
     });
@@ -53,14 +54,19 @@ class Cards extends React.Component {
 
   componentDidMount() {
     this.handleResize();
-    this.setState({
-      cardsStyle: {
-        height: (this.targetColHeight + this.margin).toString() + "px",
-        width: this.totalWidth
-      }
-    });
-    this.mounted = true;
     window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState(
+      {
+        ...this.state,
+        cards: ""
+      },
+      () => {
+        this.handleResize();
+      }
+    );
   }
 
   handleCardsProper = () => {
@@ -71,9 +77,9 @@ class Cards extends React.Component {
     let cardsSums = []; // storage for each card's top+height sum value
     let cardsHeights = []; // storage for each card's height value
     let cardsStyles = []; // storage for cards' styles
-    //calc all the heights ( and tops )
+    //  calc all the heights ( and tops )
     for (let h = 0; h < this.props.data.length; h++) {
-      this.cardHeight = this.targetCardHeight + getRandomInt(-5, 10) * 5;
+      this.cardHeight = this.targetCardHeight + getRandomInt(-1, 3) * 40;
       cardsHeights.push(this.cardHeight);
       if (h >= this.cardsInRow) {
         cardsSums.push(
@@ -84,8 +90,8 @@ class Cards extends React.Component {
       }
     }
 
-    //adjust heights and tops to make columns the same height
-    //get target height ( average height of all columns )
+    //  adjust heights and tops to make columns the same height
+    //  get target height ( average height of all columns )
     let topHeights = [];
     for (let av = 0; av < this.cardsInRow; av++) {
       topHeights.push(cardsSums[cardsSums.length - 1 - av]);
@@ -93,13 +99,14 @@ class Cards extends React.Component {
     this.targetColHeight = topHeights.reduce((a, b) => {
       return a > b ? a : b;
     });
-    //we cant rely on last card always being the last one in a row,
-    //so we get around that using modulo
+    //  set parent container element's height
+    //  we cant rely on last card always being the last one in a row,
+    //  so we get around that using modulo
     let remainder = cardsSums.length % this.cardsInRow;
     for (let i = 0; i < this.cardsInRow; i++) {
       let heightDif =
         this.targetColHeight - cardsSums[cardsSums.length - i - 1];
-      //change random card in column
+      //  change random card in column
       let newHeight = 0;
       let cardToAdjust;
       cardToAdjust = getRandomCardInCol(
@@ -120,19 +127,19 @@ class Cards extends React.Component {
       }
     }
 
-    //prepare the styles
+    //  prepare the styles
     for (let index = 0; index < this.props.data.length; index++) {
-      // first card
+      //  first card
       if (index == 0) {
         top = 0;
         left = 0;
       }
-      // first card in a row
+      //  first card in a row
       else if (index % this.cardsInRow == 0) {
         top = cardsSums[index - this.cardsInRow];
         left = 0;
       }
-      // all other cards
+      //  all other cards
       else {
         left =
           100 / this.cardsInRow +
@@ -152,24 +159,31 @@ class Cards extends React.Component {
         left: left.toString() + "%",
         top: top.toString() + "px",
         height: cardsHeights[index].toString() + "px",
-        width: this.cardWidth.toString() + "px",
+        width: this.cardWidth.toString() + "px"
       };
 
       cardsStyles.push(style);
     }
 
-    //distribute cards
+    //  distribute cards
     this.props.data.map((entry, index) => {
       sumJSX.push(
         <Card
           key={"card" + index}
+          id={"card" + index}
           cardData={entry}
           style={cardsStyles[index]}
+          wantsClose={this.state.wantsClose}
         />
       );
     });
 
-    return sumJSX;
+    this.setState({
+      ...this.state,
+      cardsStyle: { ...this.state.cardsStyle },
+      cards: sumJSX
+    });
+    //return sumJSX;
   };
 
   //  this variant distributes cards in columns instead of rows
@@ -250,7 +264,7 @@ class Cards extends React.Component {
     if (this.props.loaded) {
       return (
         <div id="cards" style={this.state.cardsStyle}>
-          {this.handleCardsProper()}
+          {this.state.cards}
         </div>
       );
     } else {

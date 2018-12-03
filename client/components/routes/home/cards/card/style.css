@@ -10,9 +10,11 @@
   object-fit: cover;
   border: 3px solid rgb(47, 47, 47);
   box-sizing: border-box;
-  -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-  transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-  will-change: all
+  -webkit-transition: transform 400ms cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 400ms cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: scale, transform, opacity;
 }
 
 .card:hover {
@@ -70,13 +72,12 @@
   display: inline;
 }
 
-.footer{
-  bottom:10px;
-  position:absolute;
+.footer {
+  bottom: 10px;
+  position: absolute;
 }
 
-.openclosed{
-  color:rgb(255, 255, 255);
+.openclosed {
+  color: rgb(255, 255, 255);
   font-size: 14px;
 }
-
