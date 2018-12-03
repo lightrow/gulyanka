@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Star, HalfStar } from "./star.js";
+import Map from "./map";
 
 class Card extends React.Component {
   constructor(props) {
@@ -24,9 +25,23 @@ class Card extends React.Component {
         display: "none",
         backgroundColor: "rgb(0,0,0,0.0)"
       },
+      headlineStyle: {
+        padding: "0px"
+      },
+      expandedStyle: {
+        display: "none"
+      },
+      imgStyle: {
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        zIndex: "-1"
+      },
       img: "",
+
       cardData: this.props.cardData
     };
+    this.initState = this.state;
     this.dark = false;
     this.mounted = false;
     this.disabled = false;
@@ -83,7 +98,10 @@ class Card extends React.Component {
           this.setState({
             ...this.state,
             style: {
-              ...this.state.style,
+              ...this.state.style
+            },
+            imgStyle: {
+              ...this.state.imgStyle,
               backgroundImage: `url(${res.photo})`
             },
             img: res.photo
@@ -122,6 +140,10 @@ class Card extends React.Component {
         darkenStyle: {
           ...this.state.darkenStyle,
           backgroundColor: "rgb(0,0,0,0.0)"
+        },
+        expandedStyle: {
+          ...this.state.expandedStyle,
+          display: "none"
         }
       },
       () => {
@@ -143,6 +165,9 @@ class Card extends React.Component {
                   ") scaleY(" +
                   scaleY +
                   ")"
+              },
+              headlineStyle: {
+                padding: "0px"
               }
             },
             () => {
@@ -153,17 +178,18 @@ class Card extends React.Component {
                     style: {
                       ...this.props.style,
                       zIndex: 0,
-                      transition: "none",
+                      transition: "none"
+                    },
+                    imgStyle: {
+                      ...this.state.imgStyle,
                       backgroundImage: `url(${this.state.img})`
                     }
                   },
                   () => {
                     setTimeout(() => {
                       this.setState({
-                        ...this.state,
                         style: {
-                          ...this.props.style,
-                          backgroundImage: `url(${this.state.img})`
+                          ...this.props.style
                         },
                         darkenStyle: {
                           ...this.state.darkenStyle,
@@ -183,7 +209,7 @@ class Card extends React.Component {
     );
   };
 
-  expandCard = newCardDOM => {
+  expandCard = (newCardDOM, newContainerDOM) => {
     let box = newCardDOM.getBoundingClientRect();
     this.cardDOM.offsetLeft = box.left;
     this.cardDOM.offsetTop = box.top;
@@ -215,6 +241,7 @@ class Card extends React.Component {
           left: "50%",
           top: window.scrollY + window.innerHeight / 2 - 85 + "px",
           transition: "none",
+          overflowY: "scroll",
           transform:
             "translate(" +
             percentX +
@@ -230,6 +257,9 @@ class Card extends React.Component {
           ...this.state.darkenStyle,
           display: "block",
           zIndex: 1
+        },
+        headlineStyle: {
+          padding: "15px"
         }
       },
       () => {
@@ -247,6 +277,7 @@ class Card extends React.Component {
               backgroundColor: "rgb(0,0,0,0.5)"
             }
           });
+
           setTimeout(() => {
             this.setState({
               ...this.state,
@@ -255,6 +286,10 @@ class Card extends React.Component {
                 position: "fixed",
                 top: "50%",
                 transition: "none"
+              },
+              expandedStyle: {
+                display: "block",
+                height: "200px"
               }
             });
             this.disabled = false;
@@ -264,7 +299,7 @@ class Card extends React.Component {
     );
   };
 
-  handleClick = event => {
+  handleClick = () => {
     //  To avoid performance problems of animating left and top transitions,
     //  animations are done using css translate, scale and opacity instead.
     //  The card's coordinates are first recalculated into
@@ -275,6 +310,7 @@ class Card extends React.Component {
     //  transitions. Transitions are done in multiple stages, requiring chaining
     //  up to 4 "setState"s with "setTimeout"s in a row. TODO: promisify setState
     let newCardDOM = document.getElementById(this.props.id);
+    let newContainerDOM = document.getElementById("container-" + this.props.id);
     let box = newCardDOM.getBoundingClientRect();
     console.log("top: " + box.top + " left: " + box.left);
     console.log(
@@ -286,7 +322,7 @@ class Card extends React.Component {
     if (!this.disabled) {
       this.disabled = true;
       if (!this.expanded) {
-        this.expandCard(newCardDOM);
+        this.expandCard(newCardDOM, newContainerDOM);
       } else {
         this.closeCard();
       }
@@ -313,9 +349,9 @@ class Card extends React.Component {
 
   render() {
     return (
-      <div id="cardGroup">
+      <div className="card-container" id={"container-" + this.props.id}>
         <span
-          id="darken"
+          className="darken"
           onClick={this.handleDarken}
           style={this.state.darkenStyle}
         />
@@ -323,10 +359,11 @@ class Card extends React.Component {
           className="card"
           style={this.state.style}
           id={this.props.id}
-          onClick={e => this.handleClick(e)}
+          onClick={this.handleClick}
         >
+          <div className="card-img" style={this.state.imgStyle} />
           <div className="overlay">
-            <div className="headline">
+            <div className="headline" style={this.state.headlineStyle}>
               <span className="card-title">{this.props.cardData.name}</span>
               <div className="stars">{this.handleRating()}</div>
             </div>
@@ -340,6 +377,9 @@ class Card extends React.Component {
                   : ""}
               </span>
             </div>
+          </div>
+          <div className="expanded-info" style={this.state.expandedStyle}>
+ 
           </div>
         </div>
       </div>
