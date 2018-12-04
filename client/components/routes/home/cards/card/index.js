@@ -114,7 +114,6 @@ class Card extends React.Component {
     let cardX = this.cardDOM.offsetLeft + this.cardDOM.clientWidth / 2;
     let cardY =
       this.cardDOM.offsetTop +
-      (this.scrollY - window.scrollY) +
       this.cardDOM.clientHeight / 2;
     this.scrollY = window.scrollY;
     let scaleX = this.cardDOM.clientWidth / this.expandedWidth;
@@ -134,7 +133,7 @@ class Card extends React.Component {
         style: {
           ...this.state.style,
           position: "absolute",
-          top: window.scrollY + window.innerHeight / 2 - 85 + "px",
+          top: this.savedTop,
           transform: "scale(1.0) translate(-50%,-50%)"
         },
         darkenStyle: {
@@ -153,7 +152,7 @@ class Card extends React.Component {
               ...this.state,
               style: {
                 ...this.state.style,
-                top: window.scrollY + window.innerHeight / 2 - 85 + "px",
+                top: this.savedTop,
                 transition: "transform 200ms cubic-bezier(0.19, 1, 0.22, 1)",
                 transform:
                   "translate(" +
@@ -226,7 +225,7 @@ class Card extends React.Component {
     let diffY = cardY - middleY;
     let percentX = (diffX / this.expandedWidth) * 100 - 50;
     let percentY = (diffY / this.expandedHeight) * 100 - 50;
-
+    this.savedTop = window.scrollY + window.innerHeight / 2 - 85 + "px"
     this.expanded = true;
 
     this.setState(
@@ -239,7 +238,7 @@ class Card extends React.Component {
           height: this.expandedHeight,
           width: this.expandedWidth,
           left: "50%",
-          top: window.scrollY + window.innerHeight / 2 - 85 + "px",
+          top: this.savedTop,
           transition: "none",
           overflowY: "scroll",
           transform:
@@ -270,7 +269,7 @@ class Card extends React.Component {
               ...this.state.style,
               transition: "transform 300ms cubic-bezier(0.19, 1, 0.22, 1)",
               transform: "scale(1.0) translate(-50%,-50%)",
-              top: window.scrollY + window.innerHeight / 2 - 85 + "px"
+              top: this.savedTop
             },
             darkenStyle: {
               ...this.state.darkenStyle,
@@ -283,8 +282,8 @@ class Card extends React.Component {
               ...this.state,
               style: {
                 ...this.state.style,
-                position: "fixed",
-                top: "50%",
+                position: "absolute",
+                top: this.savedTop,
                 transition: "none"
               },
               expandedStyle: {
