@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Link } from "react-router-dom";
 import Home from "../routes/home";
 import Details from "../routes/details";
-import Auth from "../routes/auth"
-import Navbar from "../navbar"
+import Auth from "../routes/auth";
+import Navbar from "../navbar";
+import { hot } from "react-hot-loader";
 
-export class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -21,3 +22,5 @@ export class App extends React.Component {
     );
   }
 }
+
+export default hot(module)(App);

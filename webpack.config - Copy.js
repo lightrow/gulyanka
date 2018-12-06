@@ -1,10 +1,10 @@
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const LiveReloadPlugin = require("webpack-livereload-plugin");
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import LiveReloadPlugin from "webpack-livereload-plugin";
 
-module.exports = {
+export default {
   mode: "development",
-  entry: ["webpack-hot-middleware/client", "./client/index.js"],
+  entry: "./client/index.js",
   output: {
     path: "/",
     filename: "bundle.js"
@@ -14,7 +14,7 @@ module.exports = {
       {
         test: /\.js$/,
         use: "babel-loader",
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -44,10 +44,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "client/index.html"
+      template:'client/index.html'
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new LiveReloadPlugin()
   ]
 };

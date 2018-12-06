@@ -3,8 +3,8 @@ var oauth = require("oauth");
 var _mongourl = "mongodb://guest:1234@ds125288.mlab.com:25288/mlabdb";
 var _twitterConsumerKey = "mqMuivEEFDyBNekQBk56PMMSa";
 var _twitterConsumerSecret = "b7Q6sPdVHJDB4TTehG1dOyyDAdm2TV1JUscXc9XHOe5T7w4blV";
-var _placekey = 'AIzaSyDMjbGUjGDQvv0OrSsywknkFGXd7Yfyxrg';
-var _geokey = 'AIzaSyBmE_Hutx3XU261LRizJjgV7Vs493z5gZI'
+var _placekey = 'AIzaSyC8K66Hs3IKMTnrdhTH3OvKkgOnC11oEIU';
+var _geokey = 'AIzaSyC8K66Hs3IKMTnrdhTH3OvKkgOnC11oEIU'
 var _db = "mlabdb";
 var _collection = "gulyanka-db";
 

@@ -14,17 +14,6 @@ class Card extends React.Component {
         opacity: 0,
         zIndex: 1
       },
-      darkenStyle: {
-        position: "fixed",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%,-50%)",
-        transition: "background-color 200ms cubic-bezier(0.19, 1, 0.22, 1)",
-        height: "100vh",
-        width: "100vw",
-        display: "none",
-        backgroundColor: "rgb(0,0,0,0.0)"
-      },
       headlineStyle: {
         padding: "0px"
       },
@@ -35,13 +24,14 @@ class Card extends React.Component {
         position: "absolute",
         height: "100%",
         width: "100%",
-        zIndex: "-1"
+        zIndex: "-1",
+        opacity: 0
       },
+      overlayStyle: {},
       img: "",
 
       cardData: this.props.cardData
     };
-    this.initState = this.state;
     this.dark = false;
     this.mounted = false;
     this.disabled = false;
@@ -49,18 +39,46 @@ class Card extends React.Component {
     this.percentY = 0;
     this.scrollY = 0;
     this.cardDOM = {};
-    this.expandedHeight = 500;
-    this.expandedWidth = 700;
+    this.expansionHeight = 200;
+    this.expandedHeight = 300;
+    this.expandedWidth = 500;
+    this.translExpandOffset = 33;
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({
-      ...this.state,
-      style: {
-        ...this.state.style,
-        ...newProps.style
+    if (newProps.wantsClose && this.expanded) {
+      this.closeCard();
+    } else {
+      //  messy
+      if (this.expanded) {
+        this.closeCard();
       }
-    });
+      this.setState(
+        {
+          ...this.state,
+          style: {
+            ...this.state.style,
+            ...newProps.style,
+            transition: "none"
+          }
+        },
+        () => {
+          setTimeout(() => {
+            this.setState(
+              {
+                ...this.state,
+                style: {
+                  ...newProps.style
+                }
+              },
+              () => {
+                console.log("LOLOLOLOLO");
+              }
+            );
+          }, 20);
+        }
+      );
+    }
   }
 
   componentDidMount() {
@@ -86,12 +104,20 @@ class Card extends React.Component {
     }, 100);
   }
 
+  fetchDetails = () => {
+    fetch(`/api/getdetails?&placeid=${this.props.cardData.place_id}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      });
+  };
+
   fetchImage = () => {
     if (this.props.cardData.photos && this.state.img == "") {
       fetch(
-        `/api/getdetails?photoref=${
+        `/api/getphoto?photoref=${
           this.props.cardData.photos[0].photo_reference
-        }&placeid=${this.props.cardData.place_id}`
+        }&placeref=${this.props.cardData.place_id}`
       )
         .then(res => res.json())
         .then(res => {
@@ -102,31 +128,29 @@ class Card extends React.Component {
             },
             imgStyle: {
               ...this.state.imgStyle,
-              backgroundImage: `url(${res.photo})`
+              backgroundImage: `url(${res})`,
+              opacity: 1
             },
-            img: res.photo
+            img: res
           });
         });
     }
   };
 
   closeCard = () => {
-    let cardX = this.cardDOM.offsetLeft + this.cardDOM.clientWidth / 2;
-    let cardY =
-      this.cardDOM.offsetTop +
-      this.cardDOM.clientHeight / 2;
+    let cardX = this.cardDOM.offsetLeft + 5 + this.cardDOM.clientWidth / 2;
+    let cardY = this.cardDOM.offsetTop + 5 + this.cardDOM.clientHeight / 2;
     this.scrollY = window.scrollY;
     let scaleX = this.cardDOM.clientWidth / this.expandedWidth;
     let scaleY = this.cardDOM.clientHeight / this.expandedHeight;
     let middleX = window.innerWidth / 2;
-    let middleY = window.innerHeight / 2;
+    let middleY = window.innerHeight / 3;
     let diffX = cardX - middleX;
     let diffY = cardY - middleY;
     let percentX = (diffX / this.expandedWidth) * 100 - 50;
     let percentY = (diffY / this.expandedHeight) * 100 - 50;
 
     this.expanded = false;
-
     this.setState(
       {
         ...this.state,
@@ -134,15 +158,10 @@ class Card extends React.Component {
           ...this.state.style,
           position: "absolute",
           top: this.savedTop,
-          transform: "scale(1.0) translate(-50%,-50%)"
-        },
-        darkenStyle: {
-          ...this.state.darkenStyle,
-          backgroundColor: "rgb(0,0,0,0.0)"
-        },
-        expandedStyle: {
-          ...this.state.expandedStyle,
-          display: "none"
+          transition:
+            "transform 200ms cubic-bezier(0.35, 1, 0.5, 1), height 200ms cubic-bezier(0.5, 1, 0.5, 1)",
+          transform: "scale(1.0) translate(-50%,-50%)",
+          height: this.expandedHeight
         }
       },
       () => {
@@ -152,8 +171,8 @@ class Card extends React.Component {
               ...this.state,
               style: {
                 ...this.state.style,
+                position: "absolute",
                 top: this.savedTop,
-                transition: "transform 200ms cubic-bezier(0.19, 1, 0.22, 1)",
                 transform:
                   "translate(" +
                   percentX +
@@ -165,8 +184,16 @@ class Card extends React.Component {
                   scaleY +
                   ")"
               },
-              headlineStyle: {
-                padding: "0px"
+              overlayStyle: {
+                height: "100%"
+              },
+              expandedStyle: {
+                ...this.state.expandedStyle,
+                display: "none"
+              },
+              imgStyle: {
+                ...this.state.imgStyle,
+                height: "100%"
               }
             },
             () => {
@@ -175,35 +202,58 @@ class Card extends React.Component {
                   {
                     ...this.state,
                     style: {
-                      ...this.props.style,
-                      zIndex: 0,
-                      transition: "none"
+                      ...this.state.style,
+                      top: this.savedTop,
+                      transition:
+                        "transform 200ms cubic-bezier(0.19, 1, 0.22, 1)",
+                      transform:
+                        "translate(" +
+                        percentX +
+                        "%," +
+                        percentY +
+                        "%) scaleX(" +
+                        scaleX +
+                        ") scaleY(" +
+                        scaleY +
+                        ")"
                     },
-                    imgStyle: {
-                      ...this.state.imgStyle,
-                      backgroundImage: `url(${this.state.img})`
+                    headlineStyle: {
+                      padding: "0px"
                     }
                   },
                   () => {
                     setTimeout(() => {
-                      this.setState({
-                        style: {
-                          ...this.props.style
+                      this.setState(
+                        {
+                          ...this.state,
+                          style: {
+                            ...this.props.style,
+                            zIndex: 0,
+                            transition: "none"
+                          },
+                          imgStyle: {
+                            ...this.state.imgStyle,
+                            backgroundImage: `url(${this.state.img})`
+                          }
                         },
-                        darkenStyle: {
-                          ...this.state.darkenStyle,
-                          zIndex: 0,
-                          display: "none"
+                        () => {
+                          setTimeout(() => {
+                            this.setState({
+                              style: {
+                                ...this.props.style
+                              }
+                            });
+                            this.disabled = false;
+                          }, 20);
                         }
-                      });
+                      );
                     }, 20);
                   }
                 );
-              }, 100);
+              }, 20);
             }
           );
-          this.disabled = false;
-        }, 30);
+        }, 20);
       }
     );
   };
@@ -214,18 +264,18 @@ class Card extends React.Component {
     this.cardDOM.offsetTop = box.top;
     this.cardDOM.clientHeight = newCardDOM.clientHeight;
     this.cardDOM.clientWidth = newCardDOM.clientWidth;
-    let cardX = this.cardDOM.offsetLeft + this.cardDOM.clientWidth / 2;
-    let cardY = this.cardDOM.offsetTop + this.cardDOM.clientHeight / 2;
+    let cardX = this.cardDOM.offsetLeft + 5 + this.cardDOM.clientWidth / 2;
+    let cardY = this.cardDOM.offsetTop + 5 + this.cardDOM.clientHeight / 2;
     this.scrollY = window.scrollY;
     let middleX = window.innerWidth / 2;
-    let middleY = window.innerHeight / 2;
+    let middleY = window.innerHeight / 3;
     let scaleX = this.cardDOM.clientWidth / this.expandedWidth;
     let scaleY = this.cardDOM.clientHeight / this.expandedHeight;
     let diffX = cardX - middleX;
     let diffY = cardY - middleY;
     let percentX = (diffX / this.expandedWidth) * 100 - 50;
     let percentY = (diffY / this.expandedHeight) * 100 - 50;
-    this.savedTop = window.scrollY + window.innerHeight / 2 - 85 + "px"
+    this.savedTop = window.scrollY + window.innerHeight / 3 - 90 + "px";
     this.expanded = true;
 
     this.setState(
@@ -240,7 +290,6 @@ class Card extends React.Component {
           left: "50%",
           top: this.savedTop,
           transition: "none",
-          overflowY: "scroll",
           transform:
             "translate(" +
             percentX +
@@ -252,85 +301,77 @@ class Card extends React.Component {
             scaleY +
             ")"
         },
-        darkenStyle: {
-          ...this.state.darkenStyle,
-          display: "block",
-          zIndex: 1
-        },
         headlineStyle: {
           padding: "15px"
         }
       },
       () => {
         setTimeout(() => {
-          this.setState({
-            ...this.state,
-            style: {
-              ...this.state.style,
-              transition: "transform 300ms cubic-bezier(0.19, 1, 0.22, 1)",
-              transform: "scale(1.0) translate(-50%,-50%)",
-              top: this.savedTop
-            },
-            darkenStyle: {
-              ...this.state.darkenStyle,
-              backgroundColor: "rgb(0,0,0,0.5)"
-            }
-          });
-
-          setTimeout(() => {
-            this.setState({
+          this.setState(
+            {
               ...this.state,
               style: {
                 ...this.state.style,
-                position: "absolute",
-                top: this.savedTop,
-                transition: "none"
+                transition: "transform 300ms cubic-bezier(0.19, 1, 0.22, 1)",
+                transform: "scale(1.0) translate(-50%,-50%)",
+                top: this.savedTop
               },
-              expandedStyle: {
-                display: "block",
-                height: "200px"
+              darkenStyle: {
+                ...this.state.darkenStyle,
+                backgroundColor: "rgb(0,0,0,0.5)"
+              },
+              overlayStyle: {
+                ...this.state.overlayStyle,
+                height: this.expandedHeight + "px",
+                position: "relative"
+              },
+              imgStyle: {
+                ...this.state.imgStyle,
+                height: this.expandedHeight - 6 + "px"
               }
-            });
-            this.disabled = false;
-          }, 300);
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  ...this.state,
+                  style: {
+                    ...this.state.style,
+                    top: this.savedTop,
+                    transition:
+                      "transform 400ms cubic-bezier(0.35, 1, 0.5, 1), height 400ms cubic-bezier(0.5, 1, 0.5, 1)",
+                    transform:
+                      "scale(1.0) translate(-50%,-" +
+                      this.translExpandOffset +
+                      "%)",
+                    height: this.expandedHeight + this.expansionHeight + "px"
+                  },
+                  expandedStyle: {
+                    display: "block",
+                    height: this.expansionHeight + "px"
+                  }
+                });
+                this.disabled = false;
+              }, 300);
+            }
+          );
         }, 20);
       }
     );
   };
 
   handleClick = () => {
-    //  To avoid performance problems of animating left and top transitions,
-    //  animations are done using css translate, scale and opacity instead.
-    //  The card's coordinates are first recalculated into
-    //  "translate" relative screen coordinates, then changed to visually
-    //  move the card, then a transitionless transformation happens, making an
-    //  expanded card into a fixed position element. The backwards process is the
-    //  same reversed. Opacity transitions are applied to mask the translate
-    //  transitions. Transitions are done in multiple stages, requiring chaining
-    //  up to 4 "setState"s with "setTimeout"s in a row. TODO: promisify setState
     let newCardDOM = document.getElementById(this.props.id);
-    let newContainerDOM = document.getElementById("container-" + this.props.id);
-    let box = newCardDOM.getBoundingClientRect();
-    console.log("top: " + box.top + " left: " + box.left);
-    console.log(
-      "offtop: " + newCardDOM.offsetTop + " offleft:" + newCardDOM.offsetLeft
-    );
-    //  we need to save the DOM values to make the card return to its proper
-    //  place even if the user scrolls the page after opening the card.
+    //let newContainerDOM = document.getElementById("container-" + this.props.id);
 
     if (!this.disabled) {
       this.disabled = true;
       if (!this.expanded) {
-        this.expandCard(newCardDOM, newContainerDOM);
+        this.props.darken(true);
+        this.expandCard(newCardDOM);
       } else {
+        this.props.darken(false);
         this.closeCard();
       }
-    }
-  };
-
-  handleDarken = () => {
-    if (this.expanded && !this.disabled) {
-      this.closeCard();
     }
   };
 
@@ -348,20 +389,15 @@ class Card extends React.Component {
 
   render() {
     return (
-      <div className="card-container" id={"container-" + this.props.id}>
-        <span
-          className="darken"
-          onClick={this.handleDarken}
-          style={this.state.darkenStyle}
-        />
-        <div
-          className="card"
-          style={this.state.style}
-          id={this.props.id}
-          onClick={this.handleClick}
-        >
+      <div
+        className="card"
+        style={this.state.style}
+        id={this.props.id}
+        onClick={this.handleClick}
+      >
+        <div className="card-container" id={"container-" + this.props.id}>
           <div className="card-img" style={this.state.imgStyle} />
-          <div className="overlay">
+          <div className="overlay" style={this.state.overlayStyle}>
             <div className="headline" style={this.state.headlineStyle}>
               <span className="card-title">{this.props.cardData.name}</span>
               <div className="stars">{this.handleRating()}</div>
@@ -377,9 +413,7 @@ class Card extends React.Component {
               </span>
             </div>
           </div>
-          <div className="expanded-info" style={this.state.expandedStyle}>
- 
-          </div>
+          <div className="expanded-info" style={this.state.expandedStyle} />
         </div>
       </div>
     );

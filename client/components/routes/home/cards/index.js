@@ -21,16 +21,30 @@ let getRandomCardInCol = (numRows, cardsInRow, remainder, index) => {
 class Cards extends React.Component {
   constructor(props) {
     super(props);
+    this.child = React.createRef();
     this.state = {
       cardsStyle: {
         height: "1000px"
       },
-      cards: "",
+      darkenStyle: {
+        position: "fixed",
+        zIndex: 1,
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%,-50%)",
+        transition: "background-color 200ms cubic-bezier(0.19, 1, 0.22, 1)",
+        height: "100vh",
+        width: "100vw",
+        display: "none",
+        backgroundColor: "rgb(0,0,0,0.0)"
+      },
+      cards: ""
     };
+    this.cardsStyles = [];
     this.mounted = false;
-    this.targetCardHeight = 200;
+    this.targetCardHeight = 150;
     this.cardHeight = this.targetCardHeight;
-    this.cardWidth = 300;
+    this.cardWidth = 200;
     this.margin = 10;
     this.cardsInRow = 4;
     this.numRows = Math.floor(this.props.data.length / this.cardsInRow);
@@ -57,7 +71,7 @@ class Cards extends React.Component {
     window.addEventListener("resize", this.handleResize);
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps() {
     this.setState(
       {
         ...this.state,
@@ -69,6 +83,90 @@ class Cards extends React.Component {
     );
   }
 
+  darken = dark => {
+    if (dark) {
+      this.setState(
+        {
+          ...this.state,
+          darkenStyle: {
+            ...this.state.darkenStyle,
+            display: "block"
+          }
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({
+              ...this.state,
+              darkenStyle: {
+                ...this.state.darkenStyle,
+                backgroundColor: "rgb(0,0,0,0.5)"
+              }
+            });
+          }, 20);
+        }
+      );
+    } else {
+      this.setState(
+        {
+          ...this.state,
+          darkenStyle: {
+            ...this.state.darkenStyle,
+            backgroundColor: "rgb(0,0,0,0.0)"
+          }
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({
+              ...this.state,
+              darkenStyle: {
+                ...this.state.darkenStyle,
+                display: "none"
+              }
+            });
+          }, 100);
+        }
+      );
+    }
+  };
+
+  closeCards = () => {
+    //  redistribute cards
+    let sumJSX = [];
+    this.props.data.map((entry, index) => {
+      sumJSX.push(
+        <Card
+          key={"card" + index}
+          id={"card" + index}
+          cardData={entry}
+          style={this.cardsStyles[index]}
+          darken={this.darken}
+          wantsClose={true}
+        />
+      );
+    });
+    this.setState(
+      {
+        ...this.state,
+        darkenStyle: {
+          ...this.state.darkenStyle,
+          backgroundColor: "rgb(0,0,0,0)"
+        },
+        cards: sumJSX
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            darkenStyle: {
+              ...this.state.darkenStyle,
+              display: "none"
+            }
+          });
+        }, 200);
+      }
+    );
+  };
+
   handleCardsProper = () => {
     let style = {};
     let top = 0;
@@ -79,7 +177,7 @@ class Cards extends React.Component {
     let cardsStyles = []; // storage for cards' styles
     //  calc all the heights ( and tops )
     for (let h = 0; h < this.props.data.length; h++) {
-      this.cardHeight = this.targetCardHeight + getRandomInt(-1, 3) * 40;
+      this.cardHeight = this.targetCardHeight + getRandomInt(-2, 2) * 25;
       cardsHeights.push(this.cardHeight);
       if (h >= this.cardsInRow) {
         cardsSums.push(
@@ -165,6 +263,8 @@ class Cards extends React.Component {
       cardsStyles.push(style);
     }
 
+    this.cardsStyles = cardsStyles;
+
     //  distribute cards
     this.props.data.map((entry, index) => {
       sumJSX.push(
@@ -172,8 +272,9 @@ class Cards extends React.Component {
           key={"card" + index}
           id={"card" + index}
           cardData={entry}
-          style={cardsStyles[index]}
-          wantsClose={this.state.wantsClose}
+          style={this.cardsStyles[index]}
+          darken={this.darken}
+          wantsClose={false}
         />
       );
     });
@@ -264,6 +365,11 @@ class Cards extends React.Component {
     if (this.props.loaded) {
       return (
         <div id="cards" style={this.state.cardsStyle}>
+          <span
+            id="dark-overlay"
+            style={this.state.darkenStyle}
+            onClick={this.closeCards}
+          />
           {this.state.cards}
         </div>
       );

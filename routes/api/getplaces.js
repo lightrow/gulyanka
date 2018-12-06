@@ -17,7 +17,7 @@ router.get("/", function(req, res, next) {
 
     request(url, (error, response, body) => {
       if (response.statusCode === 200 && JSON.parse(body).status === "OK") {
-        console.log(response.statusCode);
+        console.log(JSON.parse(body).status);
         var longtitude = JSON.parse(body).results[0].geometry.location.lng;
         var latitude = JSON.parse(body).results[0].geometry.location.lat;
         var location = latitude + "," + longtitude;
@@ -31,6 +31,7 @@ router.get("/", function(req, res, next) {
         });
       } else {
         //res.end(JSON.stringify("BAD"))
+        console.log(JSON.parse(body).status);
         res.end(body);
       }
     });

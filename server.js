@@ -7,10 +7,12 @@ const session = require("express-session");
 const history = require("connect-history-api-fallback");
 const MongoStore = require("connect-mongo")(session);
 const utils = require("./utils");
-import webpack from "webpack";
-import webpackMiddleware from "webpack-dev-middleware";
-import webpackConfig from "./webpack.config.js";
+const webpack = require("webpack");
+const webpackMiddleware = require("webpack-dev-middleware");
+const webpackConfig = require("./webpack.config.js");
+const webpackHot = require("webpack-hot-middleware")
 
+const compiler = webpack(webpackConfig);
 const app = express();
 
 // uncomment after placing your favicon in /public
@@ -45,10 +47,12 @@ app.use("/api/getgoers", require("./routes/api/getgoers"));
 app.use(history());
 
 app.use(
-  webpackMiddleware(webpack(webpackConfig), {
+  webpackMiddleware(compiler, {
+    noInfo: true,
     publicPath: "/"
   })
 );
+app.use(webpackHot(compiler));
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
