@@ -11,7 +11,7 @@ module.exports = {
      "./client/index.js"
     ],
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "../public"),
     filename: "client.js"
   },
   //externals: [nodeExternals()], // Need this to avoid error when working with Express

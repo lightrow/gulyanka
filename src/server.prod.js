@@ -48,10 +48,11 @@ app.use("/api/getgoers", require("./routes/api/getgoers"));
 
 app.use(history());
 
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static("public"));
+
 app.use("/", (req, res) => {
-  console.log("MANI")
-  res.sendFile(path.join(__dirname, "dist/index.html"));
+  console.log("MANI");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 /*

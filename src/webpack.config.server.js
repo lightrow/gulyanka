@@ -7,7 +7,7 @@ module.exports = {
   target: 'node',
   entry: ["./server.prod.js"],
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "../"),
     filename: "server.js"
   },
   //externals: [nodeExternals()], // Need this to avoid error when working with Express
