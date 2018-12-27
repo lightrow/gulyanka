@@ -42,7 +42,7 @@ class Card extends React.Component {
     this.expansionHeight = 200;
     this.expandedHeight = 300;
     this.expandedWidth = 500;
-    this.translExpandOffset = 33;
+    this.translExpandOffset = 30; // todo : calculate based on expansion height
   }
 
   componentWillReceiveProps(newProps) {
@@ -159,8 +159,9 @@ class Card extends React.Component {
           position: "absolute",
           top: this.savedTop,
           transition:
-            "transform 200ms cubic-bezier(0.35, 1, 0.5, 1), height 200ms cubic-bezier(0.5, 1, 0.5, 1)",
-          transform: "scale(1.0) translate(-50%,-50%)",
+            "transform 400ms cubic-bezier(.86,0,.07,1), height 400ms cubic-bezier(.86,0,.07,1)",
+          transform:
+            "scale(1.0) translate(-50%,-50%)",
           height: this.expandedHeight
         }
       },
@@ -173,6 +174,9 @@ class Card extends React.Component {
                 ...this.state.style,
                 position: "absolute",
                 top: this.savedTop,
+                transition:
+                  "transform 300ms cubic-bezier(0.19, 1, 0.22, 1), opacity 500ms cubic-bezier(0.19, 1, 0.22, 1)",
+                opacity: 0,
                 transform:
                   "translate(" +
                   percentX +
@@ -194,6 +198,9 @@ class Card extends React.Component {
               imgStyle: {
                 ...this.state.imgStyle,
                 height: "100%"
+              },
+              headlineStyle: {
+                padding: "0px"
               }
             },
             () => {
@@ -202,55 +209,29 @@ class Card extends React.Component {
                   {
                     ...this.state,
                     style: {
-                      ...this.state.style,
-                      top: this.savedTop,
+                      ...this.props.style,
+                      zIndex: 0,
                       transition:
-                        "transform 200ms cubic-bezier(0.19, 1, 0.22, 1)",
-                      transform:
-                        "translate(" +
-                        percentX +
-                        "%," +
-                        percentY +
-                        "%) scaleX(" +
-                        scaleX +
-                        ") scaleY(" +
-                        scaleY +
-                        ")"
+                        "opacity 500ms cubic-bezier(0.19, 1, 0.22, 1)",
+                      opacity: 1
                     },
-                    headlineStyle: {
-                      padding: "0px"
+                    imgStyle: {
+                      ...this.state.imgStyle,
+                      backgroundImage: `url(${this.state.img})`
                     }
                   },
                   () => {
                     setTimeout(() => {
-                      this.setState(
-                        {
-                          ...this.state,
-                          style: {
-                            ...this.props.style,
-                            zIndex: 0,
-                            transition: "none"
-                          },
-                          imgStyle: {
-                            ...this.state.imgStyle,
-                            backgroundImage: `url(${this.state.img})`
-                          }
-                        },
-                        () => {
-                          setTimeout(() => {
-                            this.setState({
-                              style: {
-                                ...this.props.style
-                              }
-                            });
-                            this.disabled = false;
-                          }, 20);
+                      this.setState({
+                        style: {
+                          ...this.props.style
                         }
-                      );
+                      });
+                      this.disabled = false;
                     }, 20);
                   }
                 );
-              }, 20);
+              }, 100);
             }
           );
         }, 20);
@@ -312,7 +293,7 @@ class Card extends React.Component {
               ...this.state,
               style: {
                 ...this.state.style,
-                transition: "transform 300ms cubic-bezier(0.19, 1, 0.22, 1)",
+                transition: "transform 200ms cubic-bezier(.0,0,.07,1)",
                 transform: "scale(1.0) translate(-50%,-50%)",
                 top: this.savedTop
               },
@@ -327,31 +308,46 @@ class Card extends React.Component {
               },
               imgStyle: {
                 ...this.state.imgStyle,
-                height: this.expandedHeight - 6 + "px"
+                height: this.expandedHeight + "px"
               }
             },
             () => {
               setTimeout(() => {
-                this.setState({
-                  ...this.state,
-                  style: {
-                    ...this.state.style,
-                    top: this.savedTop,
-                    transition:
-                      "transform 400ms cubic-bezier(0.35, 1, 0.5, 1), height 400ms cubic-bezier(0.5, 1, 0.5, 1)",
-                    transform:
-                      "scale(1.0) translate(-50%,-" +
-                      this.translExpandOffset +
-                      "%)",
-                    height: this.expandedHeight + this.expansionHeight + "px"
+                this.setState(
+                  {
+                    ...this.state,
+                    style: {
+                      ...this.state.style,
+                      transition: "none",
+                      transform: "scale(1.0) translate(-50%,-50%)"
+                    }
                   },
-                  expandedStyle: {
-                    display: "block",
-                    height: this.expansionHeight + "px"
+                  () => {
+                    setTimeout(() => {
+                      this.setState({
+                        ...this.state,
+                        style: {
+                          ...this.state.style,
+                          top: this.savedTop,
+                          transition:
+                            "transform 400ms cubic-bezier(.04,.62,.12,.96), height 400ms cubic-bezier(.08,.62,.24,.96)",
+                          transform:
+                            "scale(1.0) translate(-50%,-" +
+                            this.translExpandOffset +
+                            "%)",
+                          height:
+                            this.expandedHeight + this.expansionHeight + "px"
+                        },
+                        expandedStyle: {
+                          display: "block",
+                          height: this.expansionHeight + "px"
+                        }
+                      });
+                      this.disabled = false;
+                    }, 20);
                   }
-                });
-                this.disabled = false;
-              }, 300);
+                );
+              }, 100);
             }
           );
         }, 20);

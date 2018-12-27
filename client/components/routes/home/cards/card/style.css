@@ -10,11 +10,10 @@
 
 .card {
   height: 160px;
-  margin: 10px 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.75);
   background-repeat: no-repeat;
   border: 3px solid rgb(47, 47, 47);
-  box-sizing: border-box;
+  box-sizing: content-box;
   -webkit-transition: transform 400ms cubic-bezier(0.19, 1, 0.22, 1),
     opacity 400ms cubic-bezier(0.19, 1, 0.22, 1);
   transition: transform 400ms cubic-bezier(0.19, 1, 0.22, 1),

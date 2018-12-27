@@ -12,7 +12,7 @@ var utils = require("../../utils");
 
 router.get("/", function(req, res, next) {
   var photoref = req.query.photoref;
-  var placeref = req.query.placeref
+  var placeref = req.query.placeref;
   var maxwidth = 500;
 
   mongo.connect(
@@ -22,7 +22,7 @@ router.get("/", function(req, res, next) {
       var dbo = db.db(utils.db);
       dbo
         .collection("gulyanka-imgs")
-        .findOne({ placeref: placeref}, (err, findings) => {
+        .findOne({ placeref: placeref }, (err, findings) => {
           assert.equal(err, null);
           if (findings != undefined) {
             res.end(JSON.stringify(findings.href));
@@ -67,21 +67,4 @@ router.get("/", function(req, res, next) {
 
 module.exports = router;
 
-/* var urlPhoto =
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" +
-        maxwidth +
-        "&photoreference=" +
-        photoref +
-        "&key=" +
-        utils.geokey;
 
-      request(urlPhoto, (error, response, body) => {
-        let photoHref = response.request.uri.href;
-        newFile[photoref] = photoHref;
-        fs.appendFile(photosDB, JSON.stringify(newFile), err => {
-          if (err) throw err;
-          console.log("CACHED");
-          res.end(JSON.stringify(photoHref));
-        });
-      });
-  */

@@ -45,7 +45,7 @@ class Cards extends React.Component {
     this.targetCardHeight = 150;
     this.cardHeight = this.targetCardHeight;
     this.cardWidth = 200;
-    this.margin = 10;
+    this.margin = 15;
     this.cardsInRow = 4;
     this.numRows = Math.floor(this.props.data.length / this.cardsInRow);
     this.targetColHeight = 0;
@@ -130,6 +130,9 @@ class Cards extends React.Component {
   };
 
   closeCards = () => {
+    //  todo: pass this.disabled from card back to parent to prevent 
+    //  closing of card while it's still in transition animation.
+    
     //  redistribute cards
     let sumJSX = [];
     this.props.data.map((entry, index) => {

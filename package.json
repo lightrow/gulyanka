@@ -10,6 +10,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.11",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
@@ -49,6 +50,7 @@
     "util-inspect": "^0.1.8"
   },
   "scripts": {
-    "start": "nodemon --config nodemon.json --exec babel-node server.js"
+    "start": "nodemon --config nodemon.json --exec babel-node server.js",
+    "build": "rm -rf dist && webpack --mode production"
   }
 }

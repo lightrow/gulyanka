@@ -3,13 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  //mode: "development",
-  mode: "production",
+  mode: "development",
   optimization: {
-    minimize: true,
+    minimize: false
   },
   entry: [
-    //"webpack-hot-middleware/client",
+    "webpack-hot-middleware/client",
      "./client/index.js"
     ],
   output: {
@@ -62,12 +61,7 @@ module.exports = {
       filename: "./index.html"
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    //new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
-    })
   ]
 };

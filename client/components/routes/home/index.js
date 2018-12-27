@@ -8,6 +8,10 @@ class Home extends React.Component {
     super(props);
   }
 
+  componentDidMount(){
+    console.log("M HOME")
+  }
+
   render(){
     return(
       <div id="home">
