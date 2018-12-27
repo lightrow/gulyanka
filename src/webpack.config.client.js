@@ -3,18 +3,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  //mode: "development",
   mode: "production",
   optimization: {
     minimize: true,
   },
   entry: [
-    //"webpack-hot-middleware/client",
      "./client/index.js"
     ],
   output: {
     path: path.join(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "client.js"
   },
   //externals: [nodeExternals()], // Need this to avoid error when working with Express
   module: {
@@ -62,7 +60,6 @@ module.exports = {
       filename: "./index.html"
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    //new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       "process.env": {
