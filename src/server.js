@@ -14,7 +14,6 @@ const webpackConfig = require("./webpack.config.js");
 const webpackHot = require("webpack-hot-middleware");
 const compiler = webpack(webpackConfig);
 
-
 const app = express();
 
 // uncomment after placing your favicon in /public
@@ -50,7 +49,6 @@ app.use(history());
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-
 app.use(
   webpackMiddleware(compiler, {
     noInfo: true,
@@ -59,7 +57,7 @@ app.use(
 );
 app.use(webpackHot(compiler));
 
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Listening on port 3000");
+const port_number = process.env.PORT || 3000;
+app.listen(port_number, () => {
+  console.log("Listening on port: " + port_number);
 });
