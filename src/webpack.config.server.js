@@ -5,6 +5,9 @@ const path = require("path");
 module.exports = {
   mode: "production",
   target: 'node',
+  optimization: {
+    minimize: true,
+  },
   entry: ["./server.prod.js"],
   output: {
     path: path.join(__dirname, "../"),
