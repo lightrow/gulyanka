@@ -17,7 +17,7 @@ router.get("/", function(req, res, next) {
 
     request(url, (error, response, body) => {
       if (response.statusCode === 200 && JSON.parse(body).status === "OK") {
-        console.log(JSON.parse(body).status);
+        console.log("geocode: OK");
         var longtitude = JSON.parse(body).results[0].geometry.location.lng;
         var latitude = JSON.parse(body).results[0].geometry.location.lat;
         var location = latitude + "," + longtitude;
@@ -27,6 +27,12 @@ router.get("/", function(req, res, next) {
           "&radius=500&type=bar&key=" +
           utils.placekey;
         request(url, function(err, response, body2) {
+          if (err) {
+            console.log("places: ERROR")
+            console.log(err);
+            throw err;
+          }
+          console.log("places: OK")        
           res.end(body2);
         });
       } else {

@@ -27,7 +27,6 @@ router.get("/", function(req, res, next) {
           if (findings != undefined) {
             res.end(JSON.stringify(findings.href));
             db.close();
-            console.log("FOUND ONE!!!!!!!!!!");
           } else {
             var urlPhoto =
               "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" +
@@ -42,8 +41,10 @@ router.get("/", function(req, res, next) {
               if (
                 photoHref.includes("https://maps.googleapis.com/maps/api/place")
               ) {
+                console.log("photo: OVER_QUOTA")
                 res.end("muh shekels");
               } else {
+                console.log("photo: OK")
                 res.end(JSON.stringify(photoHref));
                 dbo
                   .collection("gulyanka-imgs")
@@ -54,7 +55,6 @@ router.get("/", function(req, res, next) {
                     (err, doc) => {
                       assert.equal(err, null);
                       db.close();
-                      console.log("sent :^)");
                     }
                   );
               }
