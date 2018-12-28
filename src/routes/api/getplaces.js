@@ -37,6 +37,7 @@ router.get("/", function(req, res, next) {
         });
       } else {
         //res.end(JSON.stringify("BAD"))
+        console.log("geocode: ERROR");
         console.log(JSON.parse(body).status);
         res.end(body);
       }
