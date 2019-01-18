@@ -1,24 +1,24 @@
 import React from "react";
-import Search from "./search"
-import Cards from "./cards"
-import "./style.css"
+import Search from "./search";
+import Cards from "./cards";
+import "./home.scss";
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount(){
-    console.log("M HOME")
+  componentDidMount() {
+    console.log("M HOME");
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div id="home">
-        <Search/>
-        <Cards/>
+        <Search />
+        <Cards />
       </div>
-    )
+    );
   }
 }
 

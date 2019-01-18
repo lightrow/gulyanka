@@ -24,13 +24,20 @@
 
 .search-field {
   height: 20px;
-  padding: 5px;
+  padding: 5px 10px;
   width: 80%;
   margin: 0;
-  border: 0px solid white;
-  box-shadow: inset 0px 1px 3px rgb(0,0,0,0.7);
-  background-color: rgb(46, 50, 54);
-  color:rgb(240,240,240);
+  box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.295);
+  border-radius: 5px;
+  background-color: rgb(235, 235, 235);
+  color:rgb(0, 0, 0);
+  outline:none;
+  border:1px solid rgb(165, 165, 165);
+}
+
+.search-field:focus{
+  background-color: rgb(255, 255, 255);
+  border:1px solid rgb(95, 95, 95);
 }
 
 .search-icon {
@@ -45,11 +52,12 @@
 }
 
 .search-button {
-  background-color: rgb(92, 109, 167);
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  background-color: none;
   justify-content: center;
   align-content: center;
   line-height: 20px;
   padding: 5px;
-  border: 0px solid white;
+  border: none;
+  outline: none;
 }

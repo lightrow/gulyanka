@@ -9,7 +9,7 @@ import {
   loadFail,
   loadSuccess
 } from "../../../../reducers/loader";
-import "./style.css";
+import "./search.scss";
 import { SearchIcon } from "./icon/search_icon";
 import { SubmitIcon } from "./icon/submit_icon";
 
@@ -108,7 +108,6 @@ class Searchbar extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props.loaded);
     if (this.props.loaded) {
       this.state = {
         styleIcon: {

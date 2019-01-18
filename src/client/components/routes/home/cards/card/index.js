@@ -1,115 +1,80 @@
 import React from "react";
-import "./style.css";
+import "./card.scss";
 import { Star, HalfStar } from "./star.js";
-import Map from "./map";
+import { Preload } from "./preload/preload.js";
 
 class Card extends React.Component {
   constructor(props) {
     super(props);
     this.expanded = false;
     this.state = {
-      style: {
-        ...props.style,
-        transform: "scale(0)",
-        opacity: 0,
-        zIndex: 1
-      },
-      headlineStyle: {
-        padding: "0px"
-      },
-      expandedStyle: {
-        display: "none"
-      },
-      imgStyle: {
-        position: "absolute",
-        height: "100%",
-        width: "100%",
-        zIndex: "-1",
-        opacity: 0
-      },
-      overlayStyle: {},
+      style: { ...this.props.style },
+      imageStyle: {},
+      containerClasses: [],
+      classes: [],
       img: "",
-
-      cardData: this.props.cardData
+      preloading:true,
     };
-    this.dark = false;
-    this.mounted = false;
-    this.disabled = false;
-    this.percentX = 0;
-    this.percentY = 0;
-    this.scrollY = 0;
-    this.cardDOM = {};
-    this.expansionHeight = 200;
-    this.expandedHeight = 300;
-    this.expandedWidth = 500;
-    this.translExpandOffset = 30; // todo : calculate based on expansion height
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.wantsClose && this.expanded) {
-      this.closeCard();
-    } else {
-      //  messy
-      if (this.expanded) {
-        this.closeCard();
-      }
-      this.setState(
-        {
-          ...this.state,
-          style: {
-            ...this.state.style,
-            ...newProps.style,
-            transition: "none"
-          }
-        },
-        () => {
-          setTimeout(() => {
-            this.setState(
-              {
-                ...this.state,
-                style: {
-                  ...newProps.style
-                }
-              },
-              () => {
-                console.log("LOLOLOLOLO");
-              }
-            );
-          }, 20);
-        }
-      );
-    }
+    this.animDuration = 1000;
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
+    let newClasses = this.state.classes;
+    newClasses.push("load-animation");
+    this.setState(
+      {
         ...this.state,
-        style: {
-          transform: "scale(1)",
-          opacity: 1,
-          ...this.props.style
-        }
-      });
-      setTimeout(() => {
-        this.setState({
-          ...this.state,
-          style: {
-            ...this.props.style
-          }
-        });
-      });
+        classes: newClasses,
+        containerClasses: ["hide-animation"]
+      },
+      () => {
+        setTimeout(() => {
+          newClasses = newClasses.filter(entry => {
+            return entry.match(/load-animation/g) ? false : true;
+          });
+          this.setState(
+            {
+              ...this.state,
+              classes: newClasses
+            },
+            () => {
+              this.fetchImage();
+            }
+          );
+        }, this.animDuration - 300);
+      }
+    );
+  }
 
-      this.fetchImage();
-    }, 100);
+  componentWillReceiveProps(newprops) {
+    let newClasses = this.state.classes;
+    newClasses = newClasses.filter(entry => {
+      return entry.match(/animation/g) ? false : true;
+    });
+    this.setState(
+      {
+        ...this.state,
+        style: { ...newprops.style },
+        classes: newClasses
+      },
+      () => {
+        setTimeout(() => {
+          newClasses = newClasses.filter(entry => {
+            return entry.match(/animation/g) ? false : true;
+          });
+          this.setState({
+            ...this.state,
+            classes: newClasses
+          });
+        }, this.animDuration);
+      }
+    );
   }
 
   fetchDetails = () => {
     fetch(`/api/getdetails?&placeid=${this.props.cardData.place_id}`)
       .then(res => res.json())
-      .then(res => {
-        console.log(res);
-      });
+      .then(res => {});
   };
 
   fetchImage = () => {
@@ -121,238 +86,70 @@ class Card extends React.Component {
       )
         .then(res => res.json())
         .then(res => {
-          this.setState({
-            ...this.state,
-            style: {
-              ...this.state.style
-            },
-            imgStyle: {
-              ...this.state.imgStyle,
-              backgroundImage: `url(${res})`,
-              opacity: 1
-            },
-            img: res
-          });
+          const bgImage = new Image();
+          bgImage.src = res;
+          bgImage.onload = () => {
+            this.imgLoaded(bgImage.src);
+          };
         });
+    } else if (this.state.img != "") {
+      this.imgLoaded(this.state.img);
+    } else {
+      this.imgLoaded(null);
     }
   };
 
-  closeCard = () => {
-    let cardX = this.cardDOM.offsetLeft + 5 + this.cardDOM.clientWidth / 2;
-    let cardY = this.cardDOM.offsetTop + 5 + this.cardDOM.clientHeight / 2;
-    this.scrollY = window.scrollY;
-    let scaleX = this.cardDOM.clientWidth / this.expandedWidth;
-    let scaleY = this.cardDOM.clientHeight / this.expandedHeight;
-    let middleX = window.innerWidth / 2;
-    let middleY = window.innerHeight / 3;
-    let diffX = cardX - middleX;
-    let diffY = cardY - middleY;
-    let percentX = (diffX / this.expandedWidth) * 100 - 50;
-    let percentY = (diffY / this.expandedHeight) * 100 - 50;
+  imgLoaded = res => {
+    //hide loader
+    //show card
+    let newClasses = this.state.classes;
+    newClasses.push("img-load-animation");
 
-    this.expanded = false;
-    this.setState(
-      {
+    if (res != null) {
+      this.setState({
         ...this.state,
-        style: {
-          ...this.state.style,
-          position: "absolute",
-          top: this.savedTop,
-          transition:
-            "transform 400ms cubic-bezier(.86,0,.07,1), height 400ms cubic-bezier(.86,0,.07,1)",
-          transform:
-            "scale(1.0) translate(-50%,-50%)",
-          height: this.expandedHeight
-        }
-      },
-      () => {
-        setTimeout(() => {
-          this.setState(
-            {
-              ...this.state,
-              style: {
-                ...this.state.style,
-                position: "absolute",
-                top: this.savedTop,
-                transition:
-                  "transform 300ms cubic-bezier(0.19, 1, 0.22, 1), opacity 500ms cubic-bezier(0.19, 1, 0.22, 1)",
-                opacity: 0,
-                transform:
-                  "translate(" +
-                  percentX +
-                  "%," +
-                  percentY +
-                  "%) scaleX(" +
-                  scaleX +
-                  ") scaleY(" +
-                  scaleY +
-                  ")"
-              },
-              overlayStyle: {
-                height: "100%"
-              },
-              expandedStyle: {
-                ...this.state.expandedStyle,
-                display: "none"
-              },
-              imgStyle: {
-                ...this.state.imgStyle,
-                height: "100%"
-              },
-              headlineStyle: {
-                padding: "0px"
-              }
-            },
-            () => {
-              setTimeout(() => {
-                this.setState(
-                  {
-                    ...this.state,
-                    style: {
-                      ...this.props.style,
-                      zIndex: 0,
-                      transition:
-                        "opacity 500ms cubic-bezier(0.19, 1, 0.22, 1)",
-                      opacity: 1
-                    },
-                    imgStyle: {
-                      ...this.state.imgStyle,
-                      backgroundImage: `url(${this.state.img})`
-                    }
-                  },
-                  () => {
-                    setTimeout(() => {
-                      this.setState({
-                        style: {
-                          ...this.props.style
-                        }
-                      });
-                      this.disabled = false;
-                    }, 20);
-                  }
-                );
-              }, 100);
-            }
-          );
-        }, 20);
-      }
-    );
-  };
-
-  expandCard = (newCardDOM, newContainerDOM) => {
-    let box = newCardDOM.getBoundingClientRect();
-    this.cardDOM.offsetLeft = box.left;
-    this.cardDOM.offsetTop = box.top;
-    this.cardDOM.clientHeight = newCardDOM.clientHeight;
-    this.cardDOM.clientWidth = newCardDOM.clientWidth;
-    let cardX = this.cardDOM.offsetLeft + 5 + this.cardDOM.clientWidth / 2;
-    let cardY = this.cardDOM.offsetTop + 5 + this.cardDOM.clientHeight / 2;
-    this.scrollY = window.scrollY;
-    let middleX = window.innerWidth / 2;
-    let middleY = window.innerHeight / 3;
-    let scaleX = this.cardDOM.clientWidth / this.expandedWidth;
-    let scaleY = this.cardDOM.clientHeight / this.expandedHeight;
-    let diffX = cardX - middleX;
-    let diffY = cardY - middleY;
-    let percentX = (diffX / this.expandedWidth) * 100 - 50;
-    let percentY = (diffY / this.expandedHeight) * 100 - 50;
-    this.savedTop = window.scrollY + window.innerHeight / 3 - 90 + "px";
-    this.expanded = true;
-
-    this.setState(
-      {
-        ...this.state,
-        style: {
-          ...this.state.style,
-          zIndex: 2,
-          position: "absolute",
-          height: this.expandedHeight,
-          width: this.expandedWidth,
-          left: "50%",
-          top: this.savedTop,
-          transition: "none",
-          transform:
-            "translate(" +
-            percentX +
-            "%," +
-            percentY +
-            "%) scaleX(" +
-            scaleX +
-            ") scaleY(" +
-            scaleY +
-            ")"
+        classes: newClasses,
+        preloading:false,
+        containerClasses: ["img-load-animation"],
+        imgStyle: {
+          backgroundImage: `url(${res}), linear-gradient(rgba(0, 0, 0, 0.73) 15%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.54) 100%)`
         },
-        headlineStyle: {
-          padding: "15px"
-        }
-      },
-      () => {
+        img: res
+      });
+
+      setTimeout(() => {
+        let newClasses = this.state.classes;
+        newClasses = newClasses.filter(entry => {
+          return entry.match(/animation/g) ? false : true;
+        });
+        this.setState({
+          ...this.state,
+          classes: newClasses
+        });
+      }, this.animDuration);
+    } else {
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          classes: newClasses,
+          containerClasses: ["img-load-animation"],
+          imgStyle: {
+            background: `black`
+          },
+          img: res
+        });
         setTimeout(() => {
-          this.setState(
-            {
-              ...this.state,
-              style: {
-                ...this.state.style,
-                transition: "transform 200ms cubic-bezier(.0,0,.07,1)",
-                transform: "scale(1.0) translate(-50%,-50%)",
-                top: this.savedTop
-              },
-              darkenStyle: {
-                ...this.state.darkenStyle,
-                backgroundColor: "rgb(0,0,0,0.5)"
-              },
-              overlayStyle: {
-                ...this.state.overlayStyle,
-                height: this.expandedHeight + "px",
-                position: "relative"
-              },
-              imgStyle: {
-                ...this.state.imgStyle,
-                height: this.expandedHeight + "px"
-              }
-            },
-            () => {
-              setTimeout(() => {
-                this.setState(
-                  {
-                    ...this.state,
-                    style: {
-                      ...this.state.style,
-                      transition: "none",
-                      transform: "scale(1.0) translate(-50%,-50%)"
-                    }
-                  },
-                  () => {
-                    setTimeout(() => {
-                      this.setState({
-                        ...this.state,
-                        style: {
-                          ...this.state.style,
-                          top: this.savedTop,
-                          transition:
-                            "transform 400ms cubic-bezier(.04,.62,.12,.96), height 400ms cubic-bezier(.08,.62,.24,.96)",
-                          transform:
-                            "scale(1.0) translate(-50%,-" +
-                            this.translExpandOffset +
-                            "%)",
-                          height:
-                            this.expandedHeight + this.expansionHeight + "px"
-                        },
-                        expandedStyle: {
-                          display: "block",
-                          height: this.expansionHeight + "px"
-                        }
-                      });
-                      this.disabled = false;
-                    }, 20);
-                  }
-                );
-              }, 100);
-            }
-          );
-        }, 20);
-      }
-    );
+          let newClasses = this.state.classes;
+          newClasses = newClasses.filter(entry => {
+            return entry.match(/animation/g) ? false : true;
+          });
+          this.setState({
+            ...this.state,
+            classes: newClasses
+          });
+        }, this.animDuration);
+      }, this.animDuration);
+    }
   };
 
   handleClick = () => {
@@ -383,18 +180,26 @@ class Card extends React.Component {
     return Stars;
   };
 
+  prepClasses = what => {
+    return what.join(" ");
+  };
+
   render() {
     return (
       <div
-        className="card"
+        className={"card " + this.prepClasses(this.state.classes)}
         style={this.state.style}
         id={this.props.id}
         onClick={this.handleClick}
       >
-        <div className="card-container" id={"container-" + this.props.id}>
-          <div className="card-img" style={this.state.imgStyle} />
-          <div className="overlay" style={this.state.overlayStyle}>
-            <div className="headline" style={this.state.headlineStyle}>
+        <div
+          className={
+            "card-container " + this.prepClasses(this.state.containerClasses)
+          }
+          id={"container-" + this.props.id}
+        >
+          <div className="card-img" style={this.state.imgStyle}>
+            <div className="headline">
               <span className="card-title">{this.props.cardData.name}</span>
               <div className="stars">{this.handleRating()}</div>
             </div>
@@ -407,10 +212,14 @@ class Card extends React.Component {
                     : ""
                   : ""}
               </span>
+              <div className="counter">
+                <span>0</span>
+              </div>
             </div>
           </div>
-          <div className="expanded-info" style={this.state.expandedStyle} />
+          <div className="expanded-info" />
         </div>
+        <Preload preloading={this.state.preloading}/>
       </div>
     );
   }

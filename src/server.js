@@ -10,7 +10,7 @@ const utils = require("./utils");
 
 const webpack = require("webpack");
 const webpackMiddleware = require("webpack-dev-middleware");
-const webpackConfig = require("./webpack.config.js");
+const webpackConfig = require("./webpack.config.dev.js");
 const webpackHot = require("webpack-hot-middleware");
 const compiler = webpack(webpackConfig);
 
@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("trust proxy", true);
+/*
 app.use(
   session({
     secret: "keyboard cat",
@@ -33,7 +34,7 @@ app.use(
     saveUninitialized: true
   })
 );
-
+*/
 app.use("/api/getplaces", require("./routes/api/getplaces"));
 app.use("/api/getphoto", require("./routes/api/getphoto"));
 app.use("/api/getdetails", require("./routes/api/getdetails"));
