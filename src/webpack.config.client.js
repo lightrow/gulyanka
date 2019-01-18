@@ -1,15 +1,14 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
   optimization: {
-    minimize: true,
+    minimize: true
   },
-  entry: [
-     "./client/index.js"
-    ],
+  entry: ["./client/index.js"],
   output: {
     path: path.join(__dirname, "../public"),
     filename: "client.js"
@@ -30,24 +29,29 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader"
+        ]
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader"
+            loader: MiniCssExtractPlugin.loader
           },
           {
             loader: "css-loader",
             options: {
-              sourceMap: true
+              sourceMap: false
             }
           },
           {
             loader: "sass-loader",
             options: {
-              sourceMap: true
+              sourceMap: false
             }
           }
         ]
@@ -55,6 +59,12 @@ module.exports = {
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
     new HtmlWebpackPlugin({
       template: "client/index.html",
       filename: "./index.html"

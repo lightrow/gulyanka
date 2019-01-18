@@ -14,22 +14,32 @@ import { SearchIcon } from "./icon/search_icon";
 import { SubmitIcon } from "./icon/submit_icon";
 
 class Searchbar extends React.Component {
+  constructor(props) {
+    super(props);
+    if (this.props.loaded) {
+      this.state = {
+        searchClass: "search-small"
+      };
+    } else {
+      this.state = {
+        searchClass: ""
+      };
+    }
+  }
+
   onInputChange = event => {
     this.props.inputChange(event.target.value);
-    if (!event.target.value){
-
-    }
   };
 
   onInputSubmit = event => {
+    event.preventDefault();
     this.setState({
       ...this.state,
-      blocked:true
-    })
+      blocked: true
+    });
     if (!this.props.loaded) {
       this.shrinkSearch();
     }
-    event.preventDefault();
     this.props.loadStart();
     if (this.props.search_field.toString() === "") {
       return this.props.loadFail("Error: Field is empty");
@@ -37,8 +47,6 @@ class Searchbar extends React.Component {
       fetch("/api/getplaces?city=" + this.props.search_field.toString())
         .then(response => response.json())
         .then(res => {
-          console.log("response received");
-          console.log(res.status === "ZERO_RESULTS");
           switch (res.status) {
             case "ZERO_RESULTS":
               return this.props.loadFail("Nothing found");
@@ -47,95 +55,24 @@ class Searchbar extends React.Component {
             default:
               return this.props.loadSuccess(res.results);
           }
-        }).then(()=>{
+        })
+        .then(() => {
           this.setState({
             ...this.state,
-            blocked:false
-          })
+            blocked: false
+          });
         });
     }
   };
 
   shrinkSearch = () => {
-    let groupDOM = document.getElementById("search-group");
-    let groupStyle = window.getComputedStyle(groupDOM);
-    console.log(groupStyle.marginTop);
-    this.setState(
-      {
-        ...this.state,
-        styleGroup: {
-          marginTop: groupStyle.marginTop.toString()
-        }
-      },
-      () => {
-        setTimeout(() => {
-          this.setState(
-            {
-              ...this.state,
-              styleIcon: {
-                opacity: "0",
-                transform: "scale(0)",
-                height: "0px",
-                margin: "0 auto"
-              },
-              styleGroup: {
-                height: "35px",
-                marginTop: "50px",
-                marginBottom: "0px"
-              }
-            },
-            () => {
-              setTimeout(() => {
-                this.setState({
-                  styleIcon: {
-                    display: "none"
-                  },
-                  styleGroup: {
-                    transition: "none",
-                    position: "relative",
-                    height: "35px",
-                    marginTop: "12px",
-                    marginBottom: "0px"
-                  }
-                });
-              }, 700);
-            }
-          );
-        }, 100);
-      }
-    );
+    this.setState({...this.state,searchClass:"search-small"});
   };
-
-  constructor(props) {
-    super(props);
-    if (this.props.loaded) {
-      this.state = {
-        styleIcon: {
-          display: "none"
-        },
-        styleGroup: {
-          transition: "none",
-          position: "relative",
-          height: "35px",
-          marginTop: "12px",
-          marginBottom: "0px"
-        }
-      };
-    } else {
-      this.state = {
-        blocked: false,
-        styleGroup: {},
-        styleIcon: {
-          opacity: "1"
-        }
-      };
-    }
-  }
 
   render() {
     return (
       <div
-        className="search-group"
+        className={"search-group " + this.state.searchClass}
         id="search-group"
         style={this.state.styleGroup}
       >
@@ -145,9 +82,10 @@ class Searchbar extends React.Component {
             <input
               onChange={this.onInputChange}
               type="city"
-              className="search-field"
+              className="search-field small-search"
               id="cityFormInput"
               placeholder="Where are you?"
+              value={this.props.search_field}
               readOnly={this.state.blocked ? "readonly" : false}
             />
             <button

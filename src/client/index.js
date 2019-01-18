@@ -5,7 +5,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history, store, persistor } from "./store.js";
 import App from "./components/app";
 import { PersistGate } from "redux-persist/integration/react";
-import "./index.css";
+import "./index.scss";
 
 const target = document.querySelector("#root");
 
