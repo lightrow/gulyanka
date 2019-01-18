@@ -1,0 +1,25 @@
+footer {
+  border-top: 3px solid rgb(61, 61, 61);
+  position: relative;
+  bottom: 0;
+  margin-top:100px;
+  background-color: rgb(32, 32, 32);
+}
+
+#copyright {
+  border-top: 1px solid rgb(24, 24, 24);
+  background-color: rgb(26, 26, 26);
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  color: rgb(85, 85, 85);
+}
+
+@media only screen and (max-width: 767px) {
+  #footer-ul {
+    padding: 35px 5%;
+  }
+  .ico {
+    width: 50px;
+  }
+}

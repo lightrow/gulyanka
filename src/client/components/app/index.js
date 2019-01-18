@@ -6,6 +6,7 @@ import Login from "../routes/login";
 import Navbar from "../navbar";
 import { hot } from "react-hot-loader";
 import "./style.scss"
+import Footer from "../footer";
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route exact path="/about" component={About} />
           <Route exact path="/login" component={Login} />
         </main>
+        <Footer />
       </div>
     );
   }

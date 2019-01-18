@@ -1,4 +1,5 @@
 const INPUT_CHANGE = "input/INPUT_CHANGE";
+const RESET_TYPING = "input/RESET_TYPING";
 
 export const inputChange = inputValue => {
   return dispatch => {
@@ -9,8 +10,17 @@ export const inputChange = inputValue => {
   };
 };
 
+export const resetTyping = () => {
+  return dispatch => {
+    dispatch({
+      type: RESET_TYPING,
+    });
+  };
+};
+
 const initialState = {
-  search_field: ""
+  search_field: "",
+  typing: false
 };
 
 export default (state = initialState, action = {}) => {
@@ -18,8 +28,14 @@ export default (state = initialState, action = {}) => {
     case INPUT_CHANGE:
       return {
         ...state,
-        search_field: action.payload
+        search_field: action.payload,
+        typing:true
       };
+    case RESET_TYPING:
+    return {
+      ...state,
+      typing:false
+    };
     default:
       return state;
   }

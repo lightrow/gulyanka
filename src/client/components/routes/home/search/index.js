@@ -7,7 +7,8 @@ import {
   loadStart,
   loadEnd,
   loadFail,
-  loadSuccess
+  loadSuccess,
+  typingStart
 } from "../../../../reducers/loader";
 import "./search.scss";
 import { SearchIcon } from "./icon/search_icon";
@@ -28,6 +29,7 @@ class Searchbar extends React.Component {
   }
 
   onInputChange = event => {
+    this.props.typingStart()
     this.props.inputChange(event.target.value);
   };
 
@@ -115,6 +117,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       inputChange,
+      typingStart,
       loadStart,
       loadEnd,
       loadSuccess,

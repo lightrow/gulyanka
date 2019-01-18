@@ -51,6 +51,7 @@ const initialState = {
   load_status: "not_loaded",
   loaded:false,
   typing:false,
+  printError:false,
   data: []
 };
 
@@ -59,13 +60,16 @@ export default (state = initialState, action = {}) => {
     case TYPING:
       return {
         ...state,
-        typing:true
+        typing:true,
+        printError:false,
       }
     case LOAD_START:
       return {
         ...state,
         loading: true,
-        loaded:false
+        loaded:false,
+        printError:false,
+        typing:false,
       };
     case LOAD_END:
       return {
@@ -80,6 +84,7 @@ export default (state = initialState, action = {}) => {
         load_status: "success",
         loaded:true,
         typing:false,
+        printError:false,
         data: action.payload
       };
     case LOAD_FAIL:
@@ -88,6 +93,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded:false,
         typing:false,
+        printError:true,
         load_status: action.payload
       };
     default:

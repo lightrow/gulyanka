@@ -133,6 +133,7 @@ class Card extends React.Component {
           ...this.state,
           classes: newClasses,
           containerClasses: ["img-load-animation"],
+          preloading:false,
           imgStyle: {
             background: `black`
           },
@@ -204,7 +205,7 @@ class Card extends React.Component {
               <div className="stars">{this.handleRating()}</div>
             </div>
             <div className="midline" />
-            <div className="footer">
+            <div className="bottomline">
               <span className="openclosed">
                 {this.props.cardData.opening_hours
                   ? this.props.cardData.opening_hours.open_now

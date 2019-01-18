@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "./search";
 import Cards from "./cards";
+import Error from "./error";
 import "./home.scss";
 
 class Home extends React.Component {
@@ -17,6 +18,7 @@ class Home extends React.Component {
       <div id="home">
         <Search />
         <Cards />
+        <Error />
       </div>
     );
   }

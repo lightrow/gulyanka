@@ -3,11 +3,11 @@
   transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
   width: 70%;
   height: 300px;
-  margin: auto auto;
+  margin: 15px auto;
   position: absolute;
-  top: 0%;
+  top: 25%;
   left: 0;
-  bottom: 0%;
+  will-change: top;
   right: 0;
 }
 
@@ -28,16 +28,13 @@
   background-color: rgb(245, 245, 245);
   border: 2px solid rgb(255, 255, 255);
   box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.205),
-    0 2px 5px rgba(0, 0, 0, 0.322);
+    -2px 2px 5px rgba(0, 0, 0, 0.171);
   border-radius: 5px;
   color: rgb(0, 0, 0);
   outline: none;
   border: 2px solid rgb(255, 255, 255);
   &:focus {
     background-color: rgb(255, 255, 255);
-    border: 2px solid rgb(255, 255, 255);
-    box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.205),
-      0 1px 3px rgba(0, 0, 0, 0.322);
   }
 }
 
@@ -45,6 +42,7 @@
   margin: 15px auto;
   width: 128px;
   overflow: auto;
+  will-change: height,width;
 }
 
 .submit-icon {
@@ -59,24 +57,26 @@
   font-weight: bold;
   justify-content: center;
   align-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.322);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.171);
   padding: 5px;
-  margin-left: 10px;
+  position: relative;
+  left: -5px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
   outline: none;
   &:active {
     background-color: rgb(245, 245, 245);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.322);
-
   }
 }
 
-
-.search-small{
-  top:-101%;
-  .search-icon{
-    position:relative;
-    z-index:-3;
+.search-small {
+  top: 0;
+  .search-icon {
+    height: 0;
+    width: 0;
+    margin: 0;
   }
 }
+

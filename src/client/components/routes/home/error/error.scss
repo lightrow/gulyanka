@@ -1,0 +1,23 @@
+.error{
+  position:absolute;
+  background-color:rgb(241, 241, 241);
+  width:60%;
+  border-radius: 5px;
+
+  box-shadow:0 2px 3px rgba(0, 0, 0, 0.226);
+  left:0;
+  right:0;
+  margin:auto;
+  top:35%;
+  padding:25px;
+  text-align: center;
+  font-size:1.2em;
+  visibility:hidden;
+  animation:none;
+}
+
+.error-unhide {
+  visibility: visible;
+  animation: "appear 1s ease-out";
+}
+
