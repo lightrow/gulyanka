@@ -6,7 +6,7 @@ module.exports = {
   mode: "production",
   target: 'node',
   optimization: {
-    minimize: true,
+    minimize: false,
   },
   entry: ["./server.prod.js"],
   output: {
