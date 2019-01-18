@@ -61,7 +61,7 @@ app.use(
 app.use(webpackHot(compiler));
 */
 
-const port_number = process.env.PORT || 3000;
+const port_number = process.env.PORT;
 app.listen(port_number, () => {
   console.log("Listening on port: " + port_number);
 });
