@@ -4,7 +4,7 @@ const path = require("path");
 
 module.exports = {
   mode: "production",
-  target: 'node',
+  target: "node",
   optimization: {
     minimize: true,
   },
@@ -27,10 +27,7 @@ module.exports = {
 
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
-    })
+    new webpack.EnvironmentPlugin({ ...process.env })
+
   ]
 };
