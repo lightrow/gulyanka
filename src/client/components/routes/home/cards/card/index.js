@@ -13,8 +13,9 @@ class Card extends React.Component {
       containerClasses: [],
       classes: [],
       img: "",
-      preloading:true,
+      preloading: true
     };
+    this.expanded = false;
     this.animDuration = 1000;
   }
 
@@ -109,7 +110,7 @@ class Card extends React.Component {
       this.setState({
         ...this.state,
         classes: newClasses,
-        preloading:false,
+        preloading: false,
         containerClasses: ["img-load-animation"],
         imgStyle: {
           backgroundImage: `url(${res}), linear-gradient(rgba(0, 0, 0, 0.73) 15%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.54) 100%)`
@@ -133,7 +134,7 @@ class Card extends React.Component {
           ...this.state,
           classes: newClasses,
           containerClasses: ["img-load-animation"],
-          preloading:false,
+          preloading: false,
           imgStyle: {
             background: `black`
           },
@@ -155,8 +156,6 @@ class Card extends React.Component {
 
   handleClick = () => {
     let newCardDOM = document.getElementById(this.props.id);
-    //let newContainerDOM = document.getElementById("container-" + this.props.id);
-
     if (!this.disabled) {
       this.disabled = true;
       if (!this.expanded) {
@@ -167,6 +166,37 @@ class Card extends React.Component {
         this.closeCard();
       }
     }
+  };
+
+  expandCard = newDOM => {
+    this.expanded = true;
+    let newClasses = this.state.classes;
+    newClasses.push("card-expanded");
+    this.setState(
+      {
+        ...this.state,
+        classes: newClasses
+      },
+      () => {
+        this.disabled = false;
+      }
+    );
+  };
+
+  closeCard = () => {
+    this.expanded = false;
+    let newClasses = this.state.classes.filter(entry => {
+      return entry.match(/card-expanded/g) ? false : true;
+    });
+    this.setState(
+      {
+        ...this.state,
+        classes: newClasses
+      },
+      () => {
+        this.disabled = false;
+      }
+    );
   };
 
   handleRating = () => {
@@ -218,9 +248,12 @@ class Card extends React.Component {
               </div>
             </div>
           </div>
-          <div className="expanded-info" />
+
+          <div className="corner1" />
+          <div className="corner2" />
+          <div className="corner3" />
         </div>
-        <Preload preloading={this.state.preloading}/>
+        <Preload preloading={this.state.preloading} />
       </div>
     );
   }

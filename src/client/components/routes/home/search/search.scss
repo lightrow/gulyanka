@@ -74,6 +74,8 @@
 .search-small {
   top: 0;
   .search-icon {
+    -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
     height: 0;
     width: 0;
     margin: 0;

@@ -22,9 +22,7 @@ export class Preload extends React.Component {
     };
   }
 
-  componentWillReceiveProps(newprops) {
-    console.log(newprops.preloading);
-  }
+
 
   componentDidMount() {
     setTimeout(() => {
