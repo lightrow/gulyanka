@@ -1,25 +1,37 @@
 footer {
-  border-top: 3px solid rgb(61, 61, 61);
-  position: relative;
+  border-top: 2px solid rgb(61, 61, 61);
+  position: absolute;
   bottom: 0;
-  margin-top:100px;
+  width:300px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin:auto;
+  left:0;
+  right:0;
+  transform:translateY(70%);
+  transition:transform 0.5s cubic-bezier(0.18, 1.01, 0.46, 0.98);
+  //margin-top:100px;
   background-color: rgb(32, 32, 32);
+  &:hover{
+    transform:translateY(0%);
+  }
 }
 
 #copyright {
-  border-top: 1px solid rgb(24, 24, 24);
-  background-color: rgb(26, 26, 26);
   width: 100%;
-  padding: 5px;
+  height:27px;
   text-align: center;
-  color: rgb(85, 85, 85);
+  p{
+    margin:0;
+    line-height:27px;
+    font-size: 0.8em;
+    color: rgb(138, 138, 138);
+    display: inline-block;
+    vertical-align: middle;
+    a{
+      color:white;
+    }
+  }
 }
 
-@media only screen and (max-width: 767px) {
-  #footer-ul {
-    padding: 35px 5%;
-  }
-  .ico {
-    width: 50px;
-  }
-}
+

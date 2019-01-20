@@ -1,4 +1,5 @@
 import React from "react";
+import './map.scss';
 
 class Map extends React.Component {
   constructor(props) {
@@ -8,17 +9,11 @@ class Map extends React.Component {
   render() {
     return (<div
       className="map"
-      style={{
-        width: "90%",
-        height: "370px",
-      }}
     >
       <iframe
         title="googleMapsEmbed"
-        height="360px"
         width="100%"
         frameBorder="0"
-        style={{ border: "0", borderRadius: "5px" }}
         src={
           "https://www.google.com/maps/embed/v1/place?key=AIzaSyDPQNABRT48CdsoR_UHMBpYWmnRhWmuBcU&q=place_id:" +
           this.props.place_id

@@ -8,7 +8,7 @@ class Footer extends React.Component {
       <footer id="footer" className="footer">
         <div id="copyright">
           <p>
-            Copyright © 2019 John Gro. All rights reserved.
+            Copyright © 2019 <a href="https://lightrow.github.io">John Gro</a>. All rights reserved.
           </p>
         </div>
       </footer>

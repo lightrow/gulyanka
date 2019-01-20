@@ -4,7 +4,6 @@ var request = require("request");
 var path = require('path');
 
 router.get("/", function (req, res, next) {
-  console.log("ber");
   request.post(
     {
       url: "https://api.twitter.com/oauth/access_token",

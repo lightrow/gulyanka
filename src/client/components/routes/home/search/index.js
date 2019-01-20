@@ -89,6 +89,7 @@ class Searchbar extends React.Component {
               placeholder="Where are you?"
               value={this.props.search_field}
               readOnly={this.state.blocked ? "readonly" : false}
+              autocomplete="off"
             />
             <button
               type="submit"

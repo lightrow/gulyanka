@@ -28,6 +28,7 @@ class Cards extends React.Component {
       },
       darkenStyle: {
         position: "fixed",
+
         zIndex: 1,
         left: "50%",
         top: "50%",
@@ -68,6 +69,7 @@ class Cards extends React.Component {
 
   darken = dark => {
     if (dark) {
+      document.getElementById("main").style.overflow = "hidden";
       this.setState(
         {
           ...this.state,
@@ -89,6 +91,7 @@ class Cards extends React.Component {
         }
       );
     } else {
+      document.getElementById("main").style.overflow = "";
       this.setState(
         {
           ...this.state,
@@ -113,9 +116,6 @@ class Cards extends React.Component {
   };
 
   closeCards = () => {
-    //  todo: pass this.disabled from card back to parent to prevent
-    //  closing of card while it's still in transition animation.
-
     //  redistribute cards
     let sumJSX = [];
     this.props.data.map((entry, index) => {
@@ -174,8 +174,8 @@ class Cards extends React.Component {
       }
     }
 
-    //  adjust heights and tops to make columns the same height
-    //  get target height ( average height of all columns )
+    //  Adjust heights and tops to give columns the same height:
+    //  Get target height ( average height of all columns )
     let topHeights = [];
     for (let av = 0; av < this.cardsInRow; av++) {
       topHeights.push(cardsSums[cardsSums.length - 1 - av]);

@@ -15,7 +15,15 @@ html {
 
 body {
   font-size: 1.4rem;
+  overflow:hidden;
 } /* =14px all type sizes are relative to the base size*/
+
+main{
+  position: relative;
+  top:48px;
+  height:calc(100vh - 48px);
+  overflow-y:scroll;
+}
 
 @keyframes appear {
   0% {

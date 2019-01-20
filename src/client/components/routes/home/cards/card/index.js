@@ -2,20 +2,28 @@ import React from "react";
 import "./card.scss";
 import { Star, HalfStar } from "./star.js";
 import { Preload } from "./preload/preload.js";
+import Counter from "./counter";
+import Map from './map';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {
+  expandCardReducer,
+  closeCardReducer
+} from "../../../../../reducers/expander";
 
 class Card extends React.Component {
   constructor(props) {
     super(props);
-    this.expanded = false;
     this.state = {
       style: { ...this.props.style },
       imageStyle: {},
       containerClasses: [],
       classes: [],
       img: "",
-      preloading: true
+      preloading: true,
+      participants: [],
+      expanded:false
     };
-    this.expanded = false;
     this.animDuration = 1000;
   }
 
@@ -60,6 +68,7 @@ class Card extends React.Component {
       },
       () => {
         setTimeout(() => {
+          let newClasses = this.state.classes;
           newClasses = newClasses.filter(entry => {
             return entry.match(/animation/g) ? false : true;
           });
@@ -94,7 +103,11 @@ class Card extends React.Component {
           };
         });
     } else if (this.state.img != "") {
-      this.imgLoaded(this.state.img);
+      const bgImage = new Image();
+      bgImage.src = this.state.img;
+      bgImage.onload = () => {
+        this.imgLoaded(bgImage.src);
+      };
     } else {
       this.imgLoaded(null);
     }
@@ -158,42 +171,46 @@ class Card extends React.Component {
     let newCardDOM = document.getElementById(this.props.id);
     if (!this.disabled) {
       this.disabled = true;
-      if (!this.expanded) {
+      if (!this.state.expanded) {
         this.props.darken(true);
-        this.expandCard(newCardDOM);
+        this.handleExpandCard(newCardDOM);
       } else {
         this.props.darken(false);
-        this.closeCard();
+        this.handleCloseCard();
       }
     }
   };
 
-  expandCard = newDOM => {
-    this.expanded = true;
+  handleExpandCard = newDOM => {
+    console.log("SUKA")
     let newClasses = this.state.classes;
     newClasses.push("card-expanded");
     this.setState(
       {
         ...this.state,
-        classes: newClasses
+        classes: newClasses,
+        expanded: true
       },
       () => {
         this.disabled = false;
+        //this.props.expandCard();
       }
     );
   };
 
-  closeCard = () => {
-    this.expanded = false;
+  handleCloseCard = () => {
+    console.log;
     let newClasses = this.state.classes.filter(entry => {
       return entry.match(/card-expanded/g) ? false : true;
     });
     this.setState(
       {
         ...this.state,
-        classes: newClasses
+        classes: newClasses,
+        expanded: false
       },
       () => {
+        //this.props.closeCard();
         this.disabled = false;
       }
     );
@@ -243,15 +260,12 @@ class Card extends React.Component {
                     : ""
                   : ""}
               </span>
-              <div className="counter">
-                <span>0</span>
-              </div>
+              <Counter expanded={this.state.expanded} place_id={this.props.cardData.place_id} />
             </div>
           </div>
-
-          <div className="corner1" />
-          <div className="corner2" />
-          <div className="corner3" />
+          <div className="expanded-part">
+            <Map place_id={this.props.cardData.place_id}/>
+          </div>
         </div>
         <Preload preloading={this.state.preloading} />
       </div>
@@ -259,4 +273,21 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+const mapStateToProps = state => ({
+  expanded: state.expander.expanded
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      expandCard: expandCardReducer,
+      closeCard: closeCardReducer,
+      changePage: () => push("/somewhere")
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Card);

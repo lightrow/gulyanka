@@ -2,7 +2,7 @@
   display: block;
   position:relative;
   margin:0 auto;
-  top:65px;
+  top:calc(62px);
   width: 930px;
 }
 
@@ -11,4 +11,6 @@
   display:block;
 }
 
-
+#dark-overlay{
+  overflow-y: hidden;
+}

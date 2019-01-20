@@ -1,0 +1,58 @@
+.counter-info-unhide {
+  display: block !important;
+}
+
+.counter-expanded {
+  border: none !important;
+
+  min-width: 200px !important;
+  height: 46px !important;
+  transform: none !important;
+  right: 20px !important;
+  bottom: 5px !important;
+  span {
+    display: block;
+    position: absolute;
+    right: 0;
+    height: 100%;
+  }
+  .participants {
+    .person {
+      margin: 0 5px;
+      display: inline;
+      img {
+        border: 2px solid white;
+        border-radius: 5px;
+        widows: 48px;
+        height: 48px;
+      }
+    }
+  }
+}
+
+.counter-info {
+  background-color: rgb(24, 24, 24) !important;
+  display: none;
+  height: 200px;
+  width: 200px;
+}
+
+.counter {
+  span {
+    position: absolute;
+    transform: translate(2px, -5px);
+    font-weight: bold;
+  }
+  display: inline-block;
+  vertical-align: middle;
+  width: 0px;
+  height: 0px;
+  border-bottom: solid 18px white;
+  border-right: solid 18px white;
+  border-left: solid 18px transparent;
+  border-top: solid 18px transparent;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(-6px, 11px);
+}

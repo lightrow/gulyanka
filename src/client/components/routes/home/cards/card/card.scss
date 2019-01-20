@@ -1,16 +1,17 @@
 .card-container {
-  overflow: hidden;
   width: 100%;
   height: 100%;
 }
 
 .card {
+  transition:transform 0.4s cubic-bezier(0.18, 1.01, 0.46, 0.98);
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.26);
   background-repeat: no-repeat;
   border: 3px solid rgb(252, 252, 252);
   box-sizing: content-box;
-  will-change: scale, transform, opacity, top,left,right,bottom,width,height;
-  transition: all 0.2s cubic-bezier(0.18, 1.01, 0.46, 0.98) !important;
+  will-change: scale, transform, opacity, top, left, right, bottom, width,
+    height;
+  //transition: all 0.2s cubic-bezier(0.18, 1.01, 0.46, 0.98) !important;
 }
 
 $s-min: 20;
@@ -40,7 +41,7 @@ $l-max: 60;
 
 .card:hover {
   transform: scale(1.02);
-  transition: transform 0.4s cubic-bezier(0.18, 1.01, 0.46, 0.98);
+  transition: none;
 }
 
 .headline {
@@ -86,55 +87,65 @@ $l-max: 60;
   position: absolute;
 }
 
+.expanded-part {
+  display: none;
+}
+
 .card-expanded {
   z-index: 1;
   position: fixed !important;
-  left: 3.7vw !important;
+  background-color: transparent !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  left: 0 !important;
   right: 0 !important;
-  top: 2vw !important;
+  top: 48px !important;
   bottom: 0 !important;
-  width: 90vw !important;
-  height: 90vh !important;
-  border: 5px solid rgb(240, 240, 240);
+  width: 100vw !important;
+  min-height: calc(100vh - 48px) !important;
+  padding: 0 150px;
+  box-sizing: border-box;
+  border: 0px solid rgb(240, 240, 240);
+  box-shadow: none;
   .card-container {
-    overflow: hidden;
-    .corner1 {
-      width: 25vw;
-      height: 100%;
-      background: rgb(211, 211, 211);
-      z-index: 1;
-      position: absolute;
-      top: 0;
-      border-right: 5px solid rgb(240, 240, 240);
+    .card-img{
+      padding:10px;
+      position:relative;
     }
-    .counter {
-      border-bottom: solid 2vw white;
-      border-right: solid 2vw white;
-      border-left: solid 2vw transparent;
-      border-top: solid 2vw transparent;
+    .bottomline{
+      bottom: 10px;
+      width:100%;
     }
     .card-title {
-      padding-top: 2vw;
-      text-align: center;
-      color: black;
+      padding: 2vw;
+      //text-align: center;
+      color: rgb(255, 255, 255);
+
       font-size: 1.3em;
       font-weight: bold;
-      width: 23vw;
-      
+      display: inline-block;
+      vertical-align: middle;
+      //width: 25vw;
+      height: auto;
     }
     .openclosed {
-      color: black;
+      color: rgb(255, 255, 255);
       font-size: 1.2em;
-      padding: 0.5vw;
+      padding: 5px 15px;
     }
     .stars {
-      padding: 1vw;
+      padding: 2vw;
       .star-svg {
         width: 20px;
       }
       .halfstar-svg {
         width: 20px;
       }
+    }
+    .expanded-part {
+      display: block;
+      width:100%;
+      background:rgb(36, 36, 36);
     }
   }
   &:hover {
@@ -145,25 +156,7 @@ $l-max: 60;
   }
 }
 
-.counter {
-  span {
-    position: absolute;
-    transform: translate(2px, -5px);
-    font-weight: bold;
-  }
-  display: inline-block;
-  vertical-align: middle;
-  width: 0px;
-  height: 0px;
-  border-bottom: solid 18px white;
-  border-right: solid 18px white;
-  border-left: solid 18px transparent;
-  border-top: solid 18px transparent;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transform: translate(-6px, 11px);
-}
+
 
 .openclosed {
   color: rgb(255, 255, 255);

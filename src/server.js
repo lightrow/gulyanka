@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("trust proxy", true);
-/*
+
 app.use(
   session({
     secret: "keyboard cat",
@@ -34,12 +34,13 @@ app.use(
     saveUninitialized: true
   })
 );
-*/
+
 app.use("/api/getplaces", require("./routes/api/getplaces"));
 app.use("/api/getphoto", require("./routes/api/getphoto"));
 app.use("/api/getdetails", require("./routes/api/getdetails"));
 
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/auth2", require("./routes/api/auth2"));
 app.use("/api/access", require("./routes/api/access"));
 app.use("/api/verify", require("./routes/api/verify"));
 app.use("/api/callback", require("./routes/api/callback"));
