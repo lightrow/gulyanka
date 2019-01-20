@@ -51,8 +51,6 @@
     "util-inspect": "^0.1.8"
   },
   "scripts": {
-    "start": "nodemon --config nodemon.json --exec babel-node server.js",
-    "start-dev": "babel-node ./dist/server.js",
-    "build": "webpack --config ./webpack.config.client.js && webpack --config ./webpack.config.server.js"
+    "start": "node server.js"
   }
 }
