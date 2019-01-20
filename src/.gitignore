@@ -7,7 +7,7 @@
 /coverage
 
 #dev
-#/client
+/client
 
 # misc
 .DS_Store

@@ -1,22 +1,18 @@
 var express = require("express");
 var router = express.Router();
 var request = require("request");
-var fs = require("fs");
-var path = require("path");
 var mongo = require("mongodb").MongoClient;
 var assert = require("assert");
-
-const photosDB = path.join(__dirname, "imgRefDB.json");
-
 var utils = require("../../utils");
 
-router.get("/", function(req, res, next) {
+router.get("/", function(req, res) {
   var photoref = req.query.photoref;
   var placeref = req.query.placeref;
   var maxwidth = 500;
 
   mongo.connect(
     utils.mongourl,
+    { useNewUrlParser: true },
     (err, db) => {
       assert.equal(err, null);
       var dbo = db.db(utils.db);

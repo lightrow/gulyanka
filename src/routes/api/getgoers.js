@@ -11,6 +11,7 @@ router.get("/", function(req, res, next) {
   } else {
     mongo.connect(
       utils.mongourl,
+      { useNewUrlParser: true },
       (err, moncon) => {
         assert.equal(err, null);
         var collection = moncon.db(utils.db).collection(utils.collection);

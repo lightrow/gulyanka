@@ -1,7 +1,6 @@
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
-
+const nodeExternals = require('webpack-node-externals');
 module.exports = {
   mode: "production",
   target: "node",
@@ -13,7 +12,9 @@ module.exports = {
     path: path.join(__dirname, "../"),
     filename: "server.js"
   },
-  //externals: [nodeExternals()], // Need this to avoid error when working with Express
+  externals: [nodeExternals({
+    whitelist: ['webpack/hot/dev-server','react-hot-loader']
+  })], // Need this to avoid error when working with Express
   module: {
     rules: [
       {
