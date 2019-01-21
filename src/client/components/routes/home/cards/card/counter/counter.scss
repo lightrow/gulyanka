@@ -1,15 +1,14 @@
-.counter-info-unhide {
-  display: block !important;
+.hide {
+  display: none !important;
 }
 
 .counter-expanded {
   border: none !important;
-
-  min-width: 200px !important;
-  height: 46px !important;
+  min-width: 300px !important;
+  height: 48px !important;
   transform: none !important;
-  right: 20px !important;
-  bottom: 5px !important;
+  right: 3vw !important;
+  bottom: 3vh !important;
   span {
     display: block;
     position: absolute;
@@ -17,16 +16,76 @@
     height: 100%;
   }
   .participants {
+    display: flex;
     .person {
       margin: 0 5px;
-      display: inline;
       img {
         border: 2px solid white;
         border-radius: 5px;
-        widows: 48px;
-        height: 48px;
       }
     }
+    .person-more {
+      div {
+        text-align: center;
+        line-height: 48px;
+        font-size: 2em;
+        width: 48px;
+        height: 48px;
+        border: 2px solid rgb(255, 255, 255);
+        background-color: rgb(223, 223, 223);
+        color: rgb(0, 0, 0);
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+.participants-all {
+  width: 70%;
+  height: calc(85vh - 48px);
+  position: fixed;
+  padding: 0 150px;
+  right: 2.3vw;
+  margin: auto;
+  bottom: 5vh;
+  box-sizing: border-box;
+  pointer-events: none;
+  .participants-all-topbar {
+    width: 100%;
+    height: 36px;
+    background-color: rgb(230, 230, 230);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position:relative;
+    pointer-events: all;
+    button{
+      position: absolute;
+      font-weight: bold;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.295);
+      border-radius: 3px;
+      right:6px;
+      top:6px;
+      width:24px;
+      height:24px;
+      outline:none;
+      background-color:white;
+      border:2px solid white;
+      &:active{
+        background-color:rgb(228, 228, 228);
+        border:2px solid rgb(228, 228, 228);
+      }
+    }
+  }
+  .participants-all-container {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(221, 221, 221);
+    padding: 20px;
+    overflow-y:scroll;
+    box-sizing: border-box;
+    pointer-events: all;
+    width: 100%;
+    height: calc(100% - 36px);
   }
 }
 

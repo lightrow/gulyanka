@@ -3,12 +3,13 @@ import "./card.scss";
 import { Star, HalfStar } from "./star.js";
 import { Preload } from "./preload/preload.js";
 import Counter from "./counter";
-import Map from './map';
+import Map from "./map";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
-  expandCardReducer,
-  closeCardReducer
+  expandCard,
+  closeCard,
+  closeParticipants
 } from "../../../../../reducers/expander";
 
 class Card extends React.Component {
@@ -22,7 +23,7 @@ class Card extends React.Component {
       img: "",
       preloading: true,
       participants: [],
-      expanded:false
+      expanded: false
     };
     this.animDuration = 1000;
   }
@@ -175,6 +176,7 @@ class Card extends React.Component {
         this.props.darken(true);
         this.handleExpandCard(newCardDOM);
       } else {
+        this.props.closeParticipants();
         this.props.darken(false);
         this.handleCloseCard();
       }
@@ -182,7 +184,7 @@ class Card extends React.Component {
   };
 
   handleExpandCard = newDOM => {
-    console.log("SUKA")
+    console.log("SUKA");
     let newClasses = this.state.classes;
     newClasses.push("card-expanded");
     this.setState(
@@ -232,6 +234,13 @@ class Card extends React.Component {
     return what.join(" ");
   };
 
+  stopContainerClickPropagation = e => {
+    //only close if clicked outside the card on the padding surrounding it.
+    if (this.state.expanded) {
+     e.stopPropagation();
+    }
+  };
+
   render() {
     return (
       <div
@@ -245,6 +254,7 @@ class Card extends React.Component {
             "card-container " + this.prepClasses(this.state.containerClasses)
           }
           id={"container-" + this.props.id}
+          onClick={this.stopContainerClickPropagation}
         >
           <div className="card-img" style={this.state.imgStyle}>
             <div className="headline">
@@ -260,11 +270,14 @@ class Card extends React.Component {
                     : ""
                   : ""}
               </span>
-              <Counter expanded={this.state.expanded} place_id={this.props.cardData.place_id} />
+              <Counter
+                expanded={this.state.expanded}
+                place_id={this.props.cardData.place_id}
+              />
             </div>
           </div>
           <div className="expanded-part">
-            <Map place_id={this.props.cardData.place_id}/>
+            <Map place_id={this.props.cardData.place_id} />
           </div>
         </div>
         <Preload preloading={this.state.preloading} />
@@ -280,8 +293,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      expandCard: expandCardReducer,
-      closeCard: closeCardReducer,
+      expandCard,
+      closeCard,
+      closeParticipants,
       changePage: () => push("/somewhere")
     },
     dispatch

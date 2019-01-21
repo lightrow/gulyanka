@@ -4,9 +4,27 @@ import { push } from "react-router-redux";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Card from "./card";
+import card from "./card";
 
 let getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
+};
+
+let getHeightOffset = (min, max, multi) => {
+  let randomOffset = (Math.floor(Math.random() * (max - min)) + min) * multi;
+  return randomOffset;
+};
+
+let getRandomCardHeight = (min, max, multiplier) => {
+  let randomHeight = getRandomInt(min, max) * multiplier;
+  console.log(randomHeight);
+  if (randomHeight > 250) {
+    return 250;
+  } else if (randomHeight < 150) {
+    return 150;
+  } else {
+    return randomHeight;
+  }
 };
 
 let getRandomCardInCol = (numRows, cardsInRow, remainder, index) => {
@@ -33,17 +51,17 @@ class Cards extends React.Component {
         left: "50%",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        transition: "background-color 200ms cubic-bezier(0.19, 1, 0.22, 1)",
+        //transition: "background-color 200ms cubic-bezier(0.19, 1, 0.22, 1)",
         height: "100vh",
         width: "100vw",
         display: "none",
-        backgroundColor: "rgb(0,0,0,0.0)"
+        backgroundColor: "rgb(0,0,0,0.5)"
       },
       cards: ""
     };
     this.cardsStyles = [];
     this.mounted = false;
-    this.targetCardHeight = 150;
+    this.targetCardHeight = 180;
     this.cardHeight = this.targetCardHeight;
     this.cardWidth = 200;
     this.margin = 15;
@@ -70,48 +88,22 @@ class Cards extends React.Component {
   darken = dark => {
     if (dark) {
       document.getElementById("main").style.overflow = "hidden";
-      this.setState(
-        {
-          ...this.state,
-          darkenStyle: {
-            ...this.state.darkenStyle,
-            display: "block"
-          }
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              ...this.state,
-              darkenStyle: {
-                ...this.state.darkenStyle,
-                backgroundColor: "rgb(0,0,0,0.5)"
-              }
-            });
-          }, 20);
+      this.setState({
+        ...this.state,
+        darkenStyle: {
+          ...this.state.darkenStyle,
+          display: "block"
         }
-      );
+      });
     } else {
       document.getElementById("main").style.overflow = "";
-      this.setState(
-        {
-          ...this.state,
-          darkenStyle: {
-            ...this.state.darkenStyle,
-            backgroundColor: "rgb(0,0,0,0.0)"
-          }
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              ...this.state,
-              darkenStyle: {
-                ...this.state.darkenStyle,
-                display: "none"
-              }
-            });
-          }, 100);
+      this.setState({
+        ...this.state,
+        darkenStyle: {
+          ...this.state.darkenStyle,
+          display: "none"
         }
-      );
+      });
     }
   };
 
@@ -130,27 +122,14 @@ class Cards extends React.Component {
         />
       );
     });
-    this.setState(
-      {
-        ...this.state,
-        darkenStyle: {
-          ...this.state.darkenStyle,
-          backgroundColor: "rgb(0,0,0,0)"
-        },
-        cards: sumJSX
+    this.setState({
+      ...this.state,
+      darkenStyle: {
+        ...this.state.darkenStyle,
+        display: "none"
       },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            ...this.state,
-            darkenStyle: {
-              ...this.state.darkenStyle,
-              display: "none"
-            }
-          });
-        }, 200);
-      }
-    );
+      cards: sumJSX
+    });
   };
 
   handleCardsProper = () => {
@@ -163,7 +142,7 @@ class Cards extends React.Component {
     let cardsStyles = []; // storage for cards' styles
     //  calc all the heights ( and tops )
     for (let h = 0; h < this.props.data.length; h++) {
-      this.cardHeight = this.targetCardHeight + getRandomInt(-2, 2) * 25;
+      this.cardHeight = this.targetCardHeight + getHeightOffset(-5, 3, 10);
       cardsHeights.push(this.cardHeight);
       if (h >= this.cardsInRow) {
         cardsSums.push(
@@ -175,7 +154,7 @@ class Cards extends React.Component {
     }
 
     //  Adjust heights and tops to give columns the same height:
-    //  Get target height ( average height of all columns )
+    //  Get target height (height of the biggest column)
     let topHeights = [];
     for (let av = 0; av < this.cardsInRow; av++) {
       topHeights.push(cardsSums[cardsSums.length - 1 - av]);

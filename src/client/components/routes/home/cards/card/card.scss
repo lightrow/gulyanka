@@ -4,7 +4,7 @@
 }
 
 .card {
-  transition:transform 0.4s cubic-bezier(0.18, 1.01, 0.46, 0.98);
+  transition: transform 0.4s cubic-bezier(0.18, 1.01, 0.46, 0.98);
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.26);
   background-repeat: no-repeat;
   border: 3px solid rgb(252, 252, 252);
@@ -108,19 +108,20 @@ $l-max: 60;
   border: 0px solid rgb(240, 240, 240);
   box-shadow: none;
   .card-container {
-    .card-img{
-      padding:10px;
-      position:relative;
+    height: auto !important;
+    .card-img {
+      height: calc(100vh - 48px);
+      padding: 10px;
+      position: relative;
     }
-    .bottomline{
+    .bottomline {
       bottom: 10px;
-      width:100%;
+      width: 100%;
     }
     .card-title {
-      padding: 2vw;
+      padding: 2vh 2vw;
       //text-align: center;
       color: rgb(255, 255, 255);
-
       font-size: 1.3em;
       font-weight: bold;
       display: inline-block;
@@ -128,13 +129,20 @@ $l-max: 60;
       //width: 25vw;
       height: auto;
     }
-    .openclosed {
-      color: rgb(255, 255, 255);
-      font-size: 1.2em;
-      padding: 5px 15px;
+    .bottomline {
+      bottom: 2vh;
+      .openclosed {
+        color: rgb(255, 255, 255);
+        font-size: 1.2em;
+        position: relative;
+        bottom: 2vh;
+        left: 2vw;
+        font-weight: bold;
+      }
     }
+
     .stars {
-      padding: 2vw;
+      padding: 3vh 2vw;
       .star-svg {
         width: 20px;
       }
@@ -144,8 +152,8 @@ $l-max: 60;
     }
     .expanded-part {
       display: block;
-      width:100%;
-      background:rgb(36, 36, 36);
+      width: 100%;
+      background: rgb(36, 36, 36);
     }
   }
   &:hover {
@@ -155,8 +163,6 @@ $l-max: 60;
     z-index: 2;
   }
 }
-
-
 
 .openclosed {
   color: rgb(255, 255, 255);
