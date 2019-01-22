@@ -4,7 +4,7 @@ import { push } from "react-router-redux";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Card from "./card";
-import card from "./card";
+import CardViewer from "./card-viewer";
 
 let getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -272,11 +272,7 @@ class Cards extends React.Component {
     if (this.props.loaded) {
       return (
         <div id="cards" style={this.state.cardsStyle}>
-          <span
-            id="dark-overlay"
-            style={this.state.darkenStyle}
-            onClick={this.closeCards}
-          />
+          <CardViewer/>
           {this.state.cards}
         </div>
       );
