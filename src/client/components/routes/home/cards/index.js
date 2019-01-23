@@ -115,6 +115,7 @@ class Cards extends React.Component {
         <Card
           key={"card" + index}
           id={"card" + index}
+          key_prop={index}
           cardData={entry}
           style={this.cardsStyles[index]}
           darken={this.darken}
@@ -235,6 +236,7 @@ class Cards extends React.Component {
       sumJSX.push(
         <Card
           key={"card" + index}
+          key_prop={index}
           id={"card" + index}
           cardData={entry}
           style={this.cardsStyles[index]}

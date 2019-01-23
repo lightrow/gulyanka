@@ -25,6 +25,7 @@ const HalfStarSvg = () => (
 </svg>
 );
 
+//eh, whatever
 export class Star extends React.Component {
   render() {
     return <StarSvg />;

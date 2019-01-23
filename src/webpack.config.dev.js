@@ -7,10 +7,7 @@ module.exports = {
   optimization: {
     minimize: false
   },
-  entry: [
-    "webpack-hot-middleware/client",
-     "./client/index.js"
-    ],
+  entry: ["webpack-hot-middleware/client", "./client/index.js"],
   output: {
     path: path.join(__dirname, "dist"),
     filename: "bundle.js"
@@ -49,6 +46,18 @@ module.exports = {
             loader: "sass-loader",
             options: {
               sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
             }
           }
         ]

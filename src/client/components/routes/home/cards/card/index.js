@@ -5,11 +5,8 @@ import { Preload } from "./preload/preload.js";
 import Counter from "./counter";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-  openCard,
-  closeCard,
-  closeParticipants
-} from "../../../../../reducers/expander";
+import { openCard, closeCard } from "../../../../../reducers/expander";
+import { saveImg } from "../../../../../reducers/loader";
 
 class Card extends React.Component {
   constructor(props) {
@@ -113,12 +110,18 @@ class Card extends React.Component {
     }
   };
 
+  saveImgToStore = img => {
+    let key = this.props.key_prop
+    let obj = { key: key, img: img };
+    console.log(obj)
+    this.props.saveImg(obj);
+  };
+
   imgLoaded = res => {
-    //hide loader
+    this.saveImgToStore(res);
     //show card
     let newClasses = this.state.classes;
     newClasses.push("img-load-animation");
-
     if (res != null) {
       this.setState({
         ...this.state,
@@ -191,7 +194,11 @@ class Card extends React.Component {
   };
 
   openCard = () => {
-    let cardData = { data: this.props.cardData, goers: this.state.goers, img:this.state.img };
+    let cardData = {
+      data: this.props.cardData,
+      goers: this.state.goers,
+      img: this.state.img
+    };
     this.props.openCard(cardData);
   };
 
@@ -245,7 +252,7 @@ const mapDispatchToProps = dispatch =>
     {
       openCard,
       closeCard,
-      closeParticipants,
+      saveImg,
       changePage: () => push("/somewhere")
     },
     dispatch
