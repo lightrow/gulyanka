@@ -1,0 +1,436 @@
+.hide {
+  display: none !important;
+}
+
+$backgroundContainer: rgb(225, 225, 225);
+
+$colorgrey: rgb(85, 85, 85);
+$color1: $colorgrey;
+$color2: $colorgrey;
+$color3: $colorgrey;
+$color4: $colorgrey;
+
+$bordersize: 40px;
+$boxsize: $bordersize * 2+50px;
+
+#corner-box1 {
+  background-color: $backgroundContainer;
+  top: 15px;
+  left: 15px;
+  width: $boxsize;
+  height: $boxsize;
+  position: absolute;
+}
+
+#corner-box2 {
+  background-color: $backgroundContainer;
+  top: 15px;
+  right: 15px;
+  width: $boxsize;
+  height: $boxsize;
+  position: absolute;
+}
+
+#corner-box3 {
+  background-color: $backgroundContainer;
+  bottom: 15px;
+  left: 15px;
+  width: $boxsize;
+  height: $boxsize;
+  position: absolute;
+}
+
+#corner-box4 {
+  background-color: $backgroundContainer;
+  bottom: 15px;
+  right: 15px;
+  width: $boxsize;
+  height: $boxsize;
+  position: absolute;
+}
+
+#corner1 {
+  width: 0px;
+  height: 0px;
+  border-bottom: solid $bordersize transparent;
+  border-right: solid $bordersize transparent;
+  border-left: solid $bordersize $color1;
+  border-top: solid $bordersize $color1;
+}
+
+#corner2 {
+  position: absolute;
+  right: 0;
+  width: 0px;
+  height: 0px;
+  border-bottom: solid $bordersize transparent;
+  border-right: solid $bordersize $color2;
+  border-left: solid $bordersize transparent;
+  border-top: solid $bordersize $color2;
+  position: absolute;
+}
+
+#corner3 {
+  position: absolute;
+  bottom: 0;
+  width: 0px;
+  height: 0px;
+  border-bottom: solid $bordersize $color3;
+  border-right: solid $bordersize transparent;
+  border-left: solid $bordersize $color3;
+  border-top: solid $bordersize transparent;
+  position: absolute;
+}
+
+#corner4 {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0px;
+  height: 0px;
+  border-bottom: solid $bordersize $color4;
+  border-right: solid $bordersize $color4;
+  border-left: solid $bordersize transparent;
+  border-top: solid $bordersize transparent;
+  position: absolute;
+}
+
+#card-viewer {
+  box-sizing: border-box;
+  font-family: "Roboto Condensed" !important;
+  * {
+    box-sizing: border-box;
+  }
+  z-index: 1;
+  position: fixed !important;
+  background-color: rgba(255, 255, 255, 0.726) !important;
+  overflow-y: scroll;
+  overflow-x: unset;
+  left: 0 !important;
+  right: 0 !important;
+  top: 48px !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  min-height: calc(100vh - 48px) !important;
+  #card-viewer-container {
+    width: 900px;
+    margin:auto;
+    padding: 15px;
+    background-color: $backgroundContainer;
+    box-sizing: border-box;
+    position: relative;
+    .card-viewer-subcontainer {
+      border: 2px solid $colorgrey;
+      position: relative;
+      padding: 25px;
+      background-color: $backgroundContainer;
+      box-sizing: content-box;
+      #title {
+        font-size: 2.3em;
+        font-family: EB Garamond !important;
+        font-weight: 500 !important;
+        background-color: white;
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        z-index: 2;
+        color: rgb(77, 77, 77);
+        text-align: center;
+        padding: 10px 10px;
+        width: 70%;
+        margin: auto;
+        margin-top: 10px;
+        font-weight: normal;
+        span {
+          display: block;
+          border-radius: 10px;
+          padding: 0 15px;
+        }
+        #rating {
+          text-align: center;
+          left: 0;
+          right: 0;
+          margin: auto;
+          position: relative;
+          z-index: 5;
+          //height:50px;
+          .star-svg {
+            margin: 3px;
+            width: 24px;
+          }
+
+          .halfstar-svg {
+            margin: 3px;
+            width: 24px;
+          }
+
+          .star {
+            fill: #c4cf5a;
+            stroke: black;
+          }
+
+          .halfstar-back {
+            fill: #c4cf5a;
+            stroke: black;
+          }
+
+          .halfstar-front {
+            fill: rgb(139, 139, 139);
+          }
+
+          .stars {
+            display: inline;
+          }
+        }
+      }
+
+      #img {
+        background-color: rgba(85, 85, 85, 0.324);
+        background-blend-mode: overlay;
+        box-shadow: inset 0 15px 95px rgba(0, 0, 0, 0.591);
+        border-bottom: 4px solid white;
+        height: 350px;
+        width: 100%;
+        background-size: cover;
+        background-position-y: 50%;
+        position: relative;
+        background-repeat: no-repeat;
+      }
+
+      .stars {
+        padding: 3vh 2vw;
+        .star-svg {
+          width: 20px;
+        }
+        .halfstar-svg {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+
+.participants {
+  margin: 10px 0;
+  display: flex;
+}
+
+.person {
+  margin-right: 10px;
+  margin-left: 0;
+  border: 4px solid rgb(255, 255, 255);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 64px;
+  height: 64px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.person-more {
+  position: relative;
+  margin-right: 10px;
+  margin-left: 0;
+  border-radius: 10px;
+  overflow: visible;
+  width: 64px;
+  height: 64px;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  line-height: 64px;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.participants-all {
+  .person {
+    margin: 5px;
+  }
+  box-sizing: content-box;
+  border: 4px solid rgb(255, 255, 255);
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  cursor: unset;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  background-color: rgb(225, 225, 225);
+  width: 400px;
+  z-index: 4;
+  .participants-all-topbar {
+    background-color: rgb(242, 242, 242);
+    position: relative;
+    width: 100%;
+    height: 36px;
+    button {
+      position: absolute;
+      right: 0;
+      width: 24px;
+      height: 24px;
+      background-color: white;
+    }
+  }
+  .participants-all-container {
+    cursor: unset;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+  }
+}
+
+.button {
+  font-family: 'Roboto Condensed';
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  height: 48px;
+  width: 48px;
+  margin: 5px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+#button-group-top {
+  margin: 20px 0;
+  margin-bottom: 0px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  .participants {
+    margin-right: auto;
+  }
+  .button-willgo {
+    margin-bottom: 10px;
+    background-color: rgb(34, 141, 118);
+    width: 180px;
+    color: white;
+    font-size: 1.2em;
+    height: 48px;
+  }
+}
+
+#button-group-bottom {
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+  margin: 0px auto;
+  position: relative;
+  padding: 5px;
+  display: flex;
+  justify-content:space-between;
+  .button-opensat {
+    margin:auto;
+    width:180px;
+    margin-right:15px;
+    font-size: 1.3em;
+    color:white;
+    background-color: rgb(88, 80, 80);
+  }
+  .splitter-line1{
+    height:2px;
+    background-color: $colorgrey;
+    flex: 1 1 auto;
+    margin:auto;
+    position:relative;
+    top:-3px;
+    justify-self: flex-end;
+  }
+  .splitter-line2{
+    height:2px;
+    background-color: $colorgrey;
+    flex: 1 1 auto;
+    margin:auto;
+    position:relative;
+    top:-3px;
+    justify-self: flex-start;
+  }
+  .splitter{
+    *{
+      stroke:$colorgrey;
+    }
+    svg{
+      height:48px;
+    }
+    flex: 0 0 60px;
+    text-align: center;
+    margin:auto 0;
+    justify-self: center;
+    align-self: center;
+  }
+  #buttons-social{
+    margin:auto;
+    margin-left:10px;
+    display:flex;
+    align-content: center;
+    justify-content: flex-end;
+    .button-facebook {
+      background-color: rgb(136, 136, 204);
+      color: white;
+      font-size: 3em;
+    }
+    .button-twitter {
+      background-color: rgb(168, 168, 226);
+      color: white;
+      font-size: 2em;
+    }
+    .button-google {
+      background-color: rgb(209, 96, 96);
+      color: white;
+      font-size: 2em;
+    }
+  
+  }
+}
+
+.tonight-text{
+  position: relative;
+  width:300px;
+  span{
+    font-size:1.3em;
+    position: absolute;
+    bottom:0;
+  }
+}
+
+.address {
+  width: auto;
+  display: block;
+  position: relative;
+  z-index: 5;
+  color:rgb(58, 58, 58);
+  font-size:1.3em;
+  text-align: center;
+  span {
+    background-color: rgb(232, 232, 247);
+    border: 4px solid white;
+    padding:5px 15px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow:0 2px 0px rgba(0, 0, 0, 0.308);
+    top:-20px;
+  }
+}
+
+.disclaimer {
+  margin-top:20px;
+  text-align: center;
+  font-size: 0.7em;
+  color: rgb(124, 124, 124);
+}
+
+.mid-container {
+  background-color: white;
+  border: 4px solid white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
+}
+
