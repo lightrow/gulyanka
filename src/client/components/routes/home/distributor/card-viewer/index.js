@@ -27,7 +27,20 @@ class CardViewer extends React.Component {
           </div>
         );
       });
-      //for testing
+      return <div className="participants">{persons}</div>;
+    } else {
+      for (let i = 0; i < 4; i++) {
+        persons.push(
+          <div className="person" id={"person" + index}>
+            <img
+              src={
+                this.props.cards[this.props.loadedCard].goers[i]
+                  .profile_image_url
+              }
+            />
+          </div>
+        );
+      }
       persons.push(
         <div
           className="person person-more"
@@ -35,36 +48,14 @@ class CardViewer extends React.Component {
         >
           {this.props.participantsExpanded
             ? this.handleParticipantsExpanded()
-            : "+" + (this.props.cards[this.props.loadedCard].goers.length - 5).toString()}
+            : "+" +
+              (
+                this.props.cards[this.props.loadedCard].goers.length - 5
+              ).toString()}
         </div>
       );
       persons.push(
-        <div
-          className="tonight-text"
-        >
-          <span>...will be chilling here tonight.</span>
-        </div>
-      );
-      return <div className="participants">{persons}</div>;
-    } else {
-      for (let i = 0; i < 4; i++) {
-        persons.push(
-          <div className="person" id={"person" + index}>
-            <img src={this.props.cards[this.props.loadedCard].goers[i].profile_image_url} />
-          </div>
-        );
-      }
-      persons.push(
-        <div className="person person-more">
-          {this.props.participantsExpanded
-            ? this.handleParticipantsExpanded
-            : "+" + (this.props.cards[this.props.loadedCard].goers.length - 5).toString}
-        </div>
-      );
-      persons.push(
-        <div
-          className="tonight-text"
-        >
+        <div className="tonight-text">
           <span>...will be chilling here tonight.</span>
         </div>
       );
@@ -146,7 +137,11 @@ class CardViewer extends React.Component {
             <div className="mid-container">
               <div
                 id="img"
-                style={{ backgroundImage: `url(${this.props.cards[this.props.loadedCard].img})` }}
+                style={{
+                  backgroundImage: `url(${
+                    this.props.cards[this.props.loadedCard].img
+                  })`
+                }}
               />
               <div id="button-group-bottom">
                 <button className="button button-opensat">Opens At {}</button>
@@ -161,7 +156,9 @@ class CardViewer extends React.Component {
                   <button className="button button-google">g+</button>
                 </div>
               </div>
-              <Map place_id={this.props.cards[this.props.loadedCard].place_id} />
+              <Map
+                place_id={this.props.cards[this.props.loadedCard].place_id}
+              />
             </div>
             <div className="address">
               <span>{this.props.cards[this.props.loadedCard].vicinity}</span>
@@ -199,7 +196,7 @@ class CardViewer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cards:state.cards,
+  cards: state.cards,
   loadedCard: state.expander.loadedCard,
   isOpened: state.expander.isOpened,
   participantsExpanded: state.expander.participantsExpanded

@@ -1,21 +1,4 @@
-@font-face {
-  font-family: "EB Garamond";
-  src: url("EBGaramond-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("EBGaramond-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("EBGaramond-Semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-}
+@import url("https://fonts.googleapis.com/css?family=EB+Garamond:600|Roboto+Condensed:400,700");
 
 @media screen {
   *,
@@ -34,14 +17,14 @@ html {
 
 body {
   font-size: 1.4rem;
-  overflow:hidden;
+  overflow: hidden;
 } /* =14px all type sizes are relative to the base size*/
 
-main{
+main {
   position: relative;
-  top:48px;
-  height:calc(100vh - 48px);
-  overflow-y:scroll;
+  top: 48px;
+  height: calc(100vh - 48px);
+  overflow-y: scroll;
 }
 
 @keyframes appear {
@@ -65,10 +48,10 @@ main{
 @keyframes appear-scalein {
   0% {
     opacity: 0;
-    transform:scale(0.3);
+    transform: scale(0.3);
   }
   100% {
     opacity: 1;
-    transform:scale(1);
+    transform: scale(1);
   }
 }
