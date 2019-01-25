@@ -4,11 +4,11 @@ const EXPAND_PARTICIPANTS = "expander/EXPAND_PARTICIPANTS";
 const CLOSE_PARTICIPANTS = "expander/CLOSE_PARTICIPANTS";
 
 
-export const openCard = cardData => {
+export const openCard = cardIndex => {
   return dispatch => {
     dispatch({
       type: OPEN_CARD,
-      payload: cardData
+      payload: cardIndex
     });
   };
 };

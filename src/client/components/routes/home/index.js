@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "./search";
-import Cards from "./cards";
+import Distributor from "./distributor";
 import Error from "./error";
 import "./home.scss";
 
@@ -17,7 +17,7 @@ class Home extends React.Component {
     return (
       <div id="home">
         <Search />
-        <Cards />
+        <Distributor />
         <Error />
       </div>
     );

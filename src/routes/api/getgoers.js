@@ -50,7 +50,7 @@ router.get("/", function(req, res, next) {
             }
           } else {
             // else send "nothing" response
-            res.status(404).json({
+            res.status(204).json({
               status: "NOT_FOUND",
               message: "No such place in database"
             });

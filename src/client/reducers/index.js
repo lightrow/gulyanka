@@ -4,7 +4,8 @@ import input from "./input";
 import loader from "./loader";
 import query from "./query";
 import auth from "./auth";
-import expander from './expander'
+import expander from "./expander";
+import cards from "./cards";
 
 const appReducer = combineReducers({
   router: routerReducer,
@@ -12,7 +13,8 @@ const appReducer = combineReducers({
   input,
   query,
   auth,
-  expander
+  expander,
+  cards
 });
 
 const rootReducer = (state, action) => {

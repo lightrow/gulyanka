@@ -4,11 +4,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { inputChange } from "../../../../reducers/input";
 import {
-  loadStart,
-  loadEnd,
-  loadFail,
-  loadSuccess,
-  typingStart
+  typingStart,
+  getData
 } from "../../../../reducers/loader";
 import "./search.scss";
 import { SearchIcon } from "./icon/search_icon";
@@ -29,46 +26,16 @@ class Searchbar extends React.Component {
   }
 
   onInputChange = event => {
-    this.props.typingStart()
+    this.props.typingStart();
     this.props.inputChange(event.target.value);
   };
 
   onInputSubmit = event => {
     event.preventDefault();
-    this.setState({
-      ...this.state,
-      blocked: true
-    });
     if (!this.props.loaded) {
-      this.shrinkSearch();
+      this.setState({ ...this.state, searchClass: "search-small" });
     }
-    this.props.loadStart();
-    if (this.props.search_field.toString() === "") {
-      return this.props.loadFail("Error: Field is empty");
-    } else {
-      fetch("/api/getplaces?city=" + this.props.search_field.toString())
-        .then(response => response.json())
-        .then(res => {
-          switch (res.status) {
-            case "ZERO_RESULTS":
-              return this.props.loadFail("Nothing found");
-            case "NO_INPUT":
-              return this.props.loadFail("Nothing entered");
-            default:
-              return this.props.loadSuccess(res.results);
-          }
-        })
-        .then(() => {
-          this.setState({
-            ...this.state,
-            blocked: false
-          });
-        });
-    }
-  };
-
-  shrinkSearch = () => {
-    this.setState({...this.state,searchClass:"search-small"});
+    this.props.getData(this.props.search_field);
   };
 
   render() {
@@ -119,10 +86,7 @@ const mapDispatchToProps = dispatch =>
     {
       inputChange,
       typingStart,
-      loadStart,
-      loadEnd,
-      loadSuccess,
-      loadFail,
+      getData,
       changePage: () => push("/details")
     },
     dispatch
