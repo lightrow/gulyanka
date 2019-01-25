@@ -8,7 +8,7 @@ var utils = require("../../utils");
 router.get("/", function(req, res) {
   var photoref = req.query.photoref;
   var placeref = req.query.placeref;
-  var maxwidth = 500;
+  var maxwidth = 1500;
 
   mongo.connect(
     utils.mongourl,

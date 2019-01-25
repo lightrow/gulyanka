@@ -19,7 +19,9 @@ class Counter extends React.Component {
     if (this.props.authData.authType != undefined) {
       let key = this.props.key_prop;
       let obj = { key: key, placeId: this.props.card.place_id };
-      this.props.getGoers(obj);
+      setTimeout(() => {
+        this.props.getGoers(obj);
+      }, 1000);
     }
   }
 
@@ -27,9 +29,7 @@ class Counter extends React.Component {
     return (
       <div className="counter">
         <span>
-          {this.props.card.goers
-            ? this.props.card.goers.length
-            : "0"}
+          {this.props.card.goers ? this.props.card.goers.length : "..."}
         </span>
       </div>
     );
