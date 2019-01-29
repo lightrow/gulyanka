@@ -1,6 +1,6 @@
 {
-  "name": "es6-tutorial",
-  "version": "1.0.0",
+  "name": "gulyanka",
+  "version": "2.0.1",
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -61,8 +61,6 @@
     "util-inspect": "^0.1.8"
   },
   "scripts": {
-    "start": "nodemon --config nodemon.json --exec babel-node server.js",
-    "start-dev": "babel-node ./dist/server.js",
-    "build": "webpack --config ./webpack.config.client.js && webpack --config ./webpack.config.server.js && cp -r ./public/* ../public/"
+    "start": "node server.js"
   }
 }
