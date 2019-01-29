@@ -7,6 +7,7 @@ const session = require("express-session");
 const history = require("connect-history-api-fallback");
 const MongoStore = require("connect-mongo")(session);
 const utils = require("./utils");
+
 /*
 const webpack = require("webpack");
 const webpackMiddleware = require("webpack-dev-middleware");
@@ -26,19 +27,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("trust proxy", true);
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "lmaozomg",
     cookie: { secure: false, expires: new Date(253402300000000) },
     store: new MongoStore({ url: utils.mongourl }),
-    proxy: true,
-    resave: true,
-    saveUninitialized: true
   })
 );
+
+app.use(express.static("public"));
+
+app.use("*", require("./routes/api/auth2"));
 
 app.use("/api/getplaces", require("./routes/api/getplaces"));
 app.use("/api/getphoto", require("./routes/api/getphoto"));
 app.use("/api/getdetails", require("./routes/api/getdetails"));
-
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/auth2", require("./routes/api/auth2"));
 app.use("/api/access", require("./routes/api/access"));
@@ -46,10 +47,9 @@ app.use("/api/verify", require("./routes/api/verify"));
 app.use("/api/callback", require("./routes/api/callback"));
 app.use("/api/willgo", require("./routes/api/willgo"));
 app.use("/api/getgoers", require("./routes/api/getgoers"));
+app.get("/api/authsse", utils.sse.init);
 
 app.use(history());
-
-app.use(express.static("public"));
 
 
 /*

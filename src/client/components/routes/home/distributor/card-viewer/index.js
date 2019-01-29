@@ -28,13 +28,20 @@ class CardViewer extends React.Component {
     } else {
       let persons = [];
       if (this.props.cards[this.props.loadedCard].goers.length <= 5) {
-        this.props.cards[this.props.loadedCard].goers.map((person, index) => {
+        if (this.props.cards[this.props.loadedCard].goers.length > 0) {
+          this.props.cards[this.props.loadedCard].goers.map((person, index) => {
+            persons.push(
+              <div className="person" id={"person" + index}>
+                <img src={person.profile_image_url} />
+              </div>
+            );
+          });
           persons.push(
-            <div className="person" id={"person" + index}>
-              <img src={person.profile_image_url} />
+            <div className="tonight-text">
+              <span>will be chilling here tonight.</span>
             </div>
           );
-        });
+        }
         return <div className="participants">{persons}</div>;
       } else {
         for (let i = 0; i < 4; i++) {
@@ -64,7 +71,7 @@ class CardViewer extends React.Component {
         );
         persons.push(
           <div className="tonight-text">
-            <span>...will be chilling here tonight.</span>
+            <span>will be chilling here tonight.</span>
           </div>
         );
         return <div className="participants">{persons}</div>;

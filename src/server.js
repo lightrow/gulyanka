@@ -6,10 +6,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const history = require("connect-history-api-fallback");
 const MongoStore = require("connect-mongo")(session);
-const SSE = require("express-sse");
 const utils = require("./utils");
-
-export const sse = new SSE(["nothing here"]);
 
 const webpack = require("webpack");
 const webpackMiddleware = require("webpack-dev-middleware");
@@ -51,7 +48,7 @@ app.use("/api/callback", require("./routes/api/callback"));
 app.use("/api/willgo", require("./routes/api/willgo"));
 app.use("/api/getgoers", require("./routes/api/getgoers"));
 
-app.get("/api/authsse", sse.init);
+app.get("/api/authsse", utils.sse.init);
 
 app.use(history());
 

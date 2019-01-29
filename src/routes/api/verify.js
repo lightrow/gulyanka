@@ -5,10 +5,9 @@ var utils = require("../../utils");
 var session = require("express-session");
 var inspect = require("util-inspect");
 var path = require("path");
+var sse = require("../../utils").sse;
 
-import { sse } from "../../server";
-
-router.get("/", function(req, res, next) {
+router.get("/", (req, res, next) => {
   console.log("**-----------------------------------------------------**");
   console.log("VERIFIYING FOR : " + req.sessionID);
   console.log("accToken Session: " + req.session.oauth.accToken);
@@ -52,11 +51,8 @@ router.get("/", function(req, res, next) {
                 data: req.session.oauth.data,
                 friends: req.session.oauth.friends
               });
-              return res
-                .status(200)
-                .sendFile(
-                  path.join(__dirname + "../../../public/redirect_close.html")
-                );
+              req.session.save();
+              return res.redirect("/redirect_close.html")
             }
           }
         );

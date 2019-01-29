@@ -1,4 +1,5 @@
 var oauth = require("oauth");
+const SSE = require("express-sse");
 
 var _mongourl = "mongodb://guest:1234@ds125288.mlab.com:25288/mlabdb";
 var _twitterConsumerKey = "mqMuivEEFDyBNekQBk56PMMSa";
@@ -8,6 +9,8 @@ var _placekey = "AIzaSyC8K66Hs3IKMTnrdhTH3OvKkgOnC11oEIU";
 var _geokey = "AIzaSyC8K66Hs3IKMTnrdhTH3OvKkgOnC11oEIU";
 var _db = "mlabdb";
 var _collection = "gulyanka-db";
+
+var _sse = new SSE(["nothing here"]);
 
 var _consumer = new oauth.OAuth(
   "https://twitter.com/oauth/request_token",
@@ -28,16 +31,15 @@ var _consumer2 = new oauth.OAuth2(
   null
 );
 
-
-
 module.exports = {
   twitterConsumerKey: _twitterConsumerKey,
   twitterConsumerSecret: _twitterConsumerSecret,
   consumer: _consumer,
-  consumer2:_consumer2,
+  consumer2: _consumer2,
   placekey: _placekey,
   geokey: _geokey,
   mongourl: _mongourl,
+  sse: _sse,
   db: _db,
   collection: _collection
 };
