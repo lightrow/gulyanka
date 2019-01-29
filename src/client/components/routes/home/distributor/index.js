@@ -196,7 +196,7 @@ class Distributor extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", () => {
       if (this.props.cardsDistributed) {  //  otherwise it recalculates ~15 times 
-        this.props.cardsRedistribute();   //  per single resize event
+        this.props.cardsRedistribute();   //  per resize event
       }
     });
   }

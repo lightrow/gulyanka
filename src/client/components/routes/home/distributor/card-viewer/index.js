@@ -6,6 +6,7 @@ import {
   closeParticipants,
   expandParticipants
 } from "../../../../../reducers/expander";
+import { getGoers, gettingGoers } from "../../../../../reducers/cards";
 import Map from "./map";
 import { Star, HalfStar } from "../card/star.js";
 import "./card-viewer.scss";
@@ -18,48 +19,56 @@ class CardViewer extends React.Component {
   }
 
   handleParticipants = () => {
-    let persons = [];
-    if (this.props.cards[this.props.loadedCard].goers.length <= 5) {
-      this.props.cards[this.props.loadedCard].goers.map((person, index) => {
-        persons.push(
-          <div className="person" id={"person" + index}>
-            <img src={person.profile_image_url} />
-          </div>
-        );
-      });
-      return <div className="participants">{persons}</div>;
+    if (this.props.cards[this.props.loadedCard].gettingGoers) {
+      return (
+        <div className="spinner-goers">
+          <img src="/spinner.svg" />
+        </div>
+      );
     } else {
-      for (let i = 0; i < 4; i++) {
+      let persons = [];
+      if (this.props.cards[this.props.loadedCard].goers.length <= 5) {
+        this.props.cards[this.props.loadedCard].goers.map((person, index) => {
+          persons.push(
+            <div className="person" id={"person" + index}>
+              <img src={person.profile_image_url} />
+            </div>
+          );
+        });
+        return <div className="participants">{persons}</div>;
+      } else {
+        for (let i = 0; i < 4; i++) {
+          persons.push(
+            <div className="person" id={"person" + i}>
+              <img
+                src={
+                  this.props.cards[this.props.loadedCard].goers[i]
+                    .profile_image_url
+                }
+              />
+            </div>
+          );
+        }
         persons.push(
-          <div className="person" id={"person" + index}>
-            <img
-              src={
-                this.props.cards[this.props.loadedCard].goers[i]
-                  .profile_image_url
-              }
-            />
+          <div
+            className="person person-more"
+            onClick={e => this.props.expandParticipants(e)}
+          >
+            {this.props.participantsExpanded
+              ? this.handleParticipantsExpanded()
+              : "+" +
+                (
+                  this.props.cards[this.props.loadedCard].goers.length - 5
+                ).toString()}
           </div>
         );
+        persons.push(
+          <div className="tonight-text">
+            <span>...will be chilling here tonight.</span>
+          </div>
+        );
+        return <div className="participants">{persons}</div>;
       }
-      persons.push(
-        <div
-          className="person person-more"
-          onClick={e => this.props.expandParticipants(e)}
-        >
-          {this.props.participantsExpanded
-            ? this.handleParticipantsExpanded()
-            : "+" +
-              (
-                this.props.cards[this.props.loadedCard].goers.length - 5
-              ).toString()}
-        </div>
-      );
-      persons.push(
-        <div className="tonight-text">
-          <span>...will be chilling here tonight.</span>
-        </div>
-      );
-      return <div className="participants">{persons}</div>;
     }
   };
 
@@ -117,6 +126,20 @@ class CardViewer extends React.Component {
     return Stars;
   };
 
+  handleWillGo = () => {
+    this.props.gettingGoers(this.props.loadedCard);
+    fetch(`/api/willgo?q=${this.props.cards[this.props.loadedCard].place_id}`)
+      .then(res => res.json())
+      .then(res => {
+        //update goers
+        let obj = {
+          key: this.props.loadedCard,
+          placeId: this.props.cards[this.props.loadedCard].place_id
+        };
+        this.props.getGoers(obj);
+      });
+  };
+
   handleViewer = () => {
     if (this.props.isOpened) {
       return (
@@ -132,7 +155,12 @@ class CardViewer extends React.Component {
 
             <div id="button-group-top">
               {this.handleParticipants()}
-              <button className="button button-willgo">Will Go</button>
+              <button
+                className="button button-willgo"
+                onClick={e => this.handleWillGo()}
+              >
+                Will Go
+              </button>
             </div>
             <div className="mid-container">
               <div
@@ -208,6 +236,8 @@ const mapDispatchToProps = dispatch =>
       closeCard,
       closeParticipants,
       expandParticipants,
+      getGoers,
+      gettingGoers,
       changePage: () => push("/somewhere")
     },
     dispatch

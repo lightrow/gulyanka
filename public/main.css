@@ -109,304 +109,304 @@
   will-change: scale, transform, opacity, top, left, right, bottom, width, height; }
 
 .card:nth-child(1) {
-  background-color: #8c8d4e; }
+  background-color: #8a6ca3; }
 
 .card:nth-child(2) {
-  background-color: #758d58; }
+  background-color: #a85d64; }
 
 .card:nth-child(3) {
-  background-color: #82b0a6; }
+  background-color: #558151; }
 
 .card:nth-child(4) {
-  background-color: #4f5a87; }
+  background-color: #a3a677; }
 
 .card:nth-child(5) {
-  background-color: #529879; }
+  background-color: #7db589; }
 
 .card:nth-child(6) {
-  background-color: #53935e; }
+  background-color: #57a26a; }
 
 .card:nth-child(7) {
-  background-color: #558b88; }
+  background-color: #a26d87; }
 
 .card:nth-child(8) {
-  background-color: #98616d; }
+  background-color: #93a573; }
 
 .card:nth-child(9) {
-  background-color: #68a16d; }
+  background-color: #557f82; }
 
 .card:nth-child(10) {
-  background-color: #4d4988; }
+  background-color: #768c4f; }
 
 .card:nth-child(11) {
-  background-color: #875393; }
+  background-color: #9c5e99; }
 
 .card:nth-child(12) {
-  background-color: #92ae7e; }
+  background-color: #a77762; }
 
 .card:nth-child(13) {
-  background-color: #68a170; }
+  background-color: #815153; }
 
 .card:nth-child(14) {
-  background-color: #8778ab; }
+  background-color: #a67268; }
 
 .card:nth-child(15) {
-  background-color: #8961a8; }
+  background-color: #ac6c9b; }
 
 .card:nth-child(16) {
-  background-color: #68a685; }
+  background-color: #b28576; }
 
 .card:nth-child(17) {
-  background-color: #698fa5; }
+  background-color: #7087a9; }
 
 .card:nth-child(18) {
-  background-color: #8775a9; }
+  background-color: #a27aae; }
 
 .card:nth-child(19) {
-  background-color: #68a685; }
+  background-color: #5a6896; }
 
 .card:nth-child(20) {
-  background-color: #528389; }
+  background-color: #8f5679; }
 
 .card:nth-child(21) {
-  background-color: #a69659; }
+  background-color: #ac809c; }
 
 .card:nth-child(22) {
-  background-color: #977eae; }
+  background-color: #a05a8b; }
 
 .card:nth-child(23) {
-  background-color: #9f657f; }
+  background-color: #91b082; }
 
 .card:nth-child(24) {
-  background-color: #b27b82; }
+  background-color: #b29270; }
 
 .card:nth-child(25) {
-  background-color: #4f8487; }
+  background-color: #88596d; }
 
 .card:nth-child(26) {
-  background-color: #5e9f56; }
+  background-color: #7f90ad; }
 
 .card:nth-child(27) {
-  background-color: #986197; }
+  background-color: #93b677; }
 
 .card:nth-child(28) {
-  background-color: #497b88; }
+  background-color: #7a7eb8; }
 
 .card:nth-child(29) {
-  background-color: #718656; }
+  background-color: #9e5772; }
 
 .card:nth-child(30) {
-  background-color: #a09464; }
+  background-color: #ad837f; }
 
 .card:nth-child(31) {
-  background-color: #7f5a8c; }
+  background-color: #64a06a; }
 
 .card:nth-child(32) {
-  background-color: #b2af7b; }
+  background-color: #8d4e81; }
 
 .card:nth-child(33) {
-  background-color: #b5a378; }
+  background-color: #b1a281; }
 
 .card:nth-child(34) {
-  background-color: #8f9457; }
+  background-color: #72a257; }
 
 .card:nth-child(35) {
-  background-color: #754f82; }
+  background-color: #7796a6; }
 
 .card:nth-child(36) {
-  background-color: #589d58; }
+  background-color: #856d4c; }
 
 .card:nth-child(37) {
-  background-color: #b27b81; }
+  background-color: #9faa64; }
 
 .card:nth-child(38) {
-  background-color: #677dad; }
+  background-color: #619b55; }
 
 .card:nth-child(39) {
-  background-color: #6f7cae; }
+  background-color: #8d7c58; }
 
 .card:nth-child(40) {
-  background-color: #89b181; }
+  background-color: #94609f; }
 
 .card:nth-child(41) {
-  background-color: #5c6c99; }
+  background-color: #7c854c; }
 
 .card:nth-child(42) {
-  background-color: #997eae; }
+  background-color: #ae9d6f; }
 
 .card:nth-child(43) {
-  background-color: #67a894; }
+  background-color: #955b80; }
 
 .card:nth-child(44) {
-  background-color: #a0b270; }
+  background-color: #79b073; }
 
 .card:nth-child(45) {
-  background-color: #82a25d; }
+  background-color: #79af74; }
 
 .card:nth-child(46) {
-  background-color: #7180a8; }
+  background-color: #654c85; }
 
 .card:nth-child(47) {
-  background-color: #a2736d; }
+  background-color: #4d8987; }
 
 .card:nth-child(48) {
-  background-color: #5f9573; }
+  background-color: #6d6fa2; }
 
 .card:nth-child(49) {
-  background-color: #9b5583; }
+  background-color: #9b9359; }
 
 .card:nth-child(50) {
-  background-color: #74aa90; }
+  background-color: #948161; }
 
 .card:nth-child(51) {
-  background-color: #af6e80; }
+  background-color: #756ca7; }
 
 .card:nth-child(52) {
-  background-color: #4d8465; }
+  background-color: #874a4e; }
 
 .card:nth-child(53) {
-  background-color: #7aa891; }
+  background-color: #83af9b; }
 
 .card:nth-child(54) {
-  background-color: #59a173; }
+  background-color: #71a28b; }
 
 .card:nth-child(55) {
-  background-color: #6faf6e; }
+  background-color: #71955f; }
 
 .card:nth-child(56) {
-  background-color: #8fae6f; }
+  background-color: #955aa0; }
 
 .card:nth-child(57) {
-  background-color: #a4707a; }
+  background-color: #a3a85d; }
 
 .card:nth-child(58) {
-  background-color: #498851; }
+  background-color: #9fa677; }
 
 .card:nth-child(59) {
-  background-color: #89864d; }
+  background-color: #635d92; }
 
 .card:nth-child(60) {
-  background-color: #a271a2; }
+  background-color: #b1818c; }
 
 .card:nth-child(61) {
-  background-color: #5a8a96; }
+  background-color: #8ca86b; }
 
 .card:nth-child(62) {
-  background-color: #7bb37a; }
+  background-color: #559156; }
 
 .card:nth-child(63) {
-  background-color: #977053; }
+  background-color: #9c7db0; }
 
 .card:nth-child(64) {
-  background-color: #a66e77; }
+  background-color: #b29476; }
 
 .card:nth-child(65) {
-  background-color: #a06a64; }
+  background-color: #68919c; }
 
 .card:nth-child(66) {
-  background-color: #5da862; }
+  background-color: #8fa85d; }
 
 .card:nth-child(67) {
-  background-color: #a27cb6; }
+  background-color: #5b8e8f; }
 
 .card:nth-child(68) {
-  background-color: #995659; }
+  background-color: #7e884e; }
 
 .card:nth-child(69) {
-  background-color: #b27bb1; }
+  background-color: #ad767f; }
 
 .card:nth-child(70) {
-  background-color: #995c64; }
+  background-color: #a47090; }
 
 .card:nth-child(71) {
-  background-color: #89ad7b; }
+  background-color: #a86ba5; }
 
 .card:nth-child(72) {
-  background-color: #537f7b; }
+  background-color: #b6937c; }
 
 .card:nth-child(73) {
-  background-color: #b47e8a; }
+  background-color: #5b6f9a; }
 
 .card:nth-child(74) {
-  background-color: #548380; }
+  background-color: #af839d; }
 
 .card:nth-child(75) {
-  background-color: #8d587b; }
+  background-color: #9c8768; }
 
 .card:nth-child(76) {
-  background-color: #7576a9; }
+  background-color: #579876; }
 
 .card:nth-child(77) {
-  background-color: #ad7698; }
+  background-color: #5a6e96; }
 
 .card:nth-child(78) {
-  background-color: #6c8aac; }
+  background-color: #ac77a5; }
 
 .card:nth-child(79) {
-  background-color: #816d51; }
+  background-color: #63a17d; }
 
 .card:nth-child(80) {
-  background-color: #9760a4; }
+  background-color: #717bad; }
 
 .card:nth-child(81) {
-  background-color: #9f8a5b; }
+  background-color: #6790a2; }
 
 .card:nth-child(82) {
-  background-color: #83a55f; }
+  background-color: #52858e; }
 
 .card:nth-child(83) {
-  background-color: #625483; }
+  background-color: #7695a7; }
 
 .card:nth-child(84) {
-  background-color: #7571ad; }
+  background-color: #81b1af; }
 
 .card:nth-child(85) {
-  background-color: #9579b4; }
+  background-color: #68aa64; }
 
 .card:nth-child(86) {
-  background-color: #7da4aa; }
+  background-color: #5d7f8e; }
 
 .card:nth-child(87) {
-  background-color: #8b5b61; }
+  background-color: #625e97; }
 
 .card:nth-child(88) {
-  background-color: #789f65; }
+  background-color: #7a72a7; }
 
 .card:nth-child(89) {
-  background-color: #93b172; }
+  background-color: #a59173; }
 
 .card:nth-child(90) {
-  background-color: #ae9b6b; }
+  background-color: #b3ac75; }
 
 .card:nth-child(91) {
-  background-color: #79aaaf; }
+  background-color: #7a8b55; }
 
 .card:nth-child(92) {
-  background-color: #a6779c; }
+  background-color: #559b90; }
 
 .card:nth-child(93) {
-  background-color: #6b568a; }
+  background-color: #b2709c; }
 
 .card:nth-child(94) {
-  background-color: #7ea2b4; }
+  background-color: #aa8d7d; }
 
 .card:nth-child(95) {
-  background-color: #5da882; }
+  background-color: #9b5f67; }
 
 .card:nth-child(96) {
-  background-color: #6689a3; }
+  background-color: #8dad76; }
 
 .card:nth-child(97) {
-  background-color: #76a77d; }
+  background-color: #a36c70; }
 
 .card:nth-child(98) {
-  background-color: #a17d68; }
+  background-color: #867456; }
 
 .card:nth-child(99) {
-  background-color: #a0915a; }
+  background-color: #548c6c; }
 
 .card:nth-child(100) {
-  background-color: #a4658d; }
+  background-color: #b677b2; }
 
 .card-img {
   height: 100%;
@@ -580,6 +580,16 @@
     transform: translate(2px, -5px);
     font-weight: bold; }
 
+.spinner-goers-small {
+  margin: auto;
+  padding: 5px;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  right: 7px; }
+  .spinner-goers-small img {
+    animation: spin 2.5s cubic-bezier(0.15, 0.58, 0.86, 0.42) infinite; }
+
 .map {
   width: 100%;
   margin: auto;
@@ -592,55 +602,70 @@
 .hide {
   display: none !important; }
 
+.spinner-goers {
+  margin: auto;
+  margin-left: 0;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: white;
+  padding: 5px;
+  border: 4px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  width: 64px;
+  height: 64px; }
+  .spinner-goers img {
+    animation: spin 2.5s cubic-bezier(0.15, 0.58, 0.86, 0.42) infinite; }
+
 #corner-box1 {
   background-color: #e1e1e1;
   top: 15px;
   left: 15px;
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   position: absolute; }
 
 #corner-box2 {
   background-color: #e1e1e1;
   top: 15px;
   right: 15px;
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   position: absolute; }
 
 #corner-box3 {
   background-color: #e1e1e1;
   bottom: 15px;
   left: 15px;
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   position: absolute; }
 
 #corner-box4 {
   background-color: #e1e1e1;
   bottom: 15px;
   right: 15px;
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   position: absolute; }
 
 #corner1 {
   width: 0px;
   height: 0px;
-  border-bottom: solid 40px transparent;
-  border-right: solid 40px transparent;
-  border-left: solid 40px #555555;
-  border-top: solid 40px #555555; }
+  border-bottom: solid 30px transparent;
+  border-right: solid 30px transparent;
+  border-left: solid 30px rgba(0, 0, 0, 0.397);
+  border-top: solid 30px rgba(0, 0, 0, 0.397); }
 
 #corner2 {
   position: absolute;
   right: 0;
   width: 0px;
   height: 0px;
-  border-bottom: solid 40px transparent;
-  border-right: solid 40px #555555;
-  border-left: solid 40px transparent;
-  border-top: solid 40px #555555;
+  border-bottom: solid 30px transparent;
+  border-right: solid 30px rgba(0, 0, 0, 0.397);
+  border-left: solid 30px transparent;
+  border-top: solid 30px rgba(0, 0, 0, 0.397);
   position: absolute; }
 
 #corner3 {
@@ -648,10 +673,10 @@
   bottom: 0;
   width: 0px;
   height: 0px;
-  border-bottom: solid 40px #555555;
-  border-right: solid 40px transparent;
-  border-left: solid 40px #555555;
-  border-top: solid 40px transparent;
+  border-bottom: solid 30px rgba(0, 0, 0, 0.397);
+  border-right: solid 30px transparent;
+  border-left: solid 30px rgba(0, 0, 0, 0.397);
+  border-top: solid 30px transparent;
   position: absolute; }
 
 #corner4 {
@@ -660,10 +685,10 @@
   bottom: 0;
   width: 0px;
   height: 0px;
-  border-bottom: solid 40px #555555;
-  border-right: solid 40px #555555;
-  border-left: solid 40px transparent;
-  border-top: solid 40px transparent;
+  border-bottom: solid 30px rgba(0, 0, 0, 0.397);
+  border-right: solid 30px rgba(0, 0, 0, 0.397);
+  border-left: solid 30px transparent;
+  border-top: solid 30px transparent;
   position: absolute; }
 
 #card-viewer {
@@ -690,7 +715,7 @@
     box-sizing: border-box;
     position: relative; }
     #card-viewer #card-viewer-container .card-viewer-subcontainer {
-      border: 2px solid #555555;
+      border: 2px solid rgba(0, 0, 0, 0.397);
       position: relative;
       padding: 25px;
       background-color: #e1e1e1;
@@ -701,7 +726,7 @@
         font-weight: 500 !important;
         background-color: white;
         position: relative;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
         z-index: 2;
         color: #4d4d4d;
         text-align: center;
@@ -820,18 +845,21 @@
     overflow-y: scroll; }
 
 .button {
-  font-family: 'Roboto Condensed';
+  font-family: "Roboto Condensed";
   cursor: pointer;
   outline: none;
   border: 2px solid white;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
   height: 48px;
   width: 48px;
   margin: 5px;
   overflow: hidden;
   box-sizing: border-box;
   background-clip: padding-box; }
+  .button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
 
 #button-group-top {
   margin: 20px 0;
@@ -843,11 +871,13 @@
     margin-right: auto; }
   #button-group-top .button-willgo {
     margin-bottom: 10px;
-    background-color: #228d76;
+    background: radial-gradient(ellipse at bottom, #21bb9a 0%, #207a67 100%);
     width: 180px;
     color: white;
     font-size: 1.2em;
     height: 48px; }
+    #button-group-top .button-willgo:hover {
+      background: radial-gradient(ellipse at bottom, #26c2a0 0%, #207a67 100%); }
 
 #button-group-bottom {
   background-color: whitesmoke;
@@ -866,7 +896,7 @@
     background-color: #585050; }
   #button-group-bottom .splitter-line1 {
     height: 2px;
-    background-color: #555555;
+    background-color: rgba(0, 0, 0, 0.397);
     flex: 1 1 auto;
     margin: auto;
     position: relative;
@@ -874,7 +904,7 @@
     justify-self: flex-end; }
   #button-group-bottom .splitter-line2 {
     height: 2px;
-    background-color: #555555;
+    background-color: rgba(0, 0, 0, 0.397);
     flex: 1 1 auto;
     margin: auto;
     position: relative;
@@ -887,7 +917,7 @@
     justify-self: center;
     align-self: center; }
     #button-group-bottom .splitter * {
-      stroke: #555555; }
+      stroke: rgba(0, 0, 0, 0.397); }
     #button-group-bottom .splitter svg {
       height: 48px; }
   #button-group-bottom #buttons-social {
@@ -994,11 +1024,19 @@ body {
   line-height: 28px;
   margin-right: auto; }
 
-.nav-group > a {
+.nav-group > a, .login-button {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  outline: none;
+  border: none;
   line-height: 28px;
   color: white;
   text-decoration: none;
-  margin: 8px; }
+  margin: 0 8px; }
 
 .auth-container {
   animation: appear 1s cubic-bezier(0.18, 1.01, 0.46, 0.98);
@@ -1087,6 +1125,12 @@ main {
   top: 48px;
   height: calc(100vh - 48px);
   overflow-y: scroll; }
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(1080deg); }
+  100% {
+    transform: rotateZ(0deg); } }
 
 @keyframes appear {
   0% {

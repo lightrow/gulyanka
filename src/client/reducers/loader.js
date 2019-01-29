@@ -14,7 +14,7 @@ export const cardsDistributeDone = (cardStyles, distributorStyle) => {
   return dispatch => {
     dispatch({
       type: CARDS_DISTRIBUTED,
-      payload: { cardStyles: cardStyles, distributorStyle: distributorStyle }
+      payload: { cardStyles, distributorStyle }
     });
   };
 };
@@ -43,6 +43,12 @@ export const getData = location => {
             dispatch(loadFail("Nothing Entered."));
             break;
           default:
+            res.results.forEach(entry => {
+              entry.img = "";
+              entry.goers = [];
+              entry.gettingGoers = true;
+              entry.updated = false;
+            });
             dispatch(fillCardsStore(Array.from(res.results)));
             dispatch(loadSuccess(Array.from(res.results)));
             break;
@@ -163,11 +169,6 @@ export default (state = initialState, action = {}) => {
         cardsDistributed: false
       };
     case LOAD_SUCCESS:
-      action.payload.forEach(entry => {
-        entry.img = "";
-        entry.goers = [];
-        entry.updated = false;
-      });
       return {
         ...state,
         loading: false,

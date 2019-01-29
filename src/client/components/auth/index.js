@@ -2,7 +2,7 @@ import "./auth.scss";
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { saveAuth } from "../../reducers/auth";
+import { authorize } from "../../reducers/auth";
 
 class Auth extends React.Component {
   constructor(props) {
@@ -12,44 +12,15 @@ class Auth extends React.Component {
     };
   }
 
-  authorizeUser = () => {
-    this.setState({
-      ...this.state,
-      authClass: ""
-    });
-    fetch("/api/auth")
-      .then(res => res.json())
-      .then(res => {
-        if (res.message == "OK") {
-          this.props.saveAuth({ authType: "user", authInfo: res });
-        }
-      });
-  };
-
-  authorizeApp = () => {
-    this.setState({
-      ...this.state,
-      authClass: ""
-    });
-    fetch("/api/auth2")
-      .then(res => res.json())
-      .then(res => {
-        if (res.message == "OK") {
-          console.log("BEARER: " + res);
-          this.props.saveAuth({ authType: "bearer", authInfo: res });
-        }
-      });
-  };
 
   componentDidMount() {
     //ask user for authorization
-    this.authorizeApp();
+   // this.props.authorize();
   }
 
   render() {
     return (
       <div id="auth" className={"auth " + this.state.authClass}>
-        <div className="auth-backdrop" />
         <div className="auth-container">
           <p>
             Login with <span className="twitter">Twitter</span> account to
@@ -72,7 +43,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      saveAuth,
+      authorize,
       changePage: () => push("/somewhere")
     },
     dispatch

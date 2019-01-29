@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch';
+import fetch from "cross-fetch";
 
 const UPDATE_CARD = "cards/UPDATE_CARD ";
 const FILL_CARDS_STORE = "cards/FILL_CARDS_STORE";
@@ -6,6 +6,7 @@ const CARD_UPDATED = "cards/CARD_UPDATED";
 const EMPTY_CARDS = "cards/EMPTY_CARDS";
 const SAVE_IMAGE = "cards/SAVE_IMAGE";
 const SAVE_GOERS = "cards/SAVE_GOERS";
+const GETTING_GOERS = "cards/GETTING_GOERS";
 
 export const updateCard = obj => {
   return {
@@ -29,45 +30,41 @@ export const saveGoers = obj => {
   };
 };
 
-export const cardUpdated = obj => {
+export const gettingGoers = key => {
+  return {
+    type: GETTING_GOERS,
+    payload: key
+  };
+};
 
+export const cardUpdated = obj => {
   return {
     type: CARD_UPDATED,
     payload: obj
   };
 };
 
-export const getImages = obj => {
-  return dispatch => {
-    return fetch(`/api/getplaces?city=${obj.placeId}`)
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(res => {
-        if (res.status == 200) {
-          dispatch(saveGoers({ key: obj.key, goers: res.goers }));
-        }
-      })
-      //.catch(error => console.log(error));
-  };
-};
-
-
 export const getGoers = obj => {
   return dispatch => {
+    dispatch(gettingGoers(obj.key));
     fetch(`/api/getgoers?q=${obj.placeId}`)
-      .then(handleErrors)
+      //.then(handleErrors)
       .then(res => res.json())
       .then(res => {
         if (res.status == 200) {
           dispatch(saveGoers({ key: obj.key, goers: res.goers }));
+        } else {
+          console.log("LOLSLSLSLSL")
+          dispatch(saveGoers({ key: obj.key, goers: [] }));
         }
-      })
-      //.catch(error => console.log(error));
+      });
+    //.catch(error => console.log(error));
   };
 };
 
 function handleErrors(response) {
   if (!response.ok) {
+    console.log(response);
     throw Error(response.statusText);
   }
   return response;
@@ -104,19 +101,28 @@ export default (state = initialState, action = {}) => {
         ...emptyState
       };
     case SAVE_IMAGE:
-    return {
+      return {
         ...state,
         [action.payload.key]: {
           ...state[action.payload.key],
           img: action.payload.img
         }
       };
+    case GETTING_GOERS:
+      return {
+        ...state,
+        [action.payload]: {
+          ...state[action.payload],
+          gettingGoers: true
+        }
+      };
     case SAVE_GOERS:
-    return {
+      return {
         ...state,
         [action.payload.key]: {
           ...state[action.payload.key],
-          goers: action.payload.goers
+          goers: action.payload.goers,
+          gettingGoers: false
         }
       };
     default:

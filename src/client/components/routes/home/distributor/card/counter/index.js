@@ -16,20 +16,26 @@ class Counter extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.authData.authType != undefined) {
-      let key = this.props.key_prop;
-      let obj = { key: key, placeId: this.props.card.place_id };
-      setTimeout(() => {
-        this.props.getGoers(obj);
-      }, 1000);
-    }
+    let key = this.props.key_prop;
+    let obj = { key: key, placeId: this.props.card.place_id };
+    setTimeout(() => {
+      this.props.getGoers(obj);
+    }, 1000);
+  }
+
+  handleSpinner = () => {
+    return (
+      <div className="spinner-goers-small">
+        <img src="/spinner.svg" />
+      </div>
+    );
   }
 
   render() {
     return (
       <div className="counter">
         <span>
-          {this.props.card.goers ? this.props.card.goers.length : "..."}
+          {this.props.card.gettingGoers ? this.handleSpinner() : this.props.card.goers.length}
         </span>
       </div>
     );

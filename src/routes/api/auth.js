@@ -12,22 +12,20 @@ router.get("/", function(req, res, next) {
     (error, oauthToken, oauthTokenSecret, results) => {
       if (error) {
         console.log(inspect(error));
-        res.status(500).json({ message: "ERROR", error:error });
+        res.status(500).json({ message: "ERROR", error: error });
       } else {
-        req.session.reqToken = oauthToken;
-        req.session.reqTokenSecret = oauthTokenSecret;
-        req.session.auth = "user";
+        req.session.oauth = {};
+        req.session.oauth.reqToken = oauthToken;
+        req.session.oauth.reqTokenSecret = oauthTokenSecret;
         console.log("------------------------");
-        console.log("<<" + req.session.reqToken);
-        console.log("<<" + req.session.reqTokenSecret);
+        console.log("<<" + req.session.oauth.reqToken);
+        console.log("<<" + req.session.oauth.reqTokenSecret);
         console.log("sessionID: " + req.sessionID);
-        res
-          .status(200)
-          .json({
-            message: "OK",
-            reqToken: oauthToken,
-            reqTokenSecret: oauthTokenSecret
-          });
+        let url = `https://api.twitter.com/oauth/authenticate?oauth_token=${
+          req.session.oauth.reqToken
+        }`;
+        console.log(url);
+        res.redirect(url);
       }
     }
   );

@@ -4,18 +4,21 @@ var request = require("request");
 var utils = require("../../utils");
 var session = require("express-session");
 var inspect = require("util-inspect");
+var path = require("path");
+
+import { sse } from "../../server";
 
 router.get("/", function(req, res, next) {
   console.log("**-----------------------------------------------------**");
   console.log("VERIFIYING FOR : " + req.sessionID);
-  console.log("accToken Session: " + req.session.accToken);
-  console.log("accTokenSecret Session: " + req.session.accTokenSecret);
+  console.log("accToken Session: " + req.session.oauth.accToken);
+  console.log("accTokenSecret Session: " + req.session.oauth.accTokenSecret);
   console.log("**-----------------------------------------------------**");
   console.log("verifying...");
   utils.consumer.get(
     "https://api.twitter.com/1.1/account/verify_credentials.json",
-    req.session.accToken,
-    req.session.accTokenSecret,
+    req.session.oauth.accToken,
+    req.session.oauth.accTokenSecret,
     (error, data, response) => {
       if (error) {
         console.log("ERROR: " + inspect(error));
@@ -24,15 +27,17 @@ router.get("/", function(req, res, next) {
         console.log("----------");
         console.log("Success");
         var parsedData = JSON.parse(data);
-        req.session.data = parsedData;
-        req.session.logged = true;
+        req.session.oauth.data = parsedData;
+        req.session.auth = "user";
         console.log("----------");
-        console.log(`Getting friends for ${req.session.data.screen_name}...`);
+        console.log(
+          `Getting friends for ${req.session.oauth.data.screen_name}...`
+        );
         utils.consumer.get(
           "https://api.twitter.com/1.1/friends/list.json?cursor=-1&screen_name=" +
-            req.session.data.screen_name,
-          req.session.accToken,
-          req.session.accTokenSecret,
+            req.session.oauth.data.screen_name,
+          req.session.oauth.accToken,
+          req.session.oauth.accTokenSecret,
           (error, data, response) => {
             if (error) {
               console.log("ERROR: " + inspect(error));
@@ -41,10 +46,17 @@ router.get("/", function(req, res, next) {
               console.log("----------");
               console.log("Success");
               var parsedFriends = JSON.parse(data);
-              req.session.friends = parsedFriends;
-              res
+              req.session.oauth.friends = parsedFriends;
+              sse.send({
+                status: 200,
+                data: req.session.oauth.data,
+                friends: req.session.oauth.friends
+              });
+              return res
                 .status(200)
-                .json({ status: 200, data: req.session.data, friends: req.session.friends });
+                .sendFile(
+                  path.join(__dirname + "../../../public/redirect_close.html")
+                );
             }
           }
         );

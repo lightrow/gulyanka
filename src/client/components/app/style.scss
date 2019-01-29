@@ -27,6 +27,15 @@ main {
   overflow-y: scroll;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotateZ(1080deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
 @keyframes appear {
   0% {
     opacity: 0;

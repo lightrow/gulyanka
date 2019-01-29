@@ -24,12 +24,18 @@ router.get("/", function(req, res, next) {
             if (req.session.auth == "user") {
               utils.consumer.get(
                 reqUrl,
-                req.session.accToken,
-                req.session.accTokenSecret,
+                req.session.oauth.accToken,
+                req.session.oauth.accTokenSecret,
                 (error, data) => {
                   assert.equal(error, null);
                   //...send its data to client
-                  res.status(200).json(JSON.parse(data));
+                  res
+                    .status(200)
+                    .json({
+                      status: 200,
+                      message: "OK",
+                      goers: JSON.parse(data)
+                    });
                   moncon.close();
                 }
               );
@@ -38,7 +44,7 @@ router.get("/", function(req, res, next) {
               var options = {
                 url: reqUrl,
                 headers: {
-                  Authorization: "Bearer " + req.session.oauth2.access_token
+                  Authorization: "Bearer " + req.session.oauth2.bearer_token
                 }
               };
               request(options, (error, response, body) => {
@@ -50,8 +56,8 @@ router.get("/", function(req, res, next) {
             }
           } else {
             // else send "nothing" response
-            res.status(204).json({
-              status: "NOT_FOUND",
+            res.status(200).json({
+              status: "404",
               message: "No such place in database"
             });
             moncon.close();

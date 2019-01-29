@@ -5,6 +5,7 @@ import Preload from "./preload/preload.js";
 import Counter from "./counter";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { push } from 'connected-react-router'
 import { openCard, closeCard } from "../../../../../reducers/expander";
 import {
   updateCard,
@@ -199,6 +200,7 @@ class Card extends React.Component {
   };
 
   openCard = () => {
+    this.props.changePage("#" + this.key.toString())
     this.props.openCard(this.key);
   };
 
@@ -256,7 +258,7 @@ const mapDispatchToProps = dispatch =>
       updateCard,
       cardUpdated,
       saveImage,
-      changePage: () => push("/somewhere")
+      changePage: (where) => push("/" + where)
     },
     dispatch
   );
