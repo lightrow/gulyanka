@@ -24,12 +24,14 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set("trust proxy", true);
 app.use(
   session({
-    secret: "lmaozomg",
+    secret: "keyboard cat",
     cookie: { secure: false, expires: new Date(253402300000000) },
     store: new MongoStore({ url: utils.mongourl }),
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
   })
 );
 
