@@ -18,7 +18,7 @@ var _consumer = new oauth.OAuth(
   _twitterConsumerKey,
   _twitterConsumerSecret,
   "1.0A",
-  "http://localhost:3000/api/callback",
+  "https://localhost:3000/api/callback",
   "HMAC-SHA1"
 );
 

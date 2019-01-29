@@ -165,7 +165,7 @@ var _collection = "gulyanka-db";
 
 var _sse = new SSE(["nothing here"]);
 
-var _consumer = new oauth.OAuth("https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "http://localhost:3000/api/callback", "HMAC-SHA1");
+var _consumer = new oauth.OAuth("https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "https://gulyanka.herokuapp.com/api/callback", "HMAC-SHA1");
 
 var _consumer2 = new oauth.OAuth2(_twitterConsumerKey, _twitterConsumerSecret, "https://api.twitter.com/", null, "oauth2/token", null);
 
