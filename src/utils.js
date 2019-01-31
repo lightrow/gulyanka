@@ -1,6 +1,13 @@
 var oauth = require("oauth");
 const SSE = require("express-sse");
 
+var env = process.env.NODE_ENV || "dev";
+var callback = ""
+if (env == "dev") {
+  callback = "http://localhost:3000/api/callback"
+} else {
+  callback = "https://gulyanka.herokuapp.com/api/callback"
+}
 var _mongourl = "mongodb://guest:1234@ds125288.mlab.com:25288/mlabdb";
 var _twitterConsumerKey = "mqMuivEEFDyBNekQBk56PMMSa";
 var _twitterConsumerSecret =
@@ -18,7 +25,7 @@ var _consumer = new oauth.OAuth(
   _twitterConsumerKey,
   _twitterConsumerSecret,
   "1.0A",
-  "https://localhost:3000/api/callback",
+  callback,
   "HMAC-SHA1"
 );
 

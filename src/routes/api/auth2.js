@@ -6,7 +6,6 @@ var session = require("express-session");
 var inspect = require("util-inspect");
 
 router.get("/", (req, res, next) => {
-  console.log(req.session.id);
   if (req.session.auth == "bearer" || req.session.auth == "user") {
     next();
   } else {

@@ -130,6 +130,8 @@ $boxsize: $bordersize * 2+50px;
   width: 100vw !important;
   min-height: calc(100vh - 48px) !important;
   #card-viewer-container {
+    animation: viewerSlideIn 0.3s cubic-bezier(0.18, 1.01, 0.46, 0.98) forwards;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
     width: 900px;
     margin: auto;
     padding: 15px;
@@ -343,6 +345,21 @@ $boxsize: $bordersize * 2+50px;
         ellipse at bottom,
         rgb(38, 194, 160) 0%,
         rgb(32, 122, 103) 100%
+      );
+    }
+  }
+  .button-willgo-nope {
+    height: 60px;
+    background: radial-gradient(
+      ellipse at bottom,
+      rgb(33, 151, 187) 0%,
+      rgb(24, 115, 143)  100%
+    );
+    &:hover {
+      background: radial-gradient(
+        ellipse at bottom,
+        rgb(32, 161, 201) 0%,
+        rgb(25, 135, 168)  100%
       );
     }
   }

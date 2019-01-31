@@ -155,6 +155,15 @@ var oauth = __webpack_require__(20);
 
 var SSE = __webpack_require__(21);
 
+var env = "production" || false;
+var callback = "";
+
+if (env == "dev") {
+  callback = "http://localhost:3000/api/callback";
+} else {
+  callback = "https://gulyanka.herokuapp.com/api/callback";
+}
+
 var _mongourl = "mongodb://guest:1234@ds125288.mlab.com:25288/mlabdb";
 var _twitterConsumerKey = "mqMuivEEFDyBNekQBk56PMMSa";
 var _twitterConsumerSecret = "b7Q6sPdVHJDB4TTehG1dOyyDAdm2TV1JUscXc9XHOe5T7w4blV";
@@ -165,7 +174,7 @@ var _collection = "gulyanka-db";
 
 var _sse = new SSE(["nothing here"]);
 
-var _consumer = new oauth.OAuth("https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "https://gulyanka.herokuapp.com/api/callback", "HMAC-SHA1");
+var _consumer = new oauth.OAuth("https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callback, "HMAC-SHA1");
 
 var _consumer2 = new oauth.OAuth2(_twitterConsumerKey, _twitterConsumerSecret, "https://api.twitter.com/", null, "oauth2/token", null);
 
@@ -192,16 +201,18 @@ module.exports = {
     return;
   }
 
-  reactHotLoader.register(_mongourl, "_mongourl", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_twitterConsumerKey, "_twitterConsumerKey", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_twitterConsumerSecret, "_twitterConsumerSecret", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_placekey, "_placekey", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_geokey, "_geokey", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_db, "_db", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_collection, "_collection", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_sse, "_sse", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_consumer, "_consumer", "/mnt/c/Work/gulyanka/src/utils.js");
-  reactHotLoader.register(_consumer2, "_consumer2", "/mnt/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(env, "env", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(callback, "callback", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_mongourl, "_mongourl", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_twitterConsumerKey, "_twitterConsumerKey", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_twitterConsumerSecret, "_twitterConsumerSecret", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_placekey, "_placekey", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_geokey, "_geokey", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_db, "_db", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_collection, "_collection", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_sse, "_sse", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_consumer, "_consumer", "/c/Work/gulyanka/src/utils.js");
+  reactHotLoader.register(_consumer2, "_consumer2", "/c/Work/gulyanka/src/utils.js");
   leaveModule(module);
 })();
 
@@ -267,8 +278,6 @@ var session = __webpack_require__(5);
 var inspect = __webpack_require__(6);
 
 router.get("/", function (req, res, next) {
-  console.log(req.session.id);
-
   if (req.session.auth == "bearer" || req.session.auth == "user") {
     next();
   } else {
@@ -309,7 +318,7 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/auth2.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/auth2.js");
   leaveModule(module);
 })();
 
@@ -393,6 +402,7 @@ app.use("/api/callback", __webpack_require__(29));
 app.use("/api/willgo", __webpack_require__(30));
 app.use("/api/getgoers", __webpack_require__(31));
 app.get("/api/authsse", utils.sse.init);
+app.use("/api/logout", __webpack_require__(32));
 app.use(history());
 /*
 app.use(
@@ -419,9 +429,9 @@ app.listen(port_number, function () {
     return;
   }
 
-  reactHotLoader.register(MongoStore, "MongoStore", "/mnt/c/Work/gulyanka/src/server.prod.js");
-  reactHotLoader.register(app, "app", "/mnt/c/Work/gulyanka/src/server.prod.js");
-  reactHotLoader.register(port_number, "port_number", "/mnt/c/Work/gulyanka/src/server.prod.js");
+  reactHotLoader.register(MongoStore, "MongoStore", "/c/Work/gulyanka/src/server.prod.js");
+  reactHotLoader.register(app, "app", "/c/Work/gulyanka/src/server.prod.js");
+  reactHotLoader.register(port_number, "port_number", "/c/Work/gulyanka/src/server.prod.js");
   leaveModule(module);
 })();
 
@@ -552,8 +562,8 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/getplaces.js");
-  reactHotLoader.register(mongo, "mongo", "/mnt/c/Work/gulyanka/src/routes/api/getplaces.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/getplaces.js");
+  reactHotLoader.register(mongo, "mongo", "/c/Work/gulyanka/src/routes/api/getplaces.js");
   leaveModule(module);
 })();
 
@@ -646,8 +656,8 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/getphoto.js");
-  reactHotLoader.register(mongo, "mongo", "/mnt/c/Work/gulyanka/src/routes/api/getphoto.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/getphoto.js");
+  reactHotLoader.register(mongo, "mongo", "/c/Work/gulyanka/src/routes/api/getphoto.js");
   leaveModule(module);
 })();
 
@@ -698,8 +708,8 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/getdetails.js");
-  reactHotLoader.register(maxwidth, "maxwidth", "/mnt/c/Work/gulyanka/src/routes/api/getdetails.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/getdetails.js");
+  reactHotLoader.register(maxwidth, "maxwidth", "/c/Work/gulyanka/src/routes/api/getdetails.js");
   leaveModule(module);
 })();
 
@@ -764,7 +774,7 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/auth.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/auth.js");
   leaveModule(module);
 })();
 
@@ -843,7 +853,7 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/access.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/access.js");
   leaveModule(module);
 })();
 
@@ -934,8 +944,8 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/verify.js");
-  reactHotLoader.register(sse, "sse", "/mnt/c/Work/gulyanka/src/routes/api/verify.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/verify.js");
+  reactHotLoader.register(sse, "sse", "/c/Work/gulyanka/src/routes/api/verify.js");
   leaveModule(module);
 })();
 
@@ -998,7 +1008,7 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/callback.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/callback.js");
   leaveModule(module);
 })();
 
@@ -1027,7 +1037,10 @@ var assert = __webpack_require__(8);
 
 router.get("/", function (req, res, next) {
   if (req.session.auth != "user") {
-    res.redirect("/api/auth");
+    return res.status(403).json({
+      status: 403,
+      message: "BAD_AUTH"
+    });
   }
 
   console.log("**-----------------------------------------------------**");
@@ -1068,8 +1081,8 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/willgo.js");
-  reactHotLoader.register(mongo, "mongo", "/mnt/c/Work/gulyanka/src/routes/api/willgo.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/willgo.js");
+  reactHotLoader.register(mongo, "mongo", "/c/Work/gulyanka/src/routes/api/willgo.js");
   leaveModule(module);
 })();
 
@@ -1170,8 +1183,50 @@ module.exports = router;
     return;
   }
 
-  reactHotLoader.register(router, "router", "/mnt/c/Work/gulyanka/src/routes/api/getgoers.js");
-  reactHotLoader.register(mongo, "mongo", "/mnt/c/Work/gulyanka/src/routes/api/getgoers.js");
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/getgoers.js");
+  reactHotLoader.register(mongo, "mongo", "/c/Work/gulyanka/src/routes/api/getgoers.js");
+  leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)(module)))
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {(function () {
+  var enterModule = __webpack_require__(0).enterModule;
+
+  enterModule && enterModule(module);
+})();
+
+var express = __webpack_require__(2);
+
+var router = express.Router();
+router.get("/", function (req, res, next) {
+  console.log("------------------------");
+  console.log("logging out...");
+  req.session.destroy();
+  req.session = undefined;
+  res.status(200).json({
+    status: 200,
+    message: "OK"
+  });
+});
+module.exports = router;
+;
+
+(function () {
+  var reactHotLoader = __webpack_require__(0).default;
+
+  var leaveModule = __webpack_require__(0).leaveModule;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(router, "router", "/c/Work/gulyanka/src/routes/api/logout.js");
   leaveModule(module);
 })();
 

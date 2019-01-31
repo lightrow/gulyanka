@@ -5,7 +5,7 @@ import Preload from "./preload/preload.js";
 import Counter from "./counter";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { push } from 'connected-react-router'
+import { push } from "connected-react-router";
 import { openCard, closeCard } from "../../../../../reducers/expander";
 import {
   updateCard,
@@ -25,6 +25,20 @@ class Card extends React.Component {
     this.key = props.key_prop;
     this.animDuration = 1000;
   }
+
+  //  "Fast" means no animation, which is used when navigating between pages
+  loadCardFast = () => {
+    this.setState(
+      {
+        ...this.state,
+        classes: [],
+        containerClasses: []
+      },
+      () => {
+        this.handleImgStyleFast();
+      }
+    );
+  };
 
   loadCard = () => {
     let newClasses = this.state.classes;
@@ -55,44 +69,29 @@ class Card extends React.Component {
   };
 
   componentDidMount() {
-    this.loadCard();
     if (!this.props.card.updated) {
+      this.loadCard();
+    } else {
+      this.loadCardFast();
     }
   }
-
-  /*
-  componentWillReceiveProps(newprops) {
-    let newClasses = this.state.classes;
-    newClasses = newClasses.filter(entry => {
-      return entry.match(/animation/g) ? false : true;
-    });
-    this.setState(
-      {
-        ...this.state,
-        style: { ...newprops.style },
-        classes: newClasses
-      },
-      () => {
-        setTimeout(() => {
-          let newClasses = this.state.classes;
-          newClasses = newClasses.filter(entry => {
-            return entry.match(/animation/g) ? false : true;
-          });
-          this.setState({
-            ...this.state,
-            classes: newClasses
-          });
-        }, this.animDuration);
-      }
-    );
-  }
-*/
 
   handleImgStyle = () => {
     if (this.props.card.img == "null") {
       this.imgLoaded(null);
     } else if (this.props.card.img != "") {
       this.imgLoaded(this.props.card.img);
+    } else {
+      console.log("CARD IMG IS EMPTY");
+      this.fetchImage();
+    }
+  };
+
+  handleImgStyleFast = () => {
+    if (this.props.card.img == "null") {
+      this.imgLoadedFast(null);
+    } else if (this.props.card.img != "") {
+      this.imgLoadedFast(this.props.card.img);
     } else {
       console.log("CARD IMG IS EMPTY");
       this.fetchImage();
@@ -157,6 +156,30 @@ class Card extends React.Component {
     }
   };
 
+  imgLoadedFast = res => {
+    if (res != null) {
+      const bgImage = new Image();
+      bgImage.src = res;
+      bgImage.onload = () => {
+        this.setState({
+          ...this.state,
+          imageStyle: {
+            backgroundImage: `url(${
+              bgImage.src
+            }), linear-gradient(rgba(0, 0, 0, 0.73) 15%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.54) 100%)`
+          }
+        });
+      };
+    } else {
+      this.setState({
+        ...this.state,
+        imageStyle: {
+          background: "black"
+        }
+      });
+    }
+  };
+
   animate = () => {
     let newClasses = this.state.classes;
     newClasses.push("img-load-animation");
@@ -200,7 +223,7 @@ class Card extends React.Component {
   };
 
   openCard = () => {
-    this.props.changePage("#" + this.key.toString())
+    this.props.changePage("#" + this.key.toString());
     this.props.openCard(this.key);
   };
 
@@ -258,7 +281,7 @@ const mapDispatchToProps = dispatch =>
       updateCard,
       cardUpdated,
       saveImage,
-      changePage: (where) => push("/" + where)
+      changePage: where => push("/" + where)
     },
     dispatch
   );

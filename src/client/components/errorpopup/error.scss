@@ -1,0 +1,41 @@
+.error-popup-container {
+  background: white;
+  position: absolute;
+  right: 25px;
+  z-index: 15;
+  top: calc(48px + 13px);
+  height: 50px;
+  button {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+
+    display: inline-block;
+    height: 100%;
+    width: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+  }
+  div {
+    line-height: 50px;
+    display: inline;
+    padding: 0 20px;
+    span {
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+}
+
+.button-bad {
+  background-color: rgb(201, 109, 129);
+}
+
+.button-good {
+  background-color:rgb(95, 189, 158);
+}

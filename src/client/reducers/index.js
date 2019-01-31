@@ -8,6 +8,7 @@ import query from "./query";
 import auth from "./auth";
 import expander from "./expander";
 import cards from "./cards";
+import errorpopup from "./errorpopup";
 
 const appReducer = combineReducers({
   loader,
@@ -15,7 +16,8 @@ const appReducer = combineReducers({
   query,
   auth,
   expander,
-  cards
+  cards,
+  errorpopup
 });
 
 const rootReducer = (state, action) => {

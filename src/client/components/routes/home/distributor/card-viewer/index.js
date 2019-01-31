@@ -6,7 +6,9 @@ import {
   closeParticipants,
   expandParticipants
 } from "../../../../../reducers/expander";
+import { showErrorPopup } from "../../../../../reducers/errorpopup";
 import { getGoers, gettingGoers } from "../../../../../reducers/cards";
+import { login } from "../../../../../reducers/auth";
 import Map from "./map";
 import { Star, HalfStar } from "../card/star.js";
 import "./card-viewer.scss";
@@ -138,13 +140,43 @@ class CardViewer extends React.Component {
     fetch(`/api/willgo?q=${this.props.cards[this.props.loadedCard].place_id}`)
       .then(res => res.json())
       .then(res => {
-        //update goers
-        let obj = {
-          key: this.props.loadedCard,
-          placeId: this.props.cards[this.props.loadedCard].place_id
-        };
-        this.props.getGoers(obj);
+        if (res.status == 403) {
+          this.props.showErrorPopup("LOGIN_ERROR");
+          let obj = {
+            key: this.props.loadedCard,
+            placeId: this.props.cards[this.props.loadedCard].place_id
+          };
+          this.props.getGoers(obj);
+        } else {
+          //update goers
+          let obj = {
+            key: this.props.loadedCard,
+            placeId: this.props.cards[this.props.loadedCard].place_id
+          };
+          this.props.getGoers(obj);
+        }
       });
+  };
+
+  handleWillGoButton = () => {
+    if (this.props.auth.loggedIn) {
+      return (
+        <button
+          className="button button-willgo "
+          onClick={e => this.handleWillGo()}
+        >
+          Will Go
+        </button>
+      );
+    } else {
+      return <button
+        className="button button-willgo button-willgo-nope"
+        onClick={e => this.props.login()}
+        onMouseOver={e => this.handle}
+      >
+       Login to join the party!
+      </button>;
+    }
   };
 
   handleViewer = () => {
@@ -162,12 +194,7 @@ class CardViewer extends React.Component {
 
             <div id="button-group-top">
               {this.handleParticipants()}
-              <button
-                className="button button-willgo"
-                onClick={e => this.handleWillGo()}
-              >
-                Will Go
-              </button>
+              {this.handleWillGoButton()}
             </div>
             <div className="mid-container">
               <div
@@ -234,7 +261,8 @@ const mapStateToProps = state => ({
   cards: state.cards,
   loadedCard: state.expander.loadedCard,
   isOpened: state.expander.isOpened,
-  participantsExpanded: state.expander.participantsExpanded
+  participantsExpanded: state.expander.participantsExpanded,
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch =>
@@ -245,6 +273,8 @@ const mapDispatchToProps = dispatch =>
       expandParticipants,
       getGoers,
       gettingGoers,
+      showErrorPopup,
+      login,
       changePage: () => push("/somewhere")
     },
     dispatch

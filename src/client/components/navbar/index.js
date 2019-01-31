@@ -5,23 +5,14 @@ import Home from "../routes/home";
 import About from "../routes/about";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { authorize, saveAuthData } from "../../reducers/auth";
+import { login, saveAuthData } from "../../reducers/auth";
+import { showErrorPopup } from "../../reducers/errorpopup";
 
 const NavSpinner = () => <div className="nav-spinner" />;
 
 class Navbar extends React.Component {
   handleClick = () => {
-    let es = new EventSource("/api/authsse");
-    let strWindowFeatures =
-      "menubar=no,toolbar=no,location=no,resizable=yes,scrollbars=yes,status=yes,width=900,height=500";
-    let popup = window.open("", "_blank");
-    popup.location.href = "http://" + window.location.host + "/api/auth";
-    es.onmessage = event => {
-      let data = JSON.parse(event.data);
-      if (data != "nothing here") {
-        this.props.saveAuthData(JSON.parse(event.data));
-      }
-    };
+    this.props.login()
   };
 
   handleLogin = () => {
@@ -37,6 +28,9 @@ class Navbar extends React.Component {
       );
     }
   };
+
+//<button className="login-button" onClick={()=>this.props.showErrorPopup("LOGIN_ERROR")}>TEST</button>
+
 
   render() {
     return (
@@ -59,8 +53,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      authorize,
       saveAuthData,
+      showErrorPopup,
+      login,
       changePage: () => push("/somewhere")
     },
     dispatch

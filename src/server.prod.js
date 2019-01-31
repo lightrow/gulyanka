@@ -50,6 +50,7 @@ app.use("/api/callback", require("./routes/api/callback"));
 app.use("/api/willgo", require("./routes/api/willgo"));
 app.use("/api/getgoers", require("./routes/api/getgoers"));
 app.get("/api/authsse", utils.sse.init);
+app.use("/api/logout", require("./routes/api/logout"));
 
 app.use(history());
 

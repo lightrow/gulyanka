@@ -1,0 +1,15 @@
+#profile-page{
+  padding:20px;
+}
+
+.button-logout{
+  width:150px;
+  font-size:1.2em;
+  font-weight: 600;
+  color:white;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgb(209, 102, 120) 0%,
+    rgb(141, 66, 89) 100%
+  );
+}

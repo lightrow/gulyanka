@@ -6,7 +6,7 @@ var assert = require("assert");
 
 router.get("/", function(req, res, next) {
   if (req.session.auth != "user") {
-    res.redirect("/api/auth");
+    return res.status(403).json({ status: 403, message: "BAD_AUTH" });
   }
   console.log("**-----------------------------------------------------**");
   console.log(
