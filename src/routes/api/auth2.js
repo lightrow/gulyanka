@@ -21,14 +21,16 @@ router.get("/", (req, res, next) => {
         } else {
           req.session.oauth2 = {};
           req.session.oauth2.bearer_token = bearer_token;
-          req.session.auth = "bearer"
-          //req.session.oauth2.refresh_token = refresh_token;
-          console.log("------------------------");
-          console.log("Authorized (bearer)");
-          console.log("<<" + req.session.oauth2.bearer_token);
-          console.log("sessionID: " + req.sessionID);
-          next();
-          //res.status(200).json({ message: "OK" });
+          req.session.auth = "bearer";
+          req.session.save(() => {
+            //req.session.oauth2.refresh_token = refresh_token;
+            console.log("------------------------");
+            console.log("Authorized (bearer)");
+            console.log("<<" + req.session.oauth2.bearer_token);
+            console.log("sessionID: " + req.sessionID);
+            next();
+            //res.status(200).json({ message: "OK" });
+          });
         }
       }
     );

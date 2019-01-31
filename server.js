@@ -295,13 +295,15 @@ router.get("/", function (req, res, next) {
       } else {
         req.session.oauth2 = {};
         req.session.oauth2.bearer_token = bearer_token;
-        req.session.auth = "bearer"; //req.session.oauth2.refresh_token = refresh_token;
-
-        console.log("------------------------");
-        console.log("Authorized (bearer)");
-        console.log("<<" + req.session.oauth2.bearer_token);
-        console.log("sessionID: " + req.sessionID);
-        next(); //res.status(200).json({ message: "OK" });
+        req.session.auth = "bearer";
+        req.session.save(function () {
+          //req.session.oauth2.refresh_token = refresh_token;
+          console.log("------------------------");
+          console.log("Authorized (bearer)");
+          console.log("<<" + req.session.oauth2.bearer_token);
+          console.log("sessionID: " + req.sessionID);
+          next(); //res.status(200).json({ message: "OK" });
+        });
       }
     });
   }
@@ -752,13 +754,15 @@ router.get("/", function (req, res, next) {
       req.session.oauth = {};
       req.session.oauth.reqToken = oauthToken;
       req.session.oauth.reqTokenSecret = oauthTokenSecret;
-      console.log("------------------------");
-      console.log("<<" + req.session.oauth.reqToken);
-      console.log("<<" + req.session.oauth.reqTokenSecret);
-      console.log("sessionID: " + req.sessionID);
-      var url = "https://api.twitter.com/oauth/authenticate?oauth_token=".concat(req.session.oauth.reqToken);
-      console.log(url);
-      res.redirect(url);
+      req.session.save(function () {
+        console.log("------------------------");
+        console.log("<<" + req.session.oauth.reqToken);
+        console.log("<<" + req.session.oauth.reqTokenSecret);
+        console.log("sessionID: " + req.sessionID);
+        var url = "https://api.twitter.com/oauth/authenticate?oauth_token=".concat(req.session.oauth.reqToken);
+        console.log(url);
+        res.redirect(url);
+      });
     }
   });
 });
@@ -904,6 +908,7 @@ router.get("/", function (req, res, next) {
       console.log("----------");
       console.log("Success");
       var parsedData = JSON.parse(data);
+      console.log(parsedData);
       req.session.oauth.data = parsedData;
       req.session.auth = "user";
       console.log("----------");
@@ -920,13 +925,14 @@ router.get("/", function (req, res, next) {
           console.log("Success");
           var parsedFriends = JSON.parse(data);
           req.session.oauth.friends = parsedFriends;
-          sse.send({
-            status: 200,
-            data: req.session.oauth.data,
-            friends: req.session.oauth.friends
+          req.session.save(function () {
+            sse.send({
+              status: 200,
+              data: req.session.oauth.data,
+              friends: req.session.oauth.friends
+            });
+            return res.redirect("/redirect_close.html");
           });
-          req.session.save();
-          return res.redirect("/redirect_close.html");
         }
       });
     }
@@ -990,10 +996,13 @@ router.get("/", function (req, res, next) {
     var accTokenSecret = body.match(/(?<=\boauth_token_secret=)(?:(?!&).)*/g);
     var screenName = body.match(/(?<=\bscreen_name=)(?:(?!&).)*/g);
     var userId = body.match(/(?<=\buser_id=)(?:(?!&).)*/g);
+    console.log("SESSION: " + req.sessionID);
     req.session.oauth.accToken = accToken;
     req.session.oauth.accTokenSecret = accTokenSecret;
-    console.log("ACCESS_GRANTED");
-    return res.redirect("/api/verify");
+    req.session.save(function () {
+      console.log("ACCESS_GRANTED");
+      return res.redirect("/api/verify");
+    });
   });
 });
 module.exports = router;
@@ -1036,7 +1045,9 @@ var mongo = __webpack_require__(7).MongoClient;
 var assert = __webpack_require__(8);
 
 router.get("/", function (req, res, next) {
-  if (req.session.auth != "user") {
+  if (req.session.auth != "user" || req.session.oauth == undefined || req.session.oauth.data == undefined) {
+    console.log("SESSION: " + req.sessionID);
+    console.log("oauth: " + req.session.oauth.data);
     return res.status(403).json({
       status: 403,
       message: "BAD_AUTH"
@@ -1060,7 +1071,6 @@ router.get("/", function (req, res, next) {
       upsert: true
     }, function (err, doc) {
       assert.equal(err, null);
-      console.log(doc);
       db.close();
       console.log("sent :^)");
     });

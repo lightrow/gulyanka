@@ -26,6 +26,7 @@ router.get("/", (req, res, next) => {
         console.log("----------");
         console.log("Success");
         var parsedData = JSON.parse(data);
+        console.log(parsedData);
         req.session.oauth.data = parsedData;
         req.session.auth = "user";
         console.log("----------");
@@ -46,13 +47,14 @@ router.get("/", (req, res, next) => {
               console.log("Success");
               var parsedFriends = JSON.parse(data);
               req.session.oauth.friends = parsedFriends;
-              sse.send({
-                status: 200,
-                data: req.session.oauth.data,
-                friends: req.session.oauth.friends
+              req.session.save(() => {
+                sse.send({
+                  status: 200,
+                  data: req.session.oauth.data,
+                  friends: req.session.oauth.friends
+                });
+                return res.redirect("/redirect_close.html");
               });
-              req.session.save();
-              return res.redirect("/redirect_close.html")
             }
           }
         );

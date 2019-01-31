@@ -5,7 +5,13 @@ var mongo = require("mongodb").MongoClient;
 var assert = require("assert");
 
 router.get("/", function(req, res, next) {
-  if (req.session.auth != "user") {
+  if (
+    req.session.auth != "user" ||
+    req.session.oauth == undefined ||
+    req.session.oauth.data == undefined
+  ) {
+    console.log("SESSION: " + req.sessionID);
+    console.log("oauth: " +  req.session.oauth.data )
     return res.status(403).json({ status: 403, message: "BAD_AUTH" });
   }
   console.log("**-----------------------------------------------------**");
@@ -28,7 +34,6 @@ router.get("/", function(req, res, next) {
           { upsert: true },
           (err, doc) => {
             assert.equal(err, null);
-            console.log(doc);
             db.close();
             console.log("sent :^)");
           }

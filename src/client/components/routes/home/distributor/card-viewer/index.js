@@ -142,19 +142,14 @@ class CardViewer extends React.Component {
       .then(res => {
         if (res.status == 403) {
           this.props.showErrorPopup("LOGIN_ERROR");
-          let obj = {
-            key: this.props.loadedCard,
-            placeId: this.props.cards[this.props.loadedCard].place_id
-          };
-          this.props.getGoers(obj);
         } else {
-          //update goers
-          let obj = {
-            key: this.props.loadedCard,
-            placeId: this.props.cards[this.props.loadedCard].place_id
-          };
-          this.props.getGoers(obj);
+          this.props.showErrorPopup("SUBMITTED");
         }
+        let obj = {
+          key: this.props.loadedCard,
+          placeId: this.props.cards[this.props.loadedCard].place_id
+        };
+        this.props.getGoers(obj);
       });
   };
 
@@ -169,13 +164,15 @@ class CardViewer extends React.Component {
         </button>
       );
     } else {
-      return <button
-        className="button button-willgo button-willgo-nope"
-        onClick={e => this.props.login()}
-        onMouseOver={e => this.handle}
-      >
-       Login to join the party!
-      </button>;
+      return (
+        <button
+          className="button button-willgo button-willgo-nope"
+          onClick={e => this.props.login()}
+          onMouseOver={e => this.handle}
+        >
+          Login to join the party!
+        </button>
+      );
     }
   };
 

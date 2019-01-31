@@ -17,15 +17,17 @@ router.get("/", function(req, res, next) {
         req.session.oauth = {};
         req.session.oauth.reqToken = oauthToken;
         req.session.oauth.reqTokenSecret = oauthTokenSecret;
-        console.log("------------------------");
-        console.log("<<" + req.session.oauth.reqToken);
-        console.log("<<" + req.session.oauth.reqTokenSecret);
-        console.log("sessionID: " + req.sessionID);
-        let url = `https://api.twitter.com/oauth/authenticate?oauth_token=${
-          req.session.oauth.reqToken
-        }`;
-        console.log(url);
-        res.redirect(url);
+        req.session.save(() => {
+          console.log("------------------------");
+          console.log("<<" + req.session.oauth.reqToken);
+          console.log("<<" + req.session.oauth.reqTokenSecret);
+          console.log("sessionID: " + req.sessionID);
+          let url = `https://api.twitter.com/oauth/authenticate?oauth_token=${
+            req.session.oauth.reqToken
+          }`;
+          console.log(url);
+          res.redirect(url);
+        });
       }
     }
   );

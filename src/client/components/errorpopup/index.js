@@ -100,6 +100,18 @@ class ErrorPopup extends React.Component {
             <div>There has been an error with your request. Sorry</div>
           </div>
         );
+        case "SUBMITTED":
+        return (
+          <div className="error-popup-container" style={this.handleContStyle()}>
+            <button
+              className="error-popup-close-button button-good"
+              onClick={() => this.props.closeErrorPopup()}
+            >
+              x
+            </button>
+            <div>Choice submitted. It's party time!</div>
+          </div>
+        );
       default:
         return (
           <div className="error-popup-container" style={this.handleContStyle()}>
