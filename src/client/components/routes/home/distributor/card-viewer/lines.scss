@@ -1,0 +1,46 @@
+.lines-container1 {
+  position: absolute;
+  top:0;
+  overflow:hidden;
+  width:100%;
+  left: 0;
+  right: 0;
+  padding: inherit;
+  height:450px;
+  z-index: 1;
+}
+
+.lines-container2 {
+  position: absolute;
+  bottom:15px;
+  overflow:hidden;
+  width:100%;
+  left: 0;
+  right: 0;
+  padding: inherit;
+  height:450px;
+  z-index: 1;
+}
+
+
+.cls-1{
+  fill:rgba(0, 0, 0, 0.06);
+  stroke:none;
+}
+
+.lt-1{
+  fill:rgba(0, 0, 0, 0.02);
+}
+
+.lt-2{
+  fill:rgba(0, 0, 0, 0.03);
+}
+
+.lt-3{
+  fill:rgba(0, 0, 0, 0.04);
+}
+
+.lt-4{
+  fill:rgba(0, 0, 0, 0.06);
+}
+

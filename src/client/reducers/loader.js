@@ -48,6 +48,7 @@ export const getData = location => {
               entry.goers = [];
               entry.gettingGoers = true;
               entry.updated = false;
+              entry.sendingWillGo = false;
             });
             dispatch(fillCardsStore(Array.from(res.results)));
             dispatch(loadSuccess(Array.from(res.results)));

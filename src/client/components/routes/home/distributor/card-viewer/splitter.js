@@ -19,7 +19,7 @@ const SplitterSvg = () => (
         transform="translate(978.081 1097.5) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_15"
@@ -28,7 +28,7 @@ const SplitterSvg = () => (
         transform="translate(987.066 1110.96) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_17"
@@ -37,7 +37,7 @@ const SplitterSvg = () => (
         transform="translate(996.065 1121.341) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_19"
@@ -46,7 +46,7 @@ const SplitterSvg = () => (
         transform="translate(1004.941 1125.227) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_16"
@@ -55,7 +55,7 @@ const SplitterSvg = () => (
         transform="translate(969.157 1110.96) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_18"
@@ -64,7 +64,7 @@ const SplitterSvg = () => (
         transform="translate(959.928 1121.341) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
       <path
         id="Path_20"
@@ -73,7 +73,7 @@ const SplitterSvg = () => (
         transform="translate(951.052 1125.227) rotate(90)"
         fill="none"
         stroke="#707070"
-        strokeWidth="3"
+        strokeWidth="2"
       />
     </g>
   </svg>

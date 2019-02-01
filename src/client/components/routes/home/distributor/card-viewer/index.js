@@ -7,11 +7,17 @@ import {
   expandParticipants
 } from "../../../../../reducers/expander";
 import { showErrorPopup } from "../../../../../reducers/errorpopup";
-import { getGoers, gettingGoers } from "../../../../../reducers/cards";
+import {
+  getGoers,
+  gettingGoers,
+  sendWillGo
+} from "../../../../../reducers/cards";
 import { login } from "../../../../../reducers/auth";
 import Map from "./map";
 import { Star, HalfStar } from "../card/star.js";
+import { Lines } from "./lines";
 import "./card-viewer.scss";
+import "./lines.scss";
 import Splitter from "./splitter.js";
 
 class CardViewer extends React.Component {
@@ -112,7 +118,7 @@ class CardViewer extends React.Component {
   );
 
   stopContainerClickPropagation = e => {
-    //only close if clicked outside the card on the padding surrounding it.
+    //only close if clicked on padding surrounding the card
     e.stopPropagation();
   };
 
@@ -136,6 +142,12 @@ class CardViewer extends React.Component {
   };
 
   handleWillGo = () => {
+    let obj = {
+      key: this.props.loadedCard,
+      placeId: this.props.cards[this.props.loadedCard].place_id
+    };
+    this.props.sendWillGo(obj);
+    /*
     this.props.gettingGoers(this.props.loadedCard);
     fetch(`/api/willgo?q=${this.props.cards[this.props.loadedCard].place_id}`)
       .then(res => res.json())
@@ -145,22 +157,27 @@ class CardViewer extends React.Component {
         } else {
           this.props.showErrorPopup("SUBMITTED");
         }
-        let obj = {
-          key: this.props.loadedCard,
-          placeId: this.props.cards[this.props.loadedCard].place_id
-        };
+
         this.props.getGoers(obj);
       });
+      */
   };
 
   handleWillGoButton = () => {
     if (this.props.auth.loggedIn) {
       return (
         <button
-          className="button button-willgo "
+          className={
+            "button button-willgo " +
+            (this.props.cards[this.props.loadedCard].sendingWillGo
+              ? "disabled"
+              : "")
+          }
           onClick={e => this.handleWillGo()}
         >
-          Will Go
+          {this.props.cards[this.props.loadedCard].sendingWillGo
+            ? "..."
+            : "Will Go"}
         </button>
       );
     } else {
@@ -176,40 +193,44 @@ class CardViewer extends React.Component {
     }
   };
 
-  handleViewer = () => {
-    if (this.props.isOpened) {
-      return (
+  happyViewer = () => {
+    //render "happy" version
+    return (
+      <div
+        className={"happy card-viewer " + (this.props.isOpened ? "" : "hide")}
+        onClick={e => this.handleClick(e)}
+      >
         <div
-          id="card-viewer-container"
+          className="card-viewer-container"
           onClick={e => this.stopContainerClickPropagation(e)}
         >
           <div className="card-viewer-subcontainer">
-            <div id="title">
+            <div className="cv-title">
               <span>{this.props.cards[this.props.loadedCard].name}</span>
-              <div id="rating">{this.handleRating()}</div>
+              <div className="cv-rating">{this.handleRating()}</div>
             </div>
 
-            <div id="button-group-top">
+            <div className="button-group-top">
               {this.handleParticipants()}
               {this.handleWillGoButton()}
             </div>
             <div className="mid-container">
               <div
-                id="img"
+                className="cv-img"
                 style={{
                   backgroundImage: `url(${
                     this.props.cards[this.props.loadedCard].img
                   })`
                 }}
               />
-              <div id="button-group-bottom">
+              <div className="button-group-bottom">
                 <button className="button button-opensat">Opens At {}</button>
                 <div className="splitter-line1" />
                 <div className="splitter">
                   <Splitter />
                 </div>
                 <div className="splitter-line2" />
-                <div id="buttons-social">
+                <div className="buttons-social">
                   <button className="button button-facebook">f</button>
                   <button className="button button-twitter">t</button>
                   <button className="button button-google">g+</button>
@@ -224,6 +245,68 @@ class CardViewer extends React.Component {
             </div>
             <div className="disclaimer">Powered by GoogleAPI</div>
           </div>
+        </div>
+      </div>
+    );
+  };
+
+  normalViewer = () => {
+    return (
+      <div
+        className={"card-viewer " + (this.props.isOpened ? "" : "hide")}
+        onClick={e => this.handleClick(e)}
+      >
+        <div
+          className="card-viewer-container"
+          onClick={e => this.stopContainerClickPropagation(e)}
+        >
+          <div className="card-viewer-subcontainer">
+            <div className="cv-title">
+              <span>{this.props.cards[this.props.loadedCard].name}</span>
+              <div className="cv-rating">{this.handleRating()}</div>
+            </div>
+
+            <div className="button-group-top">
+              {this.handleParticipants()}
+              {this.handleWillGoButton()}
+            </div>
+            <div className="mid-container">
+              <div
+                className="cv-img"
+                style={{
+                  backgroundImage: `url(${
+                    this.props.cards[this.props.loadedCard].img
+                  })`
+                }}
+              />
+              <div className="button-group-bottom">
+                <button className="button button-opensat">Opens At {}</button>
+                <div className="splitter-line1" />
+                <div className="splitter">
+                  <Splitter />
+                </div>
+                <div className="splitter-line2" />
+                <div className="buttons-social">
+                  <button className="button button-facebook">f</button>
+                  <button className="button button-twitter">t</button>
+                  <button className="button button-google">g+</button>
+                </div>
+              </div>
+              <Map
+                place_id={this.props.cards[this.props.loadedCard].place_id}
+              />
+            </div>
+            <div className="address">
+              <span>{this.props.cards[this.props.loadedCard].vicinity}</span>
+            </div>
+            <div className="disclaimer">Powered by GoogleAPI</div>
+          </div>
+          <div className="lines-container1">
+            <Lines />
+          </div>
+          <div className="lines-container2">
+            <Lines />
+          </div>
           <div id="corner-box1">
             <div id="corner1" />
           </div>
@@ -237,20 +320,31 @@ class CardViewer extends React.Component {
             <div id="corner4" />
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   };
 
   render() {
-    return (
-      <div
-        id="card-viewer"
-        className={this.props.isOpened ? "" : "hide"}
-        onClick={e => this.handleClick(e)}
-      >
-        {this.handleViewer()}
-      </div>
-    );
+    if (this.props.isOpened) {
+      if (this.props.auth.loggedIn) {
+        let happy = false;
+        this.props.cards[this.props.loadedCard].goers.forEach(goer => {
+          if (goer.id == this.props.auth.authData.data.id) {
+            happy = true;
+          }
+        });
+        if (happy) {
+          //todo
+          return this.normalViewer();
+        } else {
+          return this.normalViewer();
+        }
+      } else {
+        return this.normalViewer();
+      }
+    } else {
+      return null;
+    }
   }
 }
 
@@ -272,6 +366,7 @@ const mapDispatchToProps = dispatch =>
       gettingGoers,
       showErrorPopup,
       login,
+      sendWillGo,
       changePage: () => push("/somewhere")
     },
     dispatch

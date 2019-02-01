@@ -1,3 +1,14 @@
+$backgroundContainer: rgb(245, 245, 245);
+
+$colorgrey: rgb(159, 185, 197);
+$color1: $colorgrey;
+$color2: $colorgrey;
+$color3: $colorgrey;
+$color4: $colorgrey;
+
+$bordersize: 30px;
+$boxsize: $bordersize * 2+50px;
+
 .hide {
   display: none !important;
 }
@@ -18,17 +29,6 @@
     animation: spin 2.5s cubic-bezier(0.15, 0.58, 0.86, 0.42) infinite;
   }
 }
-
-$backgroundContainer: rgb(225, 225, 225);
-
-$colorgrey: rgba(0, 0, 0, 0.397);
-$color1: $colorgrey;
-$color2: $colorgrey;
-$color3: $colorgrey;
-$color4: $colorgrey;
-
-$bordersize: 30px;
-$boxsize: $bordersize * 2+50px;
 
 #corner-box1 {
   background-color: $backgroundContainer;
@@ -112,7 +112,7 @@ $boxsize: $bordersize * 2+50px;
   position: absolute;
 }
 
-#card-viewer {
+.card-viewer {
   box-sizing: border-box;
   font-family: "Roboto Condensed" !important;
   * {
@@ -129,106 +129,108 @@ $boxsize: $bordersize * 2+50px;
   bottom: 0 !important;
   width: 100vw !important;
   min-height: calc(100vh - 48px) !important;
-  #card-viewer-container {
+  .card-viewer-container {
     animation: viewerSlideIn 0.3s cubic-bezier(0.18, 1.01, 0.46, 0.98) forwards;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    //box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
     width: 900px;
     margin: auto;
     padding: 15px;
     background-color: $backgroundContainer;
     box-sizing: border-box;
     position: relative;
-    .card-viewer-subcontainer {
-      border: 2px solid $colorgrey;
+  }
+}
+
+.card-viewer-subcontainer {
+  border: 1px solid $colorgrey;
+  position: relative;
+  padding: 25px;
+  background-color: $backgroundContainer;
+  box-sizing: content-box;
+  .cv-title {
+    font-size: 2.3em;
+    font-family: EB Garamond !important;
+    font-weight: 500 !important;
+    background-color: white;
+    position: relative;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    color: rgb(77, 77, 77);
+    text-align: center;
+    padding: 10px 10px;
+    width: 70%;
+    margin: auto;
+    margin-top: 10px;
+    font-weight: normal;
+    span {
+      display: block;
+      border-radius: 10px;
+      padding: 0 15px;
+    }
+    .cv-rating {
+      text-align: center;
+      left: 0;
+      right: 0;
+      margin: auto;
       position: relative;
-      padding: 25px;
-      background-color: $backgroundContainer;
-      box-sizing: content-box;
-      #title {
-        font-size: 2.3em;
-        font-family: EB Garamond !important;
-        font-weight: 500 !important;
-        background-color: white;
-        position: relative;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-        z-index: 2;
-        color: rgb(77, 77, 77);
-        text-align: center;
-        padding: 10px 10px;
-        width: 70%;
-        margin: auto;
-        margin-top: 10px;
-        font-weight: normal;
-        span {
-          display: block;
-          border-radius: 10px;
-          padding: 0 15px;
-        }
-        #rating {
-          text-align: center;
-          left: 0;
-          right: 0;
-          margin: auto;
-          position: relative;
-          z-index: 5;
-          //height:50px;
-          .star-svg {
-            margin: 3px;
-            width: 24px;
-          }
-
-          .halfstar-svg {
-            margin: 3px;
-            width: 24px;
-          }
-
-          .star {
-            fill: #c4cf5a;
-            stroke: black;
-          }
-
-          .halfstar-back {
-            fill: #c4cf5a;
-            stroke: black;
-          }
-
-          .halfstar-front {
-            fill: rgb(139, 139, 139);
-          }
-
-          .stars {
-            display: inline;
-          }
-        }
+      z-index: 5;
+      //height:50px;
+      .star-svg {
+        margin: 3px;
+        width: 24px;
       }
 
-      #img {
-        background-color: rgba(85, 85, 85, 0.324);
-        background-blend-mode: overlay;
-        box-shadow: inset 0 15px 95px rgba(0, 0, 0, 0.591);
-        border-bottom: 4px solid white;
-        height: 350px;
-        width: 100%;
-        background-size: cover;
-        background-position-y: 50%;
-        position: relative;
-        background-repeat: no-repeat;
+      .halfstar-svg {
+        margin: 3px;
+        width: 24px;
+      }
+
+      .star {
+        fill: #c4cf5a;
+        stroke: black;
+      }
+
+      .halfstar-back {
+        fill: #c4cf5a;
+        stroke: black;
+      }
+
+      .halfstar-front {
+        fill: rgb(139, 139, 139);
       }
 
       .stars {
-        padding: 3vh 2vw;
-        .star-svg {
-          width: 20px;
-        }
-        .halfstar-svg {
-          width: 20px;
-        }
+        display: inline;
       }
+    }
+  }
+
+  .cv-img {
+    background-color: rgba(0, 0, 0, 0.178);
+    background-blend-mode: overlay;
+    box-shadow: inset 0 15px 95px rgba(0, 0, 0, 0.591);
+    border-bottom: 4px solid white;
+    height: 350px;
+    width: 100%;
+    background-size: cover;
+    background-position-y: 50%;
+    position: relative;
+    background-repeat: no-repeat;
+  }
+
+  .stars {
+    padding: 3vh 2vw;
+    .star-svg {
+      width: 20px;
+    }
+    .halfstar-svg {
+      width: 20px;
     }
   }
 }
 
 .participants {
+  z-index: 3;
   margin: 10px 0;
   display: flex;
 }
@@ -236,8 +238,8 @@ $boxsize: $bordersize * 2+50px;
 .person {
   margin-right: 10px;
   margin-left: 0;
-  border: 4px solid rgb(255, 255, 255);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgb(70, 70, 70);
+  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   overflow: hidden;
   width: 64px;
@@ -305,9 +307,9 @@ $boxsize: $bordersize * 2+50px;
   font-family: "Roboto Condensed";
   cursor: pointer;
   outline: none;
-  border: 2px solid rgb(255, 255, 255);
+  border: 1px solid rgb(83, 83, 83);
   border-radius: 5px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   height: 48px;
   width: 48px;
   margin: 5px;
@@ -320,7 +322,7 @@ $boxsize: $bordersize * 2+50px;
   }
 }
 
-#button-group-top {
+.button-group-top {
   margin: 20px 0;
   margin-bottom: 0px;
   width: 100%;
@@ -330,7 +332,9 @@ $boxsize: $bordersize * 2+50px;
     margin-right: auto;
   }
   .button-willgo {
+    z-index: 2;
     margin-bottom: 10px;
+    margin-right: 0;
     background: radial-gradient(
       ellipse at bottom,
       rgb(33, 187, 154) 0%,
@@ -353,19 +357,19 @@ $boxsize: $bordersize * 2+50px;
     background: radial-gradient(
       ellipse at bottom,
       rgb(33, 151, 187) 0%,
-      rgb(24, 115, 143)  100%
+      rgb(24, 115, 143) 100%
     );
     &:hover {
       background: radial-gradient(
         ellipse at bottom,
         rgb(32, 161, 201) 0%,
-        rgb(25, 135, 168)  100%
+        rgb(25, 135, 168) 100%
       );
     }
   }
 }
 
-#button-group-bottom {
+.button-group-bottom {
   background-color: rgb(245, 245, 245);
   width: 100%;
   margin: 0px auto;
@@ -377,6 +381,7 @@ $boxsize: $bordersize * 2+50px;
     margin: auto;
     width: 180px;
     margin-right: 15px;
+    margin-left: 4px;
     font-size: 1.3em;
     color: white;
     background-color: rgb(88, 80, 80);
@@ -387,7 +392,7 @@ $boxsize: $bordersize * 2+50px;
     flex: 1 1 auto;
     margin: auto;
     position: relative;
-    top: -3px;
+    top: 0px;
     justify-self: flex-end;
   }
   .splitter-line2 {
@@ -396,7 +401,7 @@ $boxsize: $bordersize * 2+50px;
     flex: 1 1 auto;
     margin: auto;
     position: relative;
-    top: -3px;
+    top: 0px;
     justify-self: flex-start;
   }
   .splitter {
@@ -409,10 +414,12 @@ $boxsize: $bordersize * 2+50px;
     flex: 0 0 60px;
     text-align: center;
     margin: auto 0;
+    top:3px;
+    position: relative;
     justify-self: center;
     align-self: center;
   }
-  #buttons-social {
+  .buttons-social {
     margin: auto;
     margin-left: 10px;
     display: flex;
@@ -455,13 +462,14 @@ $boxsize: $bordersize * 2+50px;
   font-size: 1.3em;
   text-align: center;
   span {
-    background-color: rgb(232, 232, 247);
-    border: 4px solid white;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(138, 138, 138);
     padding: 5px 15px;
     position: relative;
     border-radius: 5px;
-    box-shadow: 0 2px 0px rgba(0, 0, 0, 0.308);
-    top: -20px;
+    z-index: 5;
+    //box-shadow: 0 2px 0px rgba(0, 0, 0, 0.308);
+    top: -16px;
   }
 }
 
@@ -474,10 +482,81 @@ $boxsize: $bordersize * 2+50px;
 
 .mid-container {
   background-color: white;
-  border: 4px solid white;
+  border:1px solid rgb(158, 158, 158);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 2;
+}
+
+//***********************************
+//               HAPPY              *
+//***********************************
+$bordercolor: rgb(0, 0, 0);
+
+.happy {
+  background: rgba(0, 0, 0, 0.377) !important;
+  .card-viewer-container {
+    background: linear-gradient(rgb(66, 49, 70) 0%, rgb(44, 33, 48) 100%);
+  }
+  .card-viewer-subcontainer {
+    background: none;
+    border: 2px solid transparent;
+  }
+  .cv-title {
+    background: none;
+    box-shadow: none;
+    color: white;
+  }
+  .button {
+    border-color: $bordercolor;
+  }
+  .button-willgo {
+    background: radial-gradient(
+      ellipse at bottom, rgb(192, 179, 66) 0%,
+      rgb(151, 141, 50) 100%
+    );
+    &:hover{
+      background: radial-gradient(
+        ellipse at bottom, rgb(218, 203, 71) 0%,
+        rgb(170, 159, 58) 100%
+      );
+    }
+  }
+  .person {
+    border-color: $bordercolor;
+  }
+  .mid-container {
+    border-color: $bordercolor;
+    background: rgb(66, 49, 70);
+  }
+  .button-group-bottom {
+    background: rgb(66, 49, 70);
+    border-color: $bordercolor;
+  }
+  .cv-img {
+    border-color: transparent;
+  }
+  .address {
+    span {
+      background: rgb(97, 77, 102);
+      border-color: $bordercolor;
+      color: white;
+    }
+  }
+  .splitter {
+    * {
+      stroke: white;
+    }
+  }
+  .tonight-text{
+    color:white;
+  }
+  .splitter-line1 {
+    background: white;
+  }
+  .splitter-line2 {
+    background: white;
+  }
 }
