@@ -160,7 +160,7 @@ $boxsize: $bordersize * 2+50px;
     padding: 10px 10px;
     width: 70%;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 45px;
     font-weight: normal;
     span {
       display: block;
@@ -324,6 +324,7 @@ $boxsize: $bordersize * 2+50px;
 
 .button-group-top {
   margin: 20px 0;
+  height:84px;
   margin-bottom: 0px;
   width: 100%;
   display: flex;
