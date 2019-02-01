@@ -22,6 +22,7 @@ export const login = () => {
       let data = JSON.parse(event.data);
       if (data != "nothing here") {
         dispatch(saveAuthData(JSON.parse(event.data)));
+        es.close();
       }
     };
   };
