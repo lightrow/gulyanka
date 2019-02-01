@@ -131,7 +131,7 @@ $boxsize: $bordersize * 2+50px;
   min-height: calc(100vh - 48px) !important;
   .card-viewer-container {
     animation: viewerSlideIn 0.3s cubic-bezier(0.18, 1.01, 0.46, 0.98) forwards;
-    //box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
     width: 900px;
     margin: auto;
     padding: 15px;
@@ -238,8 +238,8 @@ $boxsize: $bordersize * 2+50px;
 .person {
   margin-right: 10px;
   margin-left: 0;
-  border: 2px solid rgb(70, 70, 70);
-  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgb(255, 255, 255);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   overflow: hidden;
   width: 64px;
@@ -307,7 +307,7 @@ $boxsize: $bordersize * 2+50px;
   font-family: "Roboto Condensed";
   cursor: pointer;
   outline: none;
-  border: 1px solid rgb(83, 83, 83);
+  border: 2px solid rgb(255, 255, 255);
   border-radius: 5px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   height: 48px;
@@ -463,12 +463,12 @@ $boxsize: $bordersize * 2+50px;
   text-align: center;
   span {
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(138, 138, 138);
+    border: 1px solid rgb(255, 255, 255);
     padding: 5px 15px;
     position: relative;
     border-radius: 5px;
     z-index: 5;
-    //box-shadow: 0 2px 0px rgba(0, 0, 0, 0.308);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
     top: -16px;
   }
 }
@@ -482,10 +482,10 @@ $boxsize: $bordersize * 2+50px;
 
 .mid-container {
   background-color: white;
-  border:1px solid rgb(158, 158, 158);
+  //border:1px solid rgb(158, 158, 158);
   border-radius: 15px;
   overflow: hidden;
-  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 2;
 }
